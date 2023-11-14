@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { FC, useState } from 'react';
 // import { Link } from 'react-router-dom';
 import { BottomNavigation, BottomNavigationAction, Box } from '@mui/material';
@@ -29,10 +30,10 @@ export const NavigationPanel: FC = () => {
         {routes.map((r) => {
           const icon = r.renderIconFunction
             ? r.renderIconFunction(
-                clsx('navigation-panel__icon', {
-                  'navigation-panel__icon_selected': isSelected(r.key),
-                })
-              )
+              clsx('navigation-panel__icon', {
+                'navigation-panel__icon_selected': isSelected(r.key),
+              })
+            )
             : null;
           return (
             <BottomNavigationAction
@@ -40,7 +41,7 @@ export const NavigationPanel: FC = () => {
               label={r.displayName}
               value={r.key}
               icon={icon}
-              // component={Link} to={r.path}
+            // component={Link} to={r.path}
             />
           );
         })}

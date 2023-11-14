@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { FC, useMemo, useState } from 'react';
 import { BottomNavigation, BottomNavigationAction, Box } from '@mui/material';
 import { MenuItem } from '../../../types/common';
