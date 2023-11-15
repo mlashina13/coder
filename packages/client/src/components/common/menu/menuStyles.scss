@@ -1,0 +1,37 @@
+.main-menu {
+    & .MuiBottomNavigation-root {
+        justify-content: flex-start;
+        background-color: #E5E5E5;
+        box-shadow: 0px 1px 2px -1px #cdcdcdeb;
+        height: 40px;
+    }
+
+    & .MuiBottomNavigationAction-label {
+        color: #9E9C9C;
+        font-size: 16px !important;
+        font-weight: 300;
+    }
+
+    & .Mui-selected {
+        color: #313131;
+    }
+
+    &__item {
+        flex-direction: row !important;
+
+        &::after {
+            content: '';
+            height: 24px;
+            width: 1px;
+            position: absolute;
+            right: 0;
+            border-right: 1px dashed #9E9C9C;
+        }
+
+        &:last-child {
+            &::after {
+                display: none;
+            }
+        }
+    }
+}
