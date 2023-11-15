@@ -26,9 +26,15 @@ export const Menu: FC<MenuProps> = props => {
   /**
    * Обработчик изменения выбора элемента меню
    */
-  const selectedChangedHandler = (id: number | string) => {
+  const selectedChangedHandler = (id: string) => {
     setSelectedItem(id)
     selectedChanged && selectedChanged(id)
+  }
+
+  if (uniqueItems.length !== menuItems.length) {
+    console.warn(
+      'You try to use menu items with same id. All duplicates was removed!'
+    )
   }
 
   return (

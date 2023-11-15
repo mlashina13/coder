@@ -1,9 +1,9 @@
 import { FC, useState } from 'react'
 //import { Link } from 'react-router-dom';
 import { BottomNavigation, BottomNavigationAction, Box } from '@mui/material'
-import { HomeIcon, MessageIcon, ProfileIcon } from '../../../assets'
+import { routes } from '../../../constants/'
 import './navigationPanelStyles.scss'
-import clsx from 'classnames'
+import classes from 'classnames'
 
 /**
  * Элементы меню навигации
@@ -34,42 +34,24 @@ export const NavigationPanel: FC = () => {
         onChange={(_, newValue) => {
           setSelectedItem(newValue)
         }}>
-        <BottomNavigationAction
-          label="Главная"
-          value={NavItems.Home}
-          icon={
-            <HomeIcon
-              className={clsx('navigation-panel__icon', {
-                'navigation-panel__icon_selected': isSelected(NavItems.Home),
-              })}
+        {routes.map(r => {
+          const icon = r.renderIconFunction
+            ? r.renderIconFunction(
+                classes('navigation-panel__icon', {
+                  'navigation-panel__icon_selected': isSelected(NavItems.Home),
+                })
+              )
+            : null
+          return (
+            <BottomNavigationAction
+              key={r.key}
+              label={r.displayName}
+              value={r.key}
+              icon={icon}
+              //component={Link} to={r.path}
             />
-          }
-          // component={Link} to="/"
-        />
-        <BottomNavigationAction
-          label="Форум"
-          value={NavItems.Forum}
-          icon={
-            <MessageIcon
-              className={clsx('navigation-panel__icon', {
-                'navigation-panel__icon_selected': isSelected(NavItems.Forum),
-              })}
-            />
-          }
-          // component={Link} to="/forum"
-        />
-        <BottomNavigationAction
-          label="Профиль"
-          value={NavItems.Profile}
-          icon={
-            <ProfileIcon
-              className={clsx('navigation-panel__icon', {
-                'navigation-panel__icon_selected': isSelected(NavItems.Profile),
-              })}
-            />
-          }
-          // component={Link} to="/profile"
-        />
+          )
+        })}
       </BottomNavigation>
     </Box>
   )

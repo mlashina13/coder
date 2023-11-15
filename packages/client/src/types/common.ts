@@ -42,10 +42,35 @@ export interface MenuItem {
   /**
    * Идентификатор
    */
-  id: number | string
+  id: string
 
   /**
    * Иконка
    */
   icon?: ReactNode
+}
+
+/**
+ * Описание элемента роутинга
+ */
+export interface RouteInfo {
+  /**
+   * Уникальный ключ
+   */
+  key: string
+
+  /**
+   * Путь (URL)
+   */
+  path: string
+
+  /**
+   * Отображаемое имя
+   */
+  displayName: string
+
+  /**
+   * Иконка навигации
+   */
+  renderIconFunction?: (className?: string) => ReactNode
 }
