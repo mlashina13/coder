@@ -1,13 +1,14 @@
-import { FC, useState } from 'react';
-//import { Link } from 'react-router-dom';
+import React, { FC, useState } from 'react';
+// import { Link } from 'react-router-dom';
 import { BottomNavigation, BottomNavigationAction, Box } from '@mui/material';
-import { routes } from '../../../constants/';
-import './navigationPanelStyles.scss';
 import classes from 'classnames';
+import { routes } from '../../../constants';
+import './navigationPanelStyles.scss';
 
 /**
  * Элементы меню навигации
  */
+// eslint-disable-next-line no-shadow
 enum NavItems {
   Home,
   Forum,
@@ -49,7 +50,7 @@ export const NavigationPanel: FC = () => {
               label={r.displayName}
               value={r.key}
               icon={icon}
-              //component={Link} to={r.path}
+              // component={Link} to={r.path}
             />
           );
         })}

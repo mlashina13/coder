@@ -11,6 +11,9 @@
     "prettier"
   ],
   "rules": {
+    "no-unused-vars": "warn",
+    "import/prefer-default-export": "off",
+    "react/function-component-definition": [0, "function-expression"],
     "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
     "import/extensions": [
       "error",

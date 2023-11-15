@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { Box, IconButton, Tooltip, Typography } from '@mui/material';
 import { LogoIcon, LogoutIcon } from '../../../assets';
 import { HeaderProps } from './HeaderProps';

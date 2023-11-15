@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react';
+import React, { FC, useMemo, useState } from 'react';
 import { BottomNavigation, BottomNavigationAction, Box } from '@mui/material';
 import { MenuItem } from '../../../types/common';
 import { MenuProps } from './MenuProps';
@@ -15,17 +15,21 @@ export const Menu: FC<MenuProps> = (props) => {
   /**
    * Убираем элементы, id которых повторяется в наборе
    */
-  const uniqueItems: Array<MenuItem> = useMemo(() => {
-    return menuItems.reduce((prev, curr) => {
-      return prev.some((p) => p.id === curr.id) ? prev : [...prev, curr];
-    }, [] as Array<MenuItem>);
-  }, [menuItems]);
+  const uniqueItems: Array<MenuItem> = useMemo(
+    () =>
+      menuItems.reduce(
+        (prev, curr) => (prev.some((p) => p.id === curr.id) ? prev : [...prev, curr]),
+        [] as Array<MenuItem>
+      ),
+    [menuItems]
+  );
 
   /**
    * Обработчик изменения выбора элемента меню
    */
   const selectedChangedHandler = (id: string) => {
     setSelectedItem(id);
+    // eslint-disable-next-line no-unused-expressions
     selectedChanged && selectedChanged(id);
   };
 
@@ -40,17 +44,15 @@ export const Menu: FC<MenuProps> = (props) => {
         value={selectedItem}
         onChange={(_, newValue) => selectedChangedHandler(newValue)}
       >
-        {uniqueItems.map((item) => {
-          return (
-            <BottomNavigationAction
-              className='main-menu__item'
-              key={item.id}
-              label={item.label}
-              value={item.id}
-              icon={item.icon}
-            />
-          );
-        })}
+        {uniqueItems.map((item) => (
+          <BottomNavigationAction
+            className='main-menu__item'
+            key={item.id}
+            label={item.label}
+            value={item.id}
+            icon={item.icon}
+          />
+        ))}
       </BottomNavigation>
     </Box>
   );

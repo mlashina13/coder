@@ -1,3 +1,4 @@
+import React from 'react';
 import { HomeIcon, MessageIcon, ProfileIcon } from '../assets';
 import { RouteInfo } from '../types/common';
 
@@ -9,24 +10,18 @@ export const routes: Array<RouteInfo> = [
     key: 'main',
     path: '/',
     displayName: 'Главная',
-    renderIconFunction: (className) => {
-      return <HomeIcon className={className} />;
-    },
+    renderIconFunction: (className) => <HomeIcon className={className} />,
   },
   {
     key: 'forum',
     path: '/forum',
     displayName: 'Форум',
-    renderIconFunction: (className) => {
-      return <MessageIcon className={className} />;
-    },
+    renderIconFunction: (className) => <MessageIcon className={className} />,
   },
   {
     key: 'profile',
     path: '/profile',
     displayName: 'Профиль',
-    renderIconFunction: (className) => {
-      return <ProfileIcon className={className} />;
-    },
+    renderIconFunction: (className) => <ProfileIcon className={className} />,
   },
 ];
