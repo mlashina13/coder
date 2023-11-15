@@ -1,0 +1,30 @@
+.navigation-panel {
+    &__icon {
+        fill: #d3d3d3;
+
+        &_selected {
+            fill: #fff;
+        }
+    }
+
+    & .MuiBottomNavigation-root {
+        justify-content: flex-start;
+        background-color: #525252;
+        height: 40px;
+    }
+
+    & .MuiButtonBase-root {
+        flex-direction: row;
+        gap: 8px;
+    }
+
+    & .MuiBottomNavigationAction-label {
+        color: #d3d3d3;
+        font-size: 16px !important;
+        font-weight: 500;
+    }
+
+    & .Mui-selected {
+        color: #fff;
+    }
+}
