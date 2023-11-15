@@ -9,7 +9,6 @@
     "dev": "lerna run dev",
     "test": "lerna run test",
     "lint": "lerna run lint",
-    "stylelint": "lerna run stylelint",
     "format": "lerna run format",
     "preview": "lerna run preview"
   },
