@@ -1,0 +1,23 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "env": {
+    "jest": true
+  },
+  "extends": [
+    "airbnb",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "prettier"
+  ],
+  "rules": {
+    "import/extensions": [
+      "error",
+      "never",
+      {
+        "scss": "always",
+        "interface": "always"
+      }
+    ]
+  }
+}
