@@ -1,13 +1,13 @@
-import { PropsWithChildren, ReactNode } from 'react'
+import { PropsWithChildren, ReactNode } from 'react';
 
 export interface LayoutProps extends PropsWithChildren {
   /**
    * Элемент вспомогательного меню
    */
-  subMenu?: ReactNode
+  subMenu?: ReactNode;
 
   /**
    * Заголовок страницы
    */
-  title?: string
+  title?: string;
 }
