@@ -1,15 +1,18 @@
+@import '../../styles/color';
+@import '../../styles/common';
+
 .layout {
   position: fixed;
   inset: 0;
 
   &__divider {
     height: 4px;
-    background: #ef4444;
+    background: $red-cherry;
   }
 
   &__content {
     height: calc(100% - 132px);
-    padding: 24px 32px;
+    padding: $spacing-ls $spacing-xl;
     overflow: auto;
   }
 }

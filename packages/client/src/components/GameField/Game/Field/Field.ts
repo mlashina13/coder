@@ -1,6 +1,7 @@
 import { backgroundColor, chipSize } from '../consts';
 
 export default class Field {
+  /* eslint-disable */
   private static _instance: Field | void;
 
   /** Элемент canvas */
@@ -40,6 +41,7 @@ export default class Field {
     maxStepsCount: number
   ) {
     if (Field._instance) {
+      /* eslint-disable */
       return Field._instance;
     }
 

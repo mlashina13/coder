@@ -1,30 +1,33 @@
+@import '../../../styles/color';
+@import '../../../styles/common';
+
 .navigation-panel {
   &__icon {
-    fill: #d3d3d3;
+    fill: $grey-mid;
 
     &_selected {
-      fill: #fff;
+      fill: $white;
     }
   }
 
   & .MuiBottomNavigation-root {
     justify-content: flex-start;
-    background-color: #525252;
+    background-color: $grey-dark;
     height: 40px;
   }
 
   & .MuiButtonBase-root {
     flex-direction: row;
-    gap: 8px;
+    gap: $spacing-s;
   }
 
   & .MuiBottomNavigationAction-label {
-    color: #d3d3d3;
-    font-size: 16px !important;
-    font-weight: 500;
+    color: $grey-mid;
+    font-size: $font-ls !important;
+    font-weight: $font-weight-medium-bold;
   }
 
   & .Mui-selected {
-    color: #fff;
+    color: $white;
   }
 }

@@ -1,31 +1,21 @@
 import React, { FC, useState } from 'react';
 // import { Link } from 'react-router-dom';
 import { BottomNavigation, BottomNavigationAction, Box } from '@mui/material';
-import classes from 'classnames';
+import clsx from 'clsx';
 import { routes } from '../../../constants';
 import './navigationPanelStyles.scss';
-
-/**
- * Элементы меню навигации
- */
-// eslint-disable-next-line no-shadow
-enum NavItems {
-  Home,
-  Forum,
-  Profile,
-}
 
 // TODO: добавить переход по страницам после подключения роутинга
 /**
  * Компонент "Панель навигации"
  */
 export const NavigationPanel: FC = () => {
-  const [selectedItem, setSelectedItem] = useState(NavItems.Home);
+  const [selectedItem, setSelectedItem] = useState(routes[0].key);
 
   /**
    * Выбран ли элемент меню
    */
-  const isSelected = (value: number) => selectedItem === value;
+  const isSelected = (value: string) => selectedItem === value;
 
   return (
     <Box className='navigation-panel'>
@@ -39,8 +29,8 @@ export const NavigationPanel: FC = () => {
         {routes.map((r) => {
           const icon = r.renderIconFunction
             ? r.renderIconFunction(
-                classes('navigation-panel__icon', {
-                  'navigation-panel__icon_selected': isSelected(NavItems.Home),
+                clsx('navigation-panel__icon', {
+                  'navigation-panel__icon_selected': isSelected(r.key),
                 })
               )
             : null;

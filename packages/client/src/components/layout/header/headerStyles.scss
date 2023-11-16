@@ -1,7 +1,10 @@
+@import '../../../styles/color';
+@import '../../../styles/common';
+
 .page-header {
   min-height: 48px;
   max-height: 48px;
-  padding: 0 32px;
+  padding: $spacing-none $spacing-xl;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -9,15 +12,15 @@
   &__logo {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 18px;
-    font-weight: 500;
-    color: #1e1e1e;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    gap: $spacing-s;
+    font-size: $font-lm;
+    font-weight: $font-weight-medium-bold;
+    color: $main-black;
+    text-shadow: 0px 4px 4px $text-shadow-color;
   }
 
   &__title {
-    color: #525252;
+    color: $grey-dark;
   }
 
   &__logout {
