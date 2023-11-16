@@ -69,9 +69,11 @@ export default class Game {
     }
 
     this._reference = generateRandomColorSequence(colorsCount);
-    this._colorsInRowCount = colorsCount;
-    this._allAvailableColorsCount = colorsCount + 1;
-    this._maxStepsCount = stepsCount;
+    // eslint-disable-next-line no-nested-ternary
+    this._colorsInRowCount = colorsCount < 4 ? 4 : colorsCount > 10 ? 10 : colorsCount;
+    this._allAvailableColorsCount = this._colorsInRowCount + 1;
+    // eslint-disable-next-line no-nested-ternary
+    this._maxStepsCount = stepsCount < 1 ? 1 : stepsCount > 20 ? 20 : stepsCount;
     this._field = new Field(
       canvas,
       ctx,

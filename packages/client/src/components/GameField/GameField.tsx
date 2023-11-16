@@ -34,7 +34,11 @@ const GameField: FC = () => {
     return <div>{result.isWin ? 'Выиграл' : 'Проиграл'}</div>;
   }
 
-  return <canvas ref={canvasRef} />;
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <canvas ref={canvasRef} />
+    </div>
+  );
 };
 
 export default GameField;
