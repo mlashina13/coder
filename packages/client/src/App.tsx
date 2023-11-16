@@ -1,10 +1,10 @@
-import { Box, Typography } from '@mui/material'
-import { FC } from 'react'
+import React from 'react';
+import { Box, Typography } from '@mui/material';
 
-export const App: FC = () => {
+export default function App() {
   return (
     <Box>
       <Typography>The coder game!</Typography>
     </Box>
-  )
+  );
 }

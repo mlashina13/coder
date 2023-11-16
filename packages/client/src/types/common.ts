@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode } from 'react';
 
 /**
  * Свойства компонента иконки
@@ -7,27 +7,27 @@ export interface IconProps {
   /**
    * Набор css-классов
    */
-  className?: string
+  className?: string;
 
   /**
    * Событие клика
    */
-  onClick?: () => void
+  onClick?: () => void;
 
   /**
    * Ширина
    */
-  width?: string | number
+  width?: string | number;
 
   /**
    * Высота
    */
-  height?: string | number
+  height?: string | number;
 
   /**
    * Цвет иконки
    */
-  color?: string
+  color?: string;
 }
 
 /**
@@ -37,17 +37,17 @@ export interface MenuItem {
   /**
    * Текст элемента
    */
-  label: string
+  label: string;
 
   /**
    * Идентификатор
    */
-  id: string
+  id: string;
 
   /**
    * Иконка
    */
-  icon?: ReactNode
+  icon?: ReactNode;
 }
 
 /**
@@ -57,20 +57,20 @@ export interface RouteInfo {
   /**
    * Уникальный ключ
    */
-  key: string
+  key: string;
 
   /**
    * Путь (URL)
    */
-  path: string
+  path: string;
 
   /**
    * Отображаемое имя
    */
-  displayName: string
+  displayName: string;
 
   /**
    * Иконка навигации
    */
-  renderIconFunction?: (className?: string) => ReactNode
+  renderIconFunction?: (className?: string) => ReactNode;
 }

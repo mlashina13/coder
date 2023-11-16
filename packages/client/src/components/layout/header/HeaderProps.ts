@@ -5,5 +5,5 @@ export interface HeaderProps {
   /**
    * Заголовок
    */
-  title?: string
+  title?: string;
 }
