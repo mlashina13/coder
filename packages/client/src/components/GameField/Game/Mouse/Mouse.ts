@@ -8,6 +8,7 @@ export default class Mouse {
   };
 
   /** Инстанс мыши */
+  /* eslint-disable */
   private static _instance: Mouse | void;
 
   /** Положение по оси X */
@@ -30,6 +31,7 @@ export default class Mouse {
 
   constructor() {
     if (Mouse._instance) {
+      /* eslint-disable */
       return Mouse._instance;
     }
 

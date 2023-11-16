@@ -17,6 +17,7 @@ import type { Reference, Statistics } from './types';
 
 export default class Game {
   /** Инстанс игры */
+  /* eslint-disable */
   private static _instance: Game | void;
 
   /** Фишка для визуализации перемещения */
@@ -68,6 +69,7 @@ export default class Game {
     stepsCount = 10
   ) {
     if (Game._instance) {
+      /* eslint-disable */
       return Game._instance;
     }
 

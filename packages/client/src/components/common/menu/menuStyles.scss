@@ -1,19 +1,22 @@
+@import '../../../styles/color';
+@import '../../../styles/common';
+
 .main-menu {
   & .MuiBottomNavigation-root {
     justify-content: flex-start;
-    background-color: #e5e5e5;
-    box-shadow: 0px 1px 2px -1px #cdcdcdeb;
+    background-color: $grey-light;
+    box-shadow: 0px 1px 2px -1px $divider-shadow-color;
     height: 40px;
   }
 
   & .MuiBottomNavigationAction-label {
-    color: #9e9c9c;
-    font-size: 16px !important;
-    font-weight: 300;
+    color: $grey;
+    font-size: $font-ls !important;
+    font-weight: $font-weight-light;
   }
 
   & .Mui-selected {
-    color: #313131;
+    color: $main-black;
   }
 
   &__item {
@@ -25,7 +28,7 @@
       width: 1px;
       position: absolute;
       right: 0;
-      border-right: 1px dashed #9e9c9c;
+      border-right: 1px dashed $grey;
     }
 
     &:last-child {
