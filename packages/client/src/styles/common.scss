@@ -4,10 +4,16 @@ $font-weight-medium-bold: 500;
 $font-weight-bold: 600;
 
 $font: 'Inter';
-$font-size-small: 12px;
-$font-size-normal: 14px;
-$font-size-medium: 16px;
-$font-size-large: 16px;
+$font-xxs: 8px;
+$font-xs: 9px;
+$font-s: 10px;
+$font-ms: 11px;
+$font-m: 12px;
+$font-ml: 14px;
+$font-ls: 16px;
+$font-lm: 18px;
+$font-xl: 20px;
+$font-xxl: 24px;
 
 $spacing-unit: 8px;
 $spacing-xs: $spacing-unit * 0.5;
@@ -22,14 +28,3 @@ $spacing-xxl: $spacing-unit * 5;
 $spacing-auto: auto;
 $spacing-none: 0;
 
-
-$font-xxs: 8px;
-$font-xs: 9px;
-$font-s: 10px;
-$font-ms: 11px;
-$font-m: 12px;
-$font-ml: 14px;
-$font-ls: 16px;
-$font-lm: 18px;
-$font-xl: 20px;
-$font-xxl: 24px;
