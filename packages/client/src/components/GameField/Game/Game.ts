@@ -39,10 +39,13 @@ export default class Game {
   /** Время запуска игры */
   private readonly _startTime!: Date;
 
+  /** Максимальное количество шагов игры */
   private readonly _maxStepsCount!: number;
 
+  /** Количество цветов в последовательности */
   private readonly _colorsInRowCount!: number;
 
+  /** Общее количество доступных для выбора пользователем цветов */
   private readonly _allAvailableColorsCount!: number;
 
   /** Положение мыши */

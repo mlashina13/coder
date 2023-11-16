@@ -19,12 +19,9 @@ const GameField: FC = () => {
 
     if (!canvasRef.current || !ctx) {
       console.warn('Не найден элемент canvas или его контекст');
-
-      // eslint-disable-next-line consistent-return
-      return;
+    } else {
+      setGame(new Game(canvasRef.current, ctx, setResult));
     }
-
-    setGame(new Game(canvasRef.current, ctx, setResult));
   }, []);
 
   // TODO: временная заглушка с результатами игры
