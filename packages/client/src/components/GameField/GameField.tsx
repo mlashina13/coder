@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef, FC } from 'react';
+import { Box, Typography } from '@mui/material';
 import Game from './Game/Game';
 import type { Statistics } from './Game/types';
+import './gameFieldStyles.scss';
 
 const GameField: FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -26,18 +28,18 @@ const GameField: FC = () => {
   }, []);
 
   // TODO: временная заглушка с результатами игры
-  if (result) {
-    if (result.isWin) {
-      console.table([result]);
-    }
-
-    return <div>{result.isWin ? 'Выиграл' : 'Проиграл'}</div>;
+  if (result && result.isWin) {
+    console.table([result]);
   }
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <canvas ref={canvasRef} />
-    </div>
+    <Box className='game-field'>
+      {result ? (
+        <Typography>{result.isWin ? 'Выиграл' : 'Проиграл'}</Typography>
+      ) : (
+        <canvas ref={canvasRef} />
+      )}
+    </Box>
   );
 };
 
