@@ -1,0 +1,35 @@
+@import '../../styles/color';
+@import '../../styles/common';
+
+.login-registration-page {
+  height: 100vh;
+  background-color: $grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__content {
+    padding: $spacing-m;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xl;
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      gap: $spacing-xl;
+    }
+  }
+
+  &__logo {
+    display: flex;
+    flex-direction: column;
+
+    &__title {
+      color: $main-black;
+      font-size: $font-ls;
+      font-weight: $font-weight-bold;
+      text-transform: uppercase;
+    }
+  }
+}
