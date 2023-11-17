@@ -1,0 +1,24 @@
+.button {
+  &.MuiButtonBase-root {
+    border-radius: 3px;
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  &.MuiButton-contained {
+    background: #0E4980;
+  }
+
+  &.MuiButton-outlined {
+    border-radius: 3px;
+    border: 1px solid #E9E8E8;
+    background: #FFF;
+
+    /** text */
+    color: #9E9C9C;
+    text-align: center;
+    font-style: normal;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}

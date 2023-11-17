@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { MenuItem } from '../../../types/common';
 
 /**

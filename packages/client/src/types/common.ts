@@ -72,5 +72,6 @@ export interface RouteInfo {
   /**
    * Иконка навигации
    */
+  // eslint-disable-next-line no-unused-vars
   renderIconFunction?: (className?: string) => ReactNode;
 }
