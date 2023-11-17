@@ -59,7 +59,7 @@ export default class Field {
 
     Field._instance = this;
 
-    this.setFieldSize(allAvailableColorsCount, colorsInRowCount, maxStepsCount);
+    this.setSize(allAvailableColorsCount, colorsInRowCount, maxStepsCount);
   }
 
   public get canvas() {
@@ -75,7 +75,7 @@ export default class Field {
   }
 
   /** Установка размера игрового поля */
-  private setFieldSize = (
+  private setSize = (
     allAvailableColorsCount: number,
     colorsInRowCount: number,
     maxStepsCount: number
