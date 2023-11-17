@@ -126,7 +126,7 @@ export default class Field {
   };
 
   /** Очищение игрового поля */
-  public clearGameField = () => {
+  public clear = () => {
     this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
   };
 

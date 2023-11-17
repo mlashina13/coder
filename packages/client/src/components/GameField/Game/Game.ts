@@ -427,7 +427,7 @@ export default class Game {
 
   /** Очищение {@link _canvas} */
   private clear = () => {
-    this._field.clearGameField();
+    this._field.clear();
     this._field.draw();
     this.drawChips();
   };
