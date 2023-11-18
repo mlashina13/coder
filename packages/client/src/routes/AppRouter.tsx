@@ -8,6 +8,7 @@ import {
   LeaderBoardPage,
   ProfilePage,
   TopicPage,
+  RegistrationPage,
 } from '../pages';
 import { PrivateRoute } from './PrivateRoute';
 import { PublicRoute } from './PublicRoute';
@@ -17,6 +18,7 @@ export const AppRouter: React.FC = () => (
   <Routes>
     <Route element={<PublicRoute />}>
       <Route element={<LoginPage />} path={ROUTER_URLS.Login} />
+      <Route element={<RegistrationPage />} path={ROUTER_URLS.Registration} />
     </Route>
     <Route element={<PrivateRoute />}>
       <Route element={<MainPage />} path={ROUTER_URLS.Main} />

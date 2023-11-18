@@ -9,9 +9,13 @@ export const ROUTER_URLS = {
    */
   Main: '/',
   /**
-   * Страница входа и регистрации
+   * Страница входа
    */
   Login: '/login',
+  /**
+   * Страница регистрации
+   */
+  Registration: '/registration',
   /**
    * Страница профиля пользователя
    */
@@ -32,6 +36,17 @@ export const ROUTER_URLS = {
    * Страница топика форума
    */
   ForumTopic: '/forum/:topicId',
+};
+
+export const LOGIN_ROUTES = {
+  /**
+   * Страница входа
+   */
+  Login: ROUTER_URLS.Login,
+  /**
+   * Страница регистрации
+   */
+  Registration: ROUTER_URLS.Registration,
 };
 
 /**
