@@ -1,23 +1,10 @@
-import React, { ReactElement } from 'react';
+import React, { FC } from 'react';
 import { Typography, Box } from '@mui/material';
 import { Button } from '../common';
+import type { ErrorProps } from './ErrorProps';
 import './errorStyles.scss';
 
-interface ServerErrorProps {
-  onClick: () => Promise<void>;
-  icon: ReactElement;
-  code: number;
-  description: string;
-  buttonText: string;
-}
-
-export const Error: React.FC<ServerErrorProps> = ({
-  onClick,
-  icon,
-  code,
-  description,
-  buttonText,
-}) => (
+export const Error: FC<ErrorProps> = ({ onClick, icon, code, description, buttonText }) => (
   <Box className='error-page__content' textAlign='center'>
     <>
       {icon}
