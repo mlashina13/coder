@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { Button, Input } from '../../../components';
 import { Auth } from '../../../services/auth';
 
-import './loginFormStyle.scss';
+import './loginFormStyles.scss';
 
 /** схема валидации */
 const validationSchema = yup.object({
@@ -41,6 +41,7 @@ export const LoginForm = () => {
         Auth.getAuthUser().then((data) => console.log(data));
       });
     },
+    validateOnBlur: false,
   });
   return (
     <form onSubmit={formik.handleSubmit} className='login-form'>
@@ -48,7 +49,7 @@ export const LoginForm = () => {
         name='login'
         value={formik.values.login}
         onChange={formik.handleChange}
-        error={Boolean(formik.errors.login)}
+        error={formik.touched.login && Boolean(formik.errors.login)}
         helperText={formik.touched.login && formik.errors.login}
         className='login-form__input'
         label='Логин'
