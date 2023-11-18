@@ -352,14 +352,24 @@ export default class Game {
   private fillCheckChips = (allMatchCount: number, colorMatchCount: number) => {
     const fillingCheckChip = this._checkChips[this._currentChipSlotsRowIndex];
 
-    for (let i = 0, j = 0; i < allMatchCount || j < colorMatchCount; i++, j++) {
-      if (i < allMatchCount) {
+    let fillingsCheckChipsCount = 0;
+
+    for (let i = 0; i < fillingCheckChip.length; i++) {
+      if (i < allMatchCount && fillingsCheckChipsCount < allMatchCount) {
         fillingCheckChip[i].matchColorAndPosition();
+        fillingsCheckChipsCount++;
+
+        continue;
       }
 
-      if (j < colorMatchCount) {
-        fillingCheckChip[this._colorsInRowCount - 1 - j].matchColor();
+      if (i >= allMatchCount && fillingsCheckChipsCount - allMatchCount < colorMatchCount) {
+        fillingCheckChip[i].matchColor();
+        fillingsCheckChipsCount++;
+
+        continue;
       }
+
+      break;
     }
   };
 
