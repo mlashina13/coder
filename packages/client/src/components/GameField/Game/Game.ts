@@ -13,7 +13,7 @@ import ChipSlot from './Figure/ChipSlot';
 import CheckChip from './Figure/CheckChip';
 import Mouse from './Mouse/Mouse';
 import Field from './Field/Field';
-import type { CheckStepResult, Reference, Statistics } from './types';
+import type { CheckStepResult, Reference, Statistics, OnEndGameCallback } from './types';
 
 export default class Game {
   /** Инстанс игры */
@@ -35,7 +35,7 @@ export default class Game {
   private readonly _field!: Field;
 
   /** Коллбэк для выполнения после окончания игры */
-  private readonly _onGameEnd: Dispatch<SetStateAction<Statistics | null>> | void;
+  private readonly _onGameEnd: OnEndGameCallback | void;
 
   /** Время запуска игры */
   private readonly _startTime!: Date;
@@ -67,7 +67,7 @@ export default class Game {
   constructor(
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
-    onGameEnd?: Dispatch<SetStateAction<Statistics | null>>,
+    onGameEnd?: OnEndGameCallback,
     colorsCount = 4,
     stepsCount = 10,
     isColorsMayBeRepeated = true

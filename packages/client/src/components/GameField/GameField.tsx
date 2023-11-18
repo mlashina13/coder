@@ -9,7 +9,15 @@ const GameField: FC = () => {
   const [game, setGame] = useState<Game | null>(null);
   const [result, setResult] = useState<Statistics | null>(null);
 
-  // eslint-disable-next-line consistent-return
+  const onEndGame = (gameResult: Statistics) => {
+    // TODO: временная заглушка с результатами игры
+    if (gameResult.isWin) {
+      console.table([result]);
+    }
+
+    setResult(gameResult);
+  };
+
   useEffect(() => {
     if (game) {
       return () => game.destructor();
@@ -20,14 +28,9 @@ const GameField: FC = () => {
     if (!canvasRef.current || !ctx) {
       console.warn('Не найден элемент canvas или его контекст');
     } else {
-      setGame(new Game(canvasRef.current, ctx, setResult));
+      setGame(new Game(canvasRef.current, ctx, onEndGame));
     }
   }, []);
-
-  // TODO: временная заглушка с результатами игры
-  if (result && result.isWin) {
-    console.table([result]);
-  }
 
   return (
     <Box className='game-field'>

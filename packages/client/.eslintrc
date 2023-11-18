@@ -11,6 +11,7 @@
     "prettier"
   ],
   "rules": {
+    "consistent-return": "off",
     "no-use-before-define": "warn",
     "no-constructor-return": "warn",
     "no-underscore-dangle": "off",

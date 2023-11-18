@@ -1,3 +1,4 @@
+import type { Dispatch, SetStateAction } from 'react';
 import type { chipColors, fieldColors } from '../consts';
 
 interface BaseStatistics {
@@ -31,3 +32,7 @@ export interface CheckStepResult {
   allMatchCount: number;
   colorMatchCount: number;
 }
+
+export type OnEndGameCallback =
+  | Dispatch<SetStateAction<Statistics | null>>
+  | ((result: Statistics) => void);
