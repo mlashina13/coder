@@ -1,8 +1,8 @@
 import React, { FC, useState } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { BottomNavigation, BottomNavigationAction, Box } from '@mui/material';
 import classes from 'classnames';
-import { routes } from '../../../constants';
+import { ROUTES } from '../../../constants';
 import './navigationPanelStyles.scss';
 
 /**
@@ -36,7 +36,7 @@ export const NavigationPanel: FC = () => {
           setSelectedItem(newValue);
         }}
       >
-        {routes.map((r) => {
+        {ROUTES.map((r) => {
           const icon = r.renderIconFunction
             ? r.renderIconFunction(
                 classes('navigation-panel__icon', {
@@ -50,7 +50,8 @@ export const NavigationPanel: FC = () => {
               label={r.displayName}
               value={r.key}
               icon={icon}
-              // component={Link} to={r.path}
+              component={Link}
+              to={r.path}
             />
           );
         })}

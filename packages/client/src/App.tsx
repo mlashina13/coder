@@ -1,10 +1,11 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
+import { AppRouter } from './routes/AppRouter';
 
 export default function App() {
   return (
     <Box>
-      <Typography>The coder game!</Typography>
+      <AppRouter />
     </Box>
   );
 }
