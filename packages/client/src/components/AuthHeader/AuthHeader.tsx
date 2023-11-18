@@ -29,9 +29,7 @@ export const AuthHeader = (props: AuthHeaderProps) => {
   const { pathname: mockLocation } = useLocation();
   const navigate = useNavigate();
 
-  const handleChange = (_: SyntheticEvent, path: LoginTabsPaths) => {
-    navigate(path);
-  };
+  const handleChange = (_: SyntheticEvent, path: LoginTabsPaths) => navigate(path);
 
   return (
     <Box className='auth-header'>
