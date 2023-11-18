@@ -1,6 +1,6 @@
 # Игровой движок
 ## UML диаграмма общих взаимосвязей
-![Game.vpd.png](..%2F..%2F..%2F..%2F..%2F..%2F..%2FDownloads%2FGame.vpd.png)
+![uml.png](images/uml.png)
 
 ## Классы
 ### BaseFigure
