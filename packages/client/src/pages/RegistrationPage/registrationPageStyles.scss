@@ -1,0 +1,17 @@
+@import '../../styles/color';
+@import '../../styles/common';
+
+.registration-page {
+  height: 100vh;
+  background-color: $grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__content {
+    padding: $spacing-m;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xl;
+  }
+}
