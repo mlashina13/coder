@@ -25,10 +25,7 @@ export type Statistics = WinStatistics | LossStatistics;
 
 export type Colors = chipColors | fieldColors;
 
-export interface Reference {
-  used: Colors[];
-  unused: Colors[];
-}
+export type Reference = Colors[];
 
 export interface CheckStepResult {
   allMatchCount: number;
