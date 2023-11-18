@@ -1,6 +1,8 @@
+import type { MouseEvents } from './types';
+
 export default class Mouse {
   /** События мыши */
-  public static readonly mouseEvents = {
+  public static readonly mouseEvents: Record<MouseEvents, MouseEvents> = {
     mousemove: 'mousemove',
     mousedown: 'mousedown',
     mouseup: 'mouseup',

@@ -29,3 +29,8 @@ export interface Reference {
   used: Colors[];
   unused: Colors[];
 }
+
+export interface CheckStepResult {
+  allMatchCount: number;
+  colorMatchCount: number;
+}

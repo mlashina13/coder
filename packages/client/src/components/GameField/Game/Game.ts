@@ -13,7 +13,7 @@ import ChipSlot from './Figure/ChipSlot';
 import CheckChip from './Figure/CheckChip';
 import Mouse from './Mouse/Mouse';
 import Field from './Field/Field';
-import type { Reference, Statistics } from './types';
+import type { CheckStepResult, Reference, Statistics } from './types';
 
 export default class Game {
   /** Инстанс игры */
@@ -296,9 +296,9 @@ export default class Game {
 
   /** Проверка результата игры */
   private checkGameResult = () => {
-    const { allMatchCounter, colorMatchCounter } = this.compareRowWithReference();
+    const { allMatchCount, colorMatchCount } = this.compareRowWithReference();
 
-    if (allMatchCounter === this._colorsInRowCount) {
+    if (allMatchCount === this._colorsInRowCount) {
       this.setWinnings();
 
       return;
@@ -310,7 +310,7 @@ export default class Game {
       return;
     }
 
-    this.fillCheckChips(allMatchCounter, colorMatchCounter);
+    this.fillCheckChips(allMatchCount, colorMatchCount);
   };
 
   /** Завершение игры победой */
@@ -341,38 +341,38 @@ export default class Game {
 
   /**
    * Заполнение результатов проверки строки
-   * @param allMatchCounter Количество фишек, у которых совпало положение и цвет
-   * @param colorMatchCounter Количество фишек, у которых совпал цвет
+   * @param allMatchCount Количество фишек, у которых совпало положение и цвет
+   * @param colorMatchCount Количество фишек, у которых совпал цвет
    */
-  private fillCheckChips = (allMatchCounter: number, colorMatchCounter: number) => {
+  private fillCheckChips = (allMatchCount: number, colorMatchCount: number) => {
     const fillingCheckChip = this._checkChips[this._currentChipSlotsRowIndex];
 
-    for (let i = 0, j = 0; i < allMatchCounter || j < colorMatchCounter; i++, j++) {
-      if (i < allMatchCounter) {
+    for (let i = 0, j = 0; i < allMatchCount || j < colorMatchCount; i++, j++) {
+      if (i < allMatchCount) {
         fillingCheckChip[i].matchColorAndPosition();
       }
 
-      if (j < colorMatchCounter) {
+      if (j < colorMatchCount) {
         fillingCheckChip[this._colorsInRowCount - 1 - j].matchColor();
       }
     }
   };
 
   /** Сравнение текущей заполненой строки и эталона */
-  private compareRowWithReference = () => {
-    let allMatchCounter = 0;
-    let colorMatchCounter = 0;
+  private compareRowWithReference = (): CheckStepResult => {
+    let allMatchCount = 0;
+    let colorMatchCount = 0;
     const currentRow = this._chipSlots[this._currentChipSlotsRowIndex];
 
     for (let i = 0; i < this._colorsInRowCount; i++) {
       if (currentRow[i].color === this._reference.used[i]) {
-        allMatchCounter++;
+        allMatchCount++;
       } else if (!this._reference.unused.includes(currentRow[i].color as chipColors)) {
-        colorMatchCounter++;
+        colorMatchCount++;
       }
     }
 
-    return { allMatchCounter, colorMatchCounter };
+    return { allMatchCount, colorMatchCount };
   };
 
   /** Заполнение игровых фигур */
@@ -427,7 +427,7 @@ export default class Game {
 
   /** Очищение {@link _canvas} */
   private clear = () => {
-    this._field.clearGameField();
+    this._field.clear();
     this._field.draw();
     this.drawChips();
   };
