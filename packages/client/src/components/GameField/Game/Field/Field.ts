@@ -1,6 +1,7 @@
 import { backgroundColor, chipSize } from '../consts';
 
 export default class Field {
+  /* eslint-disable */
   private static _instance: Field | void;
 
   /** Элемент canvas */
@@ -40,6 +41,7 @@ export default class Field {
     maxStepsCount: number
   ) {
     if (Field._instance) {
+      /* eslint-disable */
       return Field._instance;
     }
 
@@ -57,7 +59,7 @@ export default class Field {
 
     Field._instance = this;
 
-    this.setFieldSize(allAvailableColorsCount, colorsInRowCount, maxStepsCount);
+    this.setSize(allAvailableColorsCount, colorsInRowCount, maxStepsCount);
   }
 
   public get canvas() {
@@ -73,7 +75,7 @@ export default class Field {
   }
 
   /** Установка размера игрового поля */
-  private setFieldSize = (
+  private setSize = (
     allAvailableColorsCount: number,
     colorsInRowCount: number,
     maxStepsCount: number
@@ -124,7 +126,7 @@ export default class Field {
   };
 
   /** Очищение игрового поля */
-  public clearGameField = () => {
+  public clear = () => {
     this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
   };
 

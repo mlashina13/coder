@@ -1,0 +1,1 @@
+export { InfoTextBlock } from './InfoTextBlock';

@@ -1,0 +1,20 @@
+@import '../../styles/color';
+@import '../../styles/common';
+
+.auth-header {
+  display: flex;
+  justify-content: space-between;
+  gap: $spacing-xl;
+
+  &__logo {
+    display: flex;
+    flex-direction: column;
+
+    &__title {
+      color: $main-black;
+      font-size: $font-ls;
+      font-weight: $font-weight-bold;
+      text-transform: uppercase;
+    }
+  }
+}

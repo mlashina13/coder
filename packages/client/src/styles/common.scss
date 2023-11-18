@@ -3,7 +3,7 @@ $font-weight: 400;
 $font-weight-medium-bold: 500;
 $font-weight-bold: 600;
 
-$font: 'Inter';
+$font: 'Roboto';
 $font-xxs: 8px;
 $font-xs: 9px;
 $font-s: 10px;
@@ -16,15 +16,15 @@ $font-xl: 20px;
 $font-xxl: 24px;
 
 $spacing-unit: 8px;
-$spacing-xs: $spacing-unit * 0.5;
-$spacing-s: $spacing-unit * 1;
-$spacing-ms: $spacing-unit * 1.5;
-$spacing-m: $spacing-unit * 2;
-$spacing-ml: $spacing-unit * 2.5;
-$spacing-ls: $spacing-unit * 3;
-$spacing-lm: $spacing-unit * 3.5;
-$spacing-xl: $spacing-unit * 4;
-$spacing-xxl: $spacing-unit * 5;
+$spacing-xs: $spacing-unit * 0.5; //4
+$spacing-s: $spacing-unit * 1; //8
+$spacing-ms: $spacing-unit * 1.5; //12
+$spacing-m: $spacing-unit * 2; //16
+$spacing-ml: $spacing-unit * 2.5; //20
+$spacing-ls: $spacing-unit * 3; //24
+$spacing-lm: $spacing-unit * 3.5; //28
+$spacing-xl: $spacing-unit * 4; //32
+$spacing-xxl: $spacing-unit * 5; //40
 $spacing-auto: auto;
 $spacing-none: 0;
 

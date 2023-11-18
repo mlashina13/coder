@@ -1,5 +1,5 @@
 import type { SetStateAction, Dispatch } from 'react';
-import { chipColors, chipSize, leftMouseButton, backgroundColor } from './consts';
+import { chipSize, leftMouseButton, backgroundColor } from './consts';
 import {
   generateRandomColorSequence,
   calcNewCoordinate,
@@ -13,10 +13,11 @@ import ChipSlot from './Figure/ChipSlot';
 import CheckChip from './Figure/CheckChip';
 import Mouse from './Mouse/Mouse';
 import Field from './Field/Field';
-import type { Reference, Statistics } from './types';
+import type { CheckStepResult, Reference, Statistics, OnEndGameCallback } from './types';
 
 export default class Game {
   /** Инстанс игры */
+  /* eslint-disable */
   private static _instance: Game | void;
 
   /** Фишка для визуализации перемещения */
@@ -34,7 +35,7 @@ export default class Game {
   private readonly _field!: Field;
 
   /** Коллбэк для выполнения после окончания игры */
-  private readonly _onGameEnd: Dispatch<SetStateAction<Statistics | null>> | void;
+  private readonly _onGameEnd: OnEndGameCallback | void;
 
   /** Время запуска игры */
   private readonly _startTime!: Date;
@@ -48,6 +49,9 @@ export default class Game {
   /** Общее количество доступных для выбора пользователем цветов */
   private readonly _allAvailableColorsCount!: number;
 
+  /** Флаг, показывающий, могут ли повторяться цвета в последовательности */
+  private readonly _isColorsMayBeRepeated!: boolean;
+
   /** Положение мыши */
   private _mouse = new Mouse();
 
@@ -58,20 +62,22 @@ export default class Game {
   private _currentChipSlotsRowIndex = 0;
 
   /** Эталонная последовательность цветов */
-  private _reference: Reference = { used: [], unused: [] };
+  private _reference: Reference = [];
 
   constructor(
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
-    onGameEnd?: Dispatch<SetStateAction<Statistics | null>>,
+    onGameEnd?: OnEndGameCallback,
     colorsCount = 4,
-    stepsCount = 10
+    stepsCount = 10,
+    isColorsMayBeRepeated = true
   ) {
     if (Game._instance) {
+      /* eslint-disable */
       return Game._instance;
     }
 
-    this._reference = generateRandomColorSequence(colorsCount);
+    this._reference = generateRandomColorSequence(colorsCount, isColorsMayBeRepeated);
     // eslint-disable-next-line no-nested-ternary
     this._colorsInRowCount = colorsCount < 4 ? 4 : colorsCount > 10 ? 10 : colorsCount;
     this._allAvailableColorsCount = this._colorsInRowCount + 1;
@@ -86,6 +92,7 @@ export default class Game {
       this._colorsInRowCount,
       this._maxStepsCount
     );
+    this._isColorsMayBeRepeated = isColorsMayBeRepeated;
     this._currentChipSlotsRowIndex = 0;
     this._onGameEnd = onGameEnd;
     this._startTime = new Date();
@@ -294,9 +301,9 @@ export default class Game {
 
   /** Проверка результата игры */
   private checkGameResult = () => {
-    const { allMatchCounter, colorMatchCounter } = this.compareRowWithReference();
+    const { allMatchCount, colorMatchCount } = this.compareRowWithReference();
 
-    if (allMatchCounter === this._colorsInRowCount) {
+    if (allMatchCount === this._colorsInRowCount) {
       this.setWinnings();
 
       return;
@@ -308,7 +315,7 @@ export default class Game {
       return;
     }
 
-    this.fillCheckChips(allMatchCounter, colorMatchCounter);
+    this.fillCheckChips(allMatchCount, colorMatchCount);
   };
 
   /** Завершение игры победой */
@@ -339,38 +346,47 @@ export default class Game {
 
   /**
    * Заполнение результатов проверки строки
-   * @param allMatchCounter Количество фишек, у которых совпало положение и цвет
-   * @param colorMatchCounter Количество фишек, у которых совпал цвет
+   * @param allMatchCount Количество фишек, у которых совпало положение и цвет
+   * @param colorMatchCount Количество фишек, у которых совпал цвет
    */
-  private fillCheckChips = (allMatchCounter: number, colorMatchCounter: number) => {
+  private fillCheckChips = (allMatchCount: number, colorMatchCount: number) => {
     const fillingCheckChip = this._checkChips[this._currentChipSlotsRowIndex];
 
-    for (let i = 0, j = 0; i < allMatchCounter || j < colorMatchCounter; i++, j++) {
-      if (i < allMatchCounter) {
+    for (let i = 0, j = 0; i < allMatchCount || j < colorMatchCount; i++, j++) {
+      if (i < allMatchCount) {
         fillingCheckChip[i].matchColorAndPosition();
       }
 
-      if (j < colorMatchCounter) {
+      if (j < colorMatchCount) {
         fillingCheckChip[this._colorsInRowCount - 1 - j].matchColor();
       }
     }
   };
 
   /** Сравнение текущей заполненой строки и эталона */
-  private compareRowWithReference = () => {
-    let allMatchCounter = 0;
-    let colorMatchCounter = 0;
+  private compareRowWithReference = (): CheckStepResult => {
+    let allMatchCount = 0;
+    let colorMatchCount = 0;
     const currentRow = this._chipSlots[this._currentChipSlotsRowIndex];
+    const reference = this._reference.slice();
 
     for (let i = 0; i < this._colorsInRowCount; i++) {
-      if (currentRow[i].color === this._reference.used[i]) {
-        allMatchCounter++;
-      } else if (!this._reference.unused.includes(currentRow[i].color as chipColors)) {
-        colorMatchCounter++;
+      if (currentRow[i].color === reference[i]) {
+        allMatchCount++;
+        reference[i] = backgroundColor;
+      } else {
+        const index = reference.findIndex((color) => color === currentRow[i].color);
+
+        if (index === -1) {
+          continue;
+        }
+
+        colorMatchCount++;
+        reference[index] = backgroundColor;
       }
     }
 
-    return { allMatchCounter, colorMatchCounter };
+    return { allMatchCount, colorMatchCount };
   };
 
   /** Заполнение игровых фигур */
@@ -420,12 +436,14 @@ export default class Game {
     this._movingFigure.fill(gameChip.baseColor);
     this._movingFigure.setCoordinates(gameChip.x, gameChip.y);
 
-    gameChip.clear();
+    if (!this._isColorsMayBeRepeated) {
+      gameChip.clear();
+    }
   };
 
   /** Очищение {@link _canvas} */
   private clear = () => {
-    this._field.clearGameField();
+    this._field.clear();
     this._field.draw();
     this.drawChips();
   };

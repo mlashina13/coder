@@ -1,6 +1,8 @@
+import type { MouseEvents } from './types';
+
 export default class Mouse {
   /** События мыши */
-  public static readonly mouseEvents = {
+  public static readonly mouseEvents: Record<MouseEvents, MouseEvents> = {
     mousemove: 'mousemove',
     mousedown: 'mousedown',
     mouseup: 'mouseup',
@@ -8,6 +10,7 @@ export default class Mouse {
   };
 
   /** Инстанс мыши */
+  /* eslint-disable */
   private static _instance: Mouse | void;
 
   /** Положение по оси X */
@@ -30,6 +33,7 @@ export default class Mouse {
 
   constructor() {
     if (Mouse._instance) {
+      /* eslint-disable */
       return Mouse._instance;
     }
 
