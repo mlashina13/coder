@@ -1,4 +1,3 @@
-import type { SetStateAction, Dispatch } from 'react';
 import { chipSize, leftMouseButton, backgroundColor } from './consts';
 import {
   generateRandomColorSequence,
