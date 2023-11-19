@@ -3,20 +3,27 @@ import React, { FC } from 'react';
 import { Box, IconButton, Tooltip, Typography } from '@mui/material';
 import { LogoIcon, LogoutIcon } from '../../../assets';
 import { HeaderProps } from './HeaderProps';
+import { Auth } from '../../../services';
+import { useUserStore } from '../../../stores';
+
 import './headerStyles.scss';
 
 /**
  * Компонент заголовка страницы
  */
 export const Header: FC<HeaderProps> = (props) => {
+  const { setUserData } = useUserStore();
   const { title } = props;
 
   /**
    * Обработчик разлогина
    */
   const logoutHandler = () => {
-    // TODO: В будущем необходимо реализовать выход!
-    console.log('Logout clicked!');
+    Auth.logOut().then(() => {
+      // TODO: В будущем необходимо реализовать стор с данными пользователя!
+      console.log('Logout clicked!');
+      setUserData?.();
+    });
   };
 
   return (
