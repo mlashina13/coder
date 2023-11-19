@@ -1,0 +1,45 @@
+@import '../../../styles/color';
+@import '../../../styles/common';
+
+.topic-list-item {
+    & .MuiListItemText-primary {
+        font-size: $font-ls;
+    }
+    
+    & .MuiListItemText-secondary {
+        font-size: $font-ml;
+    }
+
+    &__theme {
+        width: 100%;
+        min-width: 400px;
+
+        & .MuiListItemText-primary {
+            color: $main-blue;
+            font-weight: $font-weight-bold;
+        }
+        
+        & .MuiListItemText-secondary {
+            color: $grey-dark;
+            font-weight: $font-weight-bold;
+        }
+    }
+
+    &__counters {
+        min-width: 165px !important;
+    }
+
+    &__creator {
+        min-width: 200px !important;
+        margin-right: 34px;
+    }
+
+    &__actions-container {
+        min-width: 80px;
+    }
+
+    &__actions-wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+}

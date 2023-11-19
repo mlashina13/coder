@@ -75,3 +75,38 @@ export interface RouteInfo {
   // eslint-disable-next-line no-unused-vars
   renderIconFunction?: (className?: string) => ReactNode;
 }
+
+/**
+ * Модель топика форума
+ */
+export interface Topic {
+  /**
+   * Идентификатор
+   */
+  id: string;
+
+  /**
+   * Тема
+   */
+  theme: string;
+
+  /**
+   * Дата создания топика (date string)
+   */
+  creationDate: string;
+
+  /**
+   * Автор
+   */
+  creator: string;
+
+  /**
+   * Кол-во сообщений
+   */
+  messagesCount: number;
+
+  /**
+   * Кол-во просмотров
+   */
+  viewsCount: number;
+}
