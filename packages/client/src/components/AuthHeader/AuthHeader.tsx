@@ -7,20 +7,21 @@ import './authHeaderStyles.scss';
 import { LOGIN_ROUTES } from '../../constants';
 
 type LoginTabsPaths = keyof typeof LOGIN_ROUTES;
+type Values = (typeof LOGIN_ROUTES)[LoginTabsPaths];
 
 const TABS_KEYS: Record<
   string,
   {
-    key: LoginTabsPaths;
+    key: Values;
     label: string;
   }
 > = {
   Login: {
-    key: LOGIN_ROUTES.Login as LoginTabsPaths,
+    key: LOGIN_ROUTES.Login,
     label: 'Вход',
   },
   Registration: {
-    key: LOGIN_ROUTES.Registration as LoginTabsPaths,
+    key: LOGIN_ROUTES.Registration,
     label: 'Регистрация',
   },
 };

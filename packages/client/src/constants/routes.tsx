@@ -23,7 +23,7 @@ export const ROUTER_URLS = {
   /**
    * Страница лидерборда
    */
-  Leaderboard: '/Leaderboard',
+  Leaderboard: '/leaderboard',
   /**
    * Страница с игрой
    */
@@ -36,7 +36,7 @@ export const ROUTER_URLS = {
    * Страница топика форума
    */
   ForumTopic: '/forum/:topicId',
-};
+} as const;
 
 export const LOGIN_ROUTES = {
   /**
@@ -47,7 +47,7 @@ export const LOGIN_ROUTES = {
    * Страница регистрации
    */
   Registration: ROUTER_URLS.Registration,
-};
+} as const;
 
 /**
  * Константы элементов роутинга
