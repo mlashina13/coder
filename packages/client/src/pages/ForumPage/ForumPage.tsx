@@ -9,7 +9,10 @@ import { FORUM_MOKE_DATA } from './forumMokeData';
  */
 type TopicDialogMode = 'create' | 'edit';
 
-export const Forum: FC = () => {
+/**
+ * Страница форума
+ */
+export const ForumPage: FC = () => {
   const [topics, setTopics] = useState<Array<Topic>>([]);
   const [topicsTotalCount, setTopicsTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);

@@ -37,7 +37,7 @@ export const TopicsList: FC<TopicsListProps> = (props) => {
    */
   useEffect(() => {
     setPagesCount(Math.ceil(topicsCount / topicsPerPage));
-  }, [topicsCount]);
+  }, [topicsCount, topicsPerPage]);
 
   /**
    * Обработчик события создания топика

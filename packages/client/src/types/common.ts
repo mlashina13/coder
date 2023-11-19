@@ -77,6 +77,31 @@ export interface RouteInfo {
 }
 
 /**
+ * Модель сообщения топика
+ */
+export interface TopicMessage {
+  /**
+   * Идентификатор
+   */
+  id: string;
+
+  /**
+   * Автор
+   */
+  creator: string;
+
+  /**
+   * Дата создания топика (date string)
+   */
+  creationDate: string;
+
+  /**
+   * Сообщение
+   */
+  message: string;
+}
+
+/**
  * Модель топика форума
  */
 export interface Topic {
@@ -109,4 +134,9 @@ export interface Topic {
    * Кол-во просмотров
    */
   viewsCount: number;
+
+  /**
+   * Список сообщений
+   */
+  messages?: Array<TopicMessage>;
 }

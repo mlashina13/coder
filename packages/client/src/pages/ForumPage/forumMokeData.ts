@@ -1,7 +1,7 @@
 import { Topic } from '../../types/common';
 
 /**
- * Моковые данные для форума
+ * Моковые данные для форума (в будущем будут удалены)
  */
 export const FORUM_MOKE_DATA: Array<Topic> = [
   {

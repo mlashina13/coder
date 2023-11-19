@@ -1,4 +1,5 @@
 export { AddConversationIcon } from './AddConversationIcon';
+export { EyeIcon } from './EyeIcon';
 export { HomeIcon } from './HomeIcon';
 export { LogoIcon } from './LogoIcon';
 export { LogoutIcon } from './LogoutIcon';
