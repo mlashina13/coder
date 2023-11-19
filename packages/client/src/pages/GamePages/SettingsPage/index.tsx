@@ -1,0 +1,1 @@
+export { SettingsGamePage } from './SettingsGamePage';

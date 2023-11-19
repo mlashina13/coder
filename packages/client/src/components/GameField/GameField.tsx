@@ -3,6 +3,8 @@ import { Box, Typography } from '@mui/material';
 import Game from './Game/Game';
 import type { Statistics } from './Game/types';
 import './gameFieldStyles.scss';
+import { EndGameFailDialog } from '../../pages/GamePages/SettingsPage/EndGameForm/EndGameFailDialog';
+import { EndGameDialog } from '../../pages/GamePages/SettingsPage/EndGameForm/EndGameDialog';
 
 const GameField: FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -35,7 +37,12 @@ const GameField: FC = () => {
   return (
     <Box className='game-field'>
       {result ? (
-        <Typography>{result.isWin ? 'Выиграл' : 'Проиграл'}</Typography>
+        // TODO Доработка передачи параметров в диалоговое окно
+        result.isWin ? (
+          <EndGameDialog place='10 место' time='10 мин.' />
+        ) : (
+          <EndGameFailDialog />
+        )
       ) : (
         <canvas ref={canvasRef} />
       )}

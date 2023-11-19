@@ -1,0 +1,16 @@
+@import '../../../../styles/color';
+@import '../../../../styles/common';
+
+.settings-game-info {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+
+    .settings-game-info__icon {
+        position: absolute;
+        text-align: center;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%)
+    }
+}

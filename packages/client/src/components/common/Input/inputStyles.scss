@@ -1,26 +1,53 @@
+@import '../../../styles/color';
+@import '../../../styles/common';
+
 .input {
-  border-radius: 3px;
-  background: #F8F1FF;
+  border-radius: 3px !important;
+  background: $white;
+  margin-bottom: $spacing-m !important;
+
+  .MuiFormHelperText-root {
+    color: $red-cherry;
+  }
+
+  .MuiFilledInput-root {
+    border-radius: 3px;
+    border: 0px;
+  }
+  .MuiFilledInput-root:before {
+    content: none;
+    border-bottom-style: none;
+  }
 
   span {
     color: rgba(64, 58, 75, 0.60);
     font-style: normal;
-    font-weight: 400;
+    font-weight: $font-weight;
     line-height: normal;
   }
 
   label {
-    color: rgba(64, 58, 75, 0.60);
+    color: $grey-dark;
     font-style: normal;
-    font-weight: 400;
+    font-weight: $font-weight;
     line-height: normal;
   }
 
+  &.requiredField {
+    label {
+      &:before {
+        content: '* ';
+        color: $red-cherry;;
+      }
+    }
+  }
+
   input {
-    color: #403A4B;
-    text-align: center;
-    font-style: normal;
+    color: $grey-dark;
+    text-align: left;
     font-weight: 400;
-    line-height: normal;
+    font-size: $font-ml;
   }
 }
+
+

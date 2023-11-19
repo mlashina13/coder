@@ -1,0 +1,56 @@
+@import '../../../../styles/common';
+@import '../../../../styles/color';
+
+.end-game-dialog {
+    width: 350px;
+    position: relative;
+
+    .end-game-dialog__content {
+        padding: $spacing-xxl;
+    }
+
+    .end-game-dialog__content__icon {
+        position: absolute;
+        top: $spacing-s;
+        right: $spacing-xxl;
+    }
+
+    .end-game-dialog__content__field {
+        margin-bottom: $spacing-ms;
+    }
+
+    .end-game-dialog__content__title {
+        margin-bottom: $spacing-xxl;
+    }
+
+    .end-game-dialog__content__buttons-block {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &.error {
+        width: 300px;
+        .end-game-dialog__content__title {
+            color: $red-cherry;
+        }
+        .end-game-dialog__content__icon {
+            right: $spacing-m;
+            top: $spacing-ml;
+        }
+    }
+
+    button{
+        margin-top: $spacing-ml;
+        &.cancel {
+            background-color: $white;
+            color: $grey-dark;
+        }
+    }
+
+    .MuiTypography-root {
+        color: $grey-dark;
+        font-weight: $font-weight;
+        font-size: $font-ml;
+    }
+
+}

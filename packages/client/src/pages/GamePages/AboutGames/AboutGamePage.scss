@@ -1,0 +1,62 @@
+@import '../../../styles/common';
+@import '../../../styles/color';
+
+.about-game-page {
+    h2 {
+        margin-bottom: $spacing-ml;
+    }
+
+    h3 {
+        font-size: $font-ml;
+        color: $grey-dark;
+        margin-bottom: $spacing-ml;
+    }
+
+    .about-game-page__info-text {
+        color: $red-cherry;
+    }
+
+    .about-game-page__info-level {
+        .select {
+            color: $grey;
+        }
+        strong {
+            text-decoration: underline;
+            color: $grey-dark
+        }
+    }
+
+    .circle {
+        display: inline-block;
+        background: black;
+        border-radius: 50%;
+        height: 16px;
+        width: 16px;
+        margin: 0 5px -2px 5px;
+        &.blue {
+            background: radial-gradient(circle at 4px 4px, blue, $main-black);
+        }
+        &.green {
+            background: radial-gradient(circle at 4px 4px, green, $main-black);
+        }
+        &.red {
+            background: radial-gradient(circle at 4px 4px, red, $main-black);
+        }
+        &.yellow {
+            background: radial-gradient(circle at 4px 4px, yellow, $main-black);
+        }
+        &.orange {
+            background: radial-gradient(circle at 4px 4px, orange, $main-black);
+        }
+        &.purple {
+            background: radial-gradient(circle at 4px 4px, purple, $main-black);
+        }
+        &.white {
+            background: radial-gradient(circle at 4px 4px, white, $main-black);
+        }
+        &.black {
+            background: radial-gradient(circle at 4px 4px, #555, $main-black);
+        }
+    }
+}
+

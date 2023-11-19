@@ -1,11 +1,17 @@
+@import '../../../styles/color';
+@import '../../../styles/common';
+
 .dialog-layout {
+  height: 100%;
+  box-shadow: 0px 8px 8px  $text-shadow-color;
+
   &__header {
-    background: #EF4444;
-    min-height: 2rem;
-    height: 10%;
+    background: $red-cherry;
+    height: 15px;
   }
 
   &__content {
-    background: #FFF;
+    background: $white;
+    padding: 20px 40px;
   }
 }
