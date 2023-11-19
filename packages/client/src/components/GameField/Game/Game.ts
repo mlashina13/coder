@@ -1,5 +1,5 @@
 import type { SetStateAction, Dispatch } from 'react';
-import { chipColors, chipSize, leftMouseButton, backgroundColor } from './consts';
+import { chipSize, leftMouseButton, backgroundColor } from './consts';
 import {
   generateRandomColorSequence,
   calcNewCoordinate,
@@ -13,7 +13,7 @@ import ChipSlot from './Figure/ChipSlot';
 import CheckChip from './Figure/CheckChip';
 import Mouse from './Mouse/Mouse';
 import Field from './Field/Field';
-import type { CheckStepResult, Reference, Statistics } from './types';
+import type { CheckStepResult, Reference, Statistics, OnEndGameCallback } from './types';
 
 export default class Game {
   /** Инстанс игры */
@@ -35,7 +35,7 @@ export default class Game {
   private readonly _field!: Field;
 
   /** Коллбэк для выполнения после окончания игры */
-  private readonly _onGameEnd: Dispatch<SetStateAction<Statistics | null>> | void;
+  private readonly _onGameEnd: OnEndGameCallback | void;
 
   /** Время запуска игры */
   private readonly _startTime!: Date;
@@ -49,6 +49,9 @@ export default class Game {
   /** Общее количество доступных для выбора пользователем цветов */
   private readonly _allAvailableColorsCount!: number;
 
+  /** Флаг, показывающий, могут ли повторяться цвета в последовательности */
+  private readonly _isColorsMayBeRepeated!: boolean;
+
   /** Положение мыши */
   private _mouse = new Mouse();
 
@@ -59,21 +62,22 @@ export default class Game {
   private _currentChipSlotsRowIndex = 0;
 
   /** Эталонная последовательность цветов */
-  private _reference: Reference = { used: [], unused: [] };
+  private _reference: Reference = [];
 
   constructor(
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
-    onGameEnd?: Dispatch<SetStateAction<Statistics | null>>,
+    onGameEnd?: OnEndGameCallback,
     colorsCount = 4,
-    stepsCount = 10
+    stepsCount = 10,
+    isColorsMayBeRepeated = true
   ) {
     if (Game._instance) {
       /* eslint-disable */
       return Game._instance;
     }
 
-    this._reference = generateRandomColorSequence(colorsCount);
+    this._reference = generateRandomColorSequence(colorsCount, isColorsMayBeRepeated);
     // eslint-disable-next-line no-nested-ternary
     this._colorsInRowCount = colorsCount < 4 ? 4 : colorsCount > 10 ? 10 : colorsCount;
     this._allAvailableColorsCount = this._colorsInRowCount + 1;
@@ -88,6 +92,7 @@ export default class Game {
       this._colorsInRowCount,
       this._maxStepsCount
     );
+    this._isColorsMayBeRepeated = isColorsMayBeRepeated;
     this._currentChipSlotsRowIndex = 0;
     this._onGameEnd = onGameEnd;
     this._startTime = new Date();
@@ -347,14 +352,24 @@ export default class Game {
   private fillCheckChips = (allMatchCount: number, colorMatchCount: number) => {
     const fillingCheckChip = this._checkChips[this._currentChipSlotsRowIndex];
 
-    for (let i = 0, j = 0; i < allMatchCount || j < colorMatchCount; i++, j++) {
-      if (i < allMatchCount) {
+    let fillingsCheckChipsCount = 0;
+
+    for (let i = 0; i < fillingCheckChip.length; i++) {
+      if (i < allMatchCount && fillingsCheckChipsCount < allMatchCount) {
         fillingCheckChip[i].matchColorAndPosition();
+        fillingsCheckChipsCount++;
+
+        continue;
       }
 
-      if (j < colorMatchCount) {
-        fillingCheckChip[this._colorsInRowCount - 1 - j].matchColor();
+      if (i >= allMatchCount && fillingsCheckChipsCount - allMatchCount < colorMatchCount) {
+        fillingCheckChip[i].matchColor();
+        fillingsCheckChipsCount++;
+
+        continue;
       }
+
+      break;
     }
   };
 
@@ -363,12 +378,21 @@ export default class Game {
     let allMatchCount = 0;
     let colorMatchCount = 0;
     const currentRow = this._chipSlots[this._currentChipSlotsRowIndex];
+    const reference = this._reference.slice();
 
     for (let i = 0; i < this._colorsInRowCount; i++) {
-      if (currentRow[i].color === this._reference.used[i]) {
+      if (currentRow[i].color === reference[i]) {
         allMatchCount++;
-      } else if (!this._reference.unused.includes(currentRow[i].color as chipColors)) {
+        reference[i] = backgroundColor;
+      } else {
+        const index = reference.findIndex((color) => color === currentRow[i].color);
+
+        if (index === -1) {
+          continue;
+        }
+
         colorMatchCount++;
+        reference[index] = backgroundColor;
       }
     }
 
@@ -422,7 +446,9 @@ export default class Game {
     this._movingFigure.fill(gameChip.baseColor);
     this._movingFigure.setCoordinates(gameChip.x, gameChip.y);
 
-    gameChip.clear();
+    if (!this._isColorsMayBeRepeated) {
+      gameChip.clear();
+    }
   };
 
   /** Очищение {@link _canvas} */
