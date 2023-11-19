@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Dialog as MuiDialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import clsx from 'clsx';
 import { DialogProps } from './DialogProps';
 import './dialogStyles.scss';
 
@@ -7,13 +8,13 @@ import './dialogStyles.scss';
  * Компонент диалогового окна
  */
 export const Dialog: FC<DialogProps> = (props) => {
-  const { actions, open = false, onClose, title, children } = props;
+  const { actions, className, open = false, onClose, title, children } = props;
 
   return (
     <MuiDialog
       open={open}
       onClose={onClose}
-      className='coder-dialog'
+      className={clsx('coder-dialog', className)}
       classes={{
         paper: 'coder-dialog__paper',
       }}

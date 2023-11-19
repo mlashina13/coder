@@ -7,6 +7,11 @@ export interface DialogProps extends PropsWithChildren {
   actions?: ReactNode;
 
   /**
+   * Набор css-классов
+   */
+  className?: string;
+
+  /**
    * Событие закрытия окна
    */
   onClose?: () => void;

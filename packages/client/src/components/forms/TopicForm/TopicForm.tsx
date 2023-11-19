@@ -1,26 +1,42 @@
 import { FC } from 'react';
+import { useFormik } from 'formik';
+import { Box } from '@mui/material';
+import { Button, Input } from '../../common';
+import { TopicFormProps } from './TopicFormProps';
+import { validationSchema } from './validationSchema';
+import './topicFormStyles.scss';
 
-// /** схема валидации */
-// const validationSchema = yup.object({
-//     login: yup
-//       .string()
-//       /** проверка через регулярное выражение логина */
-//       .matches(/^[a-zA-Z0-9-_]{3,20}$/g, {
-//         message:
-//           'Логин должен быть от 3 до 20 символов, написан латиницей, допускаются цифры, дефис и нижнее подчёркивание',
-//       })
-//       /** указываем на обязательность логина */
-//       .required('Введите логин'),
-//     password: yup
-//       .string()
-//       /** проверка через регулярное выражение пароля */
-//       .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/g, {
-//         message:
-//           'Пароль должен быть от 8 до 40 символов, обязательно хотя бы одна заглавная буква и одна цифра',
-//       })
-//       /** указываем на обязательность пароля */
-//       .required('Введите пароль'),
-//   });
+/**
+ * Форма редактирования топика
+ */
+export const TopicForm: FC<TopicFormProps> = (props) => {
+  const { onCancel, onFormSubmit, theme = '' } = props;
 
-// eslint-disable-next-line react/jsx-no-useless-fragment
-export const TopicForm: FC = () => <></>;
+  const formik = useFormik({
+    initialValues: {
+      theme,
+    },
+    validationSchema,
+    onSubmit: (values) => onFormSubmit(values.theme ?? ''),
+    validateOnBlur: false,
+  });
+
+  return (
+    <form onSubmit={formik.handleSubmit} className='topic-form'>
+      <Input
+        label='Название'
+        name='theme'
+        autoComplete='off'
+        value={formik.values.theme}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        error={formik.touched.theme && Boolean(formik.errors.theme)}
+        helperText={formik.touched.theme && formik.errors.theme}
+      />
+      <Box className='topic-form__actions'>
+        <Button label='Сохранить' type='submit' />
+        <Button label='Отмена' variant='outlined' onClick={onCancel} />
+      </Box>
+    </form>
+  );
+};

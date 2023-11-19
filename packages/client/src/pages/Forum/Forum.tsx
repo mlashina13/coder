@@ -1,58 +1,22 @@
 import { FC, useEffect, useState } from 'react';
-import { Button, Dialog, Input, Layout, TopicsList } from '../../components';
+import { Confirm, Dialog, Layout, TopicForm, TopicsList } from '../../components';
 import { Topic } from '../../types/common';
 import { ITEMS_PER_PAGE_DEFAULT } from '../../constants/common';
+import { FORUM_MOKE_DATA } from './forumMokeData';
 
-const topicsMoke: Array<Topic> = [
-  {
-    id: '1',
-    creationDate: '2023-02-18T19:30:16.825Z',
-    creator: 'Иванов Иван',
-    messagesCount: 20,
-    theme: 'Итоги турнира',
-    viewsCount: 63,
-  },
-  {
-    id: '2',
-    creationDate: '2023-04-22T19:30:16.825Z',
-    creator: 'Ольга Смирнова',
-    messagesCount: 0,
-    theme: 'Вопрос: не работает горизонтальный скролинг в прототипе',
-    viewsCount: 2,
-  },
-  {
-    id: '3',
-    creationDate: '2023-05-16T19:30:16.825Z',
-    creator: 'Сергей Ахтырский',
-    messagesCount: 5,
-    theme: 'Не пойму правила игры',
-    viewsCount: 9,
-  },
-  {
-    id: '4',
-    creationDate: '2023-07-29T19:30:16.825Z',
-    creator: 'Семен Нагой',
-    messagesCount: 1,
-    theme: 'Как обмануть игру',
-    viewsCount: 1,
-  },
-  {
-    id: '5',
-    creationDate: '2023-10-10T19:30:16.825Z',
-    creator: 'Анна Каренина',
-    messagesCount: 2,
-    theme: 'Жаль, что игра не про поезд',
-    viewsCount: 23,
-  },
-];
+/**
+ * Режим работы окна редактирования топика
+ */
+type TopicDialogMode = 'create' | 'edit';
 
 export const Forum: FC = () => {
   const [topics, setTopics] = useState<Array<Topic>>([]);
   const [topicsTotalCount, setTopicsTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [topicDialogOpen, setTopicDialogOpen] = useState(false);
-  const [topicDialogMode, setTopicDialogMode] = useState<'create' | 'edit'>('create');
-  const [selectedTopicTheme, setSelectedTopicTheme] = useState<string>();
+  const [topicDialogMode, setTopicDialogMode] = useState<TopicDialogMode>('create');
+  const [deleteTopicDialogOpen, setDeleteTopicDialogOpen] = useState(false);
+  const [selectedTopicId, setSelectedTopicId] = useState<string>();
 
   /**
    * Эффект, отвечающий за
@@ -60,8 +24,8 @@ export const Forum: FC = () => {
    */
   useEffect(() => {
     // TODO: в будущем сделать запрос к API
-    setTopics(topicsMoke);
-    setTopicsTotalCount(topicsMoke.length);
+    setTopics(FORUM_MOKE_DATA);
+    setTopicsTotalCount(FORUM_MOKE_DATA.length);
 
     return () => {
       // TODO: в будущем предусмотреть прерывание запроса
@@ -82,31 +46,68 @@ export const Forum: FC = () => {
     console.log('click topic', id);
   };
 
-  const createTopicHandler = () => {
+  /**
+   * Обработчик открытия окна редактирования топика
+   */
+  const openTopicDialogHandler = (mode: TopicDialogMode, id?: string) => {
     setTopicDialogOpen(true);
-    setTopicDialogMode('create');
+    setTopicDialogMode(mode);
+    if (mode === 'edit') {
+      setSelectedTopicId(id);
+    } else {
+      setSelectedTopicId(undefined);
+    }
   };
 
-  const deleteTopicHandler = (id: string) => {
-    console.log('delete topic', id);
+  /**
+   * Обработчик события сохранения топика
+   */
+  const saveTopicHandler = (newTheme: string) => {
+    console.log(newTheme);
+    if (topicDialogMode === 'edit' && selectedTopicId) {
+      // TODO: здесь будет запрос на обновление
+    } else if (topicDialogMode === 'create') {
+      // TODO: здесь будет запрос на создание
+    }
+    setTopicDialogOpen(false);
   };
 
-  const editTopicHandler = (id: string) => {
-    setTopicDialogOpen(true);
-    setTopicDialogMode('edit');
-  };
-
+  /**
+   * Обработчик закрытия окна редактирования топика
+   */
   const closeTopicDialogHandler = () => {
     setTopicDialogOpen(false);
-    setTopicDialogMode('create');
+    setSelectedTopicId(undefined);
   };
 
-  const topicDialogActions = (
-    <>
-      <Button label='Сохранить' />
-      <Button label='Отмена' variant='outlined' />
-    </>
-  );
+  /**
+   * Обработчик открытия окна подтверждения удаления топика
+   */
+  const openDeleteTopicConfirmHandler = (id: string) => {
+    setDeleteTopicDialogOpen(true);
+    setSelectedTopicId(id);
+  };
+
+  /**
+   * Обработчик подтверждения удаления топика
+   */
+  const confirmDeleteTopicHandler = () => {
+    setDeleteTopicDialogOpen(false);
+    // TODO: здесь будет запрос на удаление топика
+  };
+
+  /**
+   * Обработчик отмены удаления топика
+   */
+  const cancelDeleteTopicHandler = () => {
+    setDeleteTopicDialogOpen(false);
+    setSelectedTopicId(undefined);
+  };
+
+  /**
+   * Получить тему выбранного топика
+   */
+  const getSelectedTopicTheme = () => topics.find((t) => t.id === selectedTopicId)?.theme ?? '';
 
   return (
     <Layout>
@@ -114,16 +115,26 @@ export const Forum: FC = () => {
         open={topicDialogOpen}
         title={topicDialogMode === 'edit' ? 'Изменить тему' : 'Создать тему'}
         onClose={closeTopicDialogHandler}
-        actions={topicDialogActions}
       >
-        <Input label='Название' value={selectedTopicTheme} />
+        <TopicForm
+          onFormSubmit={saveTopicHandler}
+          onCancel={closeTopicDialogHandler}
+          theme={getSelectedTopicTheme()}
+        />
       </Dialog>
+      <Confirm
+        title='Удалить тему'
+        message={`Вы действаительно хотите удалить тему "${getSelectedTopicTheme()}"?`}
+        onConfirm={confirmDeleteTopicHandler}
+        open={deleteTopicDialogOpen}
+        onCancel={cancelDeleteTopicHandler}
+      />
       <TopicsList
         topics={topics}
         onClickTopic={clickTopicHandler}
-        onCreateTopic={createTopicHandler}
-        onDeleteTopic={deleteTopicHandler}
-        onEditTopic={editTopicHandler}
+        onCreateTopic={() => openTopicDialogHandler('create')}
+        onDeleteTopic={openDeleteTopicConfirmHandler}
+        onEditTopic={(id) => openTopicDialogHandler('edit', id)}
         onPageChange={changePageHandler}
         topicsCount={topicsTotalCount}
         topicsPerPage={ITEMS_PER_PAGE_DEFAULT}

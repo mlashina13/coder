@@ -66,12 +66,12 @@ export const TopicListItem: FC<TopicListItemProps> = (props) => {
         <ListItemText className='topic-list-item__creator' primary={creator} />
         <ListItemSecondaryAction className='topic-list-item__actions-container'>
           <Box className='topic-list-item__actions-wrapper'>
-            <Tooltip title='Редактировать топик'>
+            <Tooltip title='Редактировать тему'>
               <IconButton onClick={editTopicHandler}>
                 <PenIcon width={18} height={18} />
               </IconButton>
             </Tooltip>
-            <Tooltip title='Удалить топик'>
+            <Tooltip title='Удалить тему'>
               <IconButton onClick={deleteTopicHandler}>
                 <TrashIcon width={18} height={18} />
               </IconButton>

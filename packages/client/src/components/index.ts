@@ -1,5 +1,6 @@
 export * from './common';
 export * from './dialogs';
+export * from './forms';
 export * from './layout';
 export * from './TopicsList';
-export { AuthHeader } from './AuthHeader';
+export * from './AuthHeader';

@@ -2,6 +2,12 @@
 @import '../../../styles/common';
 
 .topic-list-item {
+    cursor: pointer;
+
+    &:hover {
+        background: $input-bg-color;
+    }
+
     & .MuiListItemText-primary {
         font-size: $font-ls;
     }

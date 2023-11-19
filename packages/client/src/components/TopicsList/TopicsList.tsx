@@ -82,7 +82,7 @@ export const TopicsList: FC<TopicsListProps> = (props) => {
           <Typography variant='h6' className='topics-list__list-title'>
             Последние темы
           </Typography>
-          <Tooltip title='Добавить топик'>
+          <Tooltip title='Добавить тему'>
             <IconButton onClick={onCreateTopicHandler}>
               <AddConversationIcon />
             </IconButton>
