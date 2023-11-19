@@ -1,0 +1,12 @@
+@import '../../../styles/color';
+@import '../../../styles/common';
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-ms;
+
+  &__input {
+    width: 25rem;
+  }
+}

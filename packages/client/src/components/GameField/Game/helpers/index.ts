@@ -13,13 +13,17 @@ import {
 import GameChip from '../Figure/GameChip';
 import ChipSlot from '../Figure/ChipSlot';
 import CheckChip from '../Figure/CheckChip';
-import type { Reference } from '../types';
+import type { Reference, Colors } from '../types';
 
 /**
  * Генерация эталонной последовательности цветов
  * @param colorsCount Количество цветов в одной строке
+ * @param isColorsMayBeRepeated Флаг, показывающий, могут ли повторяться цвета в последовательности
  */
-export const generateRandomColorSequence = (colorsCount: number): Reference => {
+export const generateRandomColorSequence = (
+  colorsCount: number,
+  isColorsMayBeRepeated: boolean
+): Reference => {
   const sequence = [];
   // Используется на 1 цвет больше, чтобы у пользователя была вариация
   const colors = availableColors.slice(0, colorsCount + 1);
@@ -29,13 +33,13 @@ export const generateRandomColorSequence = (colorsCount: number): Reference => {
     const randomDigit = colors[randomIndex];
 
     sequence.push(randomDigit);
-    colors.splice(randomIndex, 1);
+
+    if (!isColorsMayBeRepeated) {
+      colors.splice(randomIndex, 1);
+    }
   }
 
-  return {
-    used: sequence,
-    unused: colors,
-  };
+  return sequence;
 };
 
 /**
