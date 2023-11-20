@@ -1,20 +1,22 @@
 @import "../../styles/color";
 @import "../../styles/common";
 
-.error-page__content {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid $grey-dark;
-}
+.error-page {
+  &__content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid $grey-dark;
+  }
 
-.error-page__code {
-  color: $red-cherry;
-  font-weight: $font-weight-bold;
-}
+  &__code {
+    color: $red-cherry;
+    font-weight: $font-weight-bold;
+  }
 
-.error-page__description {
-  color: $grey-dark;
+  &__description {
+    color: $grey-dark;
+  }
 }
