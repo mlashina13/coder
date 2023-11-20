@@ -11,7 +11,6 @@ export const StartIcon: FC<IconProps> = (props) => {
     <svg
       xmlns='http://www.w3.org/2000/svg'
       className={className}
-      id='body'
       width='100'
       height='100'
       viewBox='0 0 500 500'

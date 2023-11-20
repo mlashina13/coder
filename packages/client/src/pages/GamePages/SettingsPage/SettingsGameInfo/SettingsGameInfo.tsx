@@ -5,7 +5,7 @@ import { Image } from '../../../../components/common/Image/Image';
 import { LockIcon } from '../../../../assets/icons/LockIcon';
 import { ImagesList } from './ImagesList';
 import { SettingGame } from '../SettingsProvider';
-import GameField from '../../../../components/GameField/GameField';
+import { GameField } from '../../../../components/GameField/GameField';
 
 /**
  *  Функция рандомного вычисления
@@ -37,7 +37,7 @@ export const SettingsGameInfo: FC = () => {
     return (
       <Container className='settings-game-info'>
         <LockIcon width='300' height='300' color='#ddd' className='settings-game-info__icon' />
-        <Image src={image} alt='' />
+        <Image src={image} alt='' className='settings-game-info__image' />
       </Container>
     );
   }

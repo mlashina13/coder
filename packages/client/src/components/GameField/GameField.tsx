@@ -6,7 +6,7 @@ import './gameFieldStyles.scss';
 import { EndGameFailDialog } from '../../pages/GamePages/SettingsPage/EndGameForm/EndGameFailDialog';
 import { EndGameDialog } from '../../pages/GamePages/SettingsPage/EndGameForm/EndGameDialog';
 
-const GameField: FC = () => {
+export const GameField: FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [game, setGame] = useState<Game | null>(null);
   const [result, setResult] = useState<Statistics | null>(null);
@@ -49,5 +49,3 @@ const GameField: FC = () => {
     </Box>
   );
 };
-
-export default GameField;
