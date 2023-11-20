@@ -213,7 +213,6 @@ export default class Game {
    * @param event Событие мыши mousedown
    */
   private mouseDownHandler = (event: Event) => {
-    console.log('DOWN');
     const mouseEvent = event as MouseEvent;
 
     if (mouseEvent.button === leftMouseButton) {
@@ -226,7 +225,6 @@ export default class Game {
    * @param event Событие мыши mouseup
    */
   private mouseUpHandler = (event: Event) => {
-    console.log('UP');
     const mouseEvent = event as MouseEvent;
 
     if (mouseEvent.button !== leftMouseButton) {
