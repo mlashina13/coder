@@ -2,7 +2,8 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 
 import { Button, Input } from '../../../components';
-import { Auth } from '../../../services/auth';
+import { Auth } from '../../../services';
+import { useUserStore } from '../../../stores';
 
 import './registrationFormStyles.scss';
 
@@ -73,6 +74,7 @@ const validationSchema = yup.object({
 });
 
 export const RegistrationForm = () => {
+  const { setUserData } = useUserStore();
   const formik = useFormik({
     initialValues: {
       login: '',
@@ -89,7 +91,7 @@ export const RegistrationForm = () => {
         console.error('Введите корректный пароль');
       } else {
         Auth.registration({ ...rest, password }).then(() => {
-          Auth.getAuthUser().then((data) => console.log(data));
+          Auth.getAuthUser().then((data) => setUserData?.(data));
         });
       }
     },
