@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
 import { Box, Divider, List, ListSubheader, Pagination, Tooltip, Typography } from '@mui/material';
 import clsx from 'clsx';
 import { TopicMessagesListProps } from './TopicMessagesListProps';
@@ -43,16 +43,16 @@ export const TopicMessagesList: FC<TopicMessagesListProps> = (props) => {
   /**
    * Обработчик события удаления сообщения
    */
-  const onDeleteMessageHandler = (id: string) => {
-    onDeleteMessage && onDeleteMessage(id);
-  };
+  const onDeleteMessageHandler = useCallback((id: string) => {
+    onDeleteMessage?.(id);
+  }, []);
 
   /**
    * Обработчик события изменения сообщения
    */
-  const onEditMessageHandler = (id: string) => {
-    onEditMessage && onEditMessage(id);
-  };
+  const onEditMessageHandler = useCallback((id: string) => {
+    onEditMessage?.(id);
+  }, []);
 
   return (
     <Box className={clsx('topic-msgs-list', className)}>

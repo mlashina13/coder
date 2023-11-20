@@ -18,7 +18,7 @@
 
     &__theme {
         width: 100%;
-        min-width: 400px;
+        min-width: $topic-theme-min-width;
 
         & .MuiListItemText-primary {
             color: $main-blue;
@@ -32,16 +32,16 @@
     }
 
     &__counters {
-        min-width: 165px !important;
+        min-width: $topic-counters-min-width !important;
     }
 
     &__creator {
-        min-width: 200px !important;
-        margin-right: 34px;
+        min-width: $topic-creator-min-width !important;
+        margin-right: $spacing-xxs;
     }
 
     &__actions-container {
-        min-width: 80px;
+        min-width: $topic-actions-width;
     }
 
     &__actions-wrapper {

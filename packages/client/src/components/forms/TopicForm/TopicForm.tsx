@@ -7,12 +7,19 @@ import { validationSchema } from './validationSchema';
 import './topicFormStyles.scss';
 
 /**
+ * Объект полей формы
+ */
+interface TopicFormFields {
+  theme: string;
+}
+
+/**
  * Форма редактирования топика
  */
 export const TopicForm: FC<TopicFormProps> = (props) => {
   const { onCancel, onFormSubmit, theme = '' } = props;
 
-  const formik = useFormik({
+  const formik = useFormik<TopicFormFields>({
     initialValues: {
       theme,
     },

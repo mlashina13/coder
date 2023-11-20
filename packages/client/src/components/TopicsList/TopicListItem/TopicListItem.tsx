@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { format } from 'date-fns';
 import {
   Avatar,
   Box,
@@ -13,6 +12,8 @@ import {
 } from '@mui/material';
 import { PenIcon, PictureIcon, TrashIcon } from '../../../assets';
 import { TopicListItemProps } from './TopicListItemProps';
+import { formatDate } from '../../../utils';
+import { DATE_FORMAT } from '../../../constants/common';
 import './topicListItemStyles.scss';
 
 /**
@@ -22,7 +23,7 @@ export const TopicListItem: FC<TopicListItemProps> = (props) => {
   const { creationDate, creator, id, messagesCount, theme, viewsCount, onDelete, onEdit, onClick } =
     props;
 
-  const creationDateFormatted = format(new Date(creationDate), 'dd.MM.yyyy');
+  const creationDateFormatted = formatDate(creationDate, DATE_FORMAT);
 
   /**
    * Обработчик редактирования топика

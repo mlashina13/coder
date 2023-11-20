@@ -11,8 +11,8 @@
     }
 
     &__message {
-        margin-right: 80px;
-        min-width: 400px !important;
+        margin-right: $topic-message-r-space;
+        min-width: $topic-message-min-width !important;
 
         & .MuiListItemText-primary {
             color: $main-blue;
@@ -26,7 +26,7 @@
     }
 
     &__actions-container {
-        min-width: 80px;
+        min-width: $topic-actions-width;
     }
 
     &__actions-wrapper {

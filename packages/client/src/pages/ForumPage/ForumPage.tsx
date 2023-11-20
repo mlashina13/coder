@@ -1,8 +1,10 @@
 import { FC, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Confirm, Dialog, Layout, TopicForm, TopicsList } from '../../components';
 import { Topic } from '../../types/common';
 import { ITEMS_PER_PAGE_DEFAULT } from '../../constants/common';
 import { FORUM_MOKE_DATA } from './forumMokeData';
+import { ROUTER_URLS } from '../../constants';
 
 /**
  * Режим работы окна редактирования топика
@@ -13,6 +15,7 @@ type TopicDialogMode = 'create' | 'edit';
  * Страница форума
  */
 export const ForumPage: FC = () => {
+  const navigate = useNavigate();
   const [topics, setTopics] = useState<Array<Topic>>([]);
   const [topicsTotalCount, setTopicsTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,9 +48,8 @@ export const ForumPage: FC = () => {
   /**
    * Обработчик клика по топику
    */
-  const clickTopicHandler = (id: string) => {
-    console.log('click topic', id);
-  };
+  const clickTopicHandler = (id: string) =>
+    navigate(ROUTER_URLS.ForumTopic.replace(':topicId', id));
 
   /**
    * Обработчик открытия окна редактирования топика

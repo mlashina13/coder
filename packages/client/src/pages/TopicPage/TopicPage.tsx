@@ -10,7 +10,7 @@ import { TOPIC_MOKE_DATA } from './topicMokeData';
  * Страница топика
  */
 export const TopicPage: FC = () => {
-  const [topic, setTopic] = useState<Topic>();
+  const [topic, setTopic] = useState<Topic>(TOPIC_MOKE_DATA);
   const [currentMessage, setCurrentMessage] = useState('');
   const [messagesTotalCount, setMessagesTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);

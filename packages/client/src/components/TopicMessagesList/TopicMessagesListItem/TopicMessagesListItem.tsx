@@ -1,5 +1,4 @@
-import { FC } from 'react';
-import { format } from 'date-fns';
+import { FC, useCallback } from 'react';
 import {
   Avatar,
   Box,
@@ -13,6 +12,8 @@ import {
 } from '@mui/material';
 import { PenIcon, PictureIcon, TrashIcon } from '../../../assets';
 import { TopicMessagesListItemProps } from './TopicMessagesListItemProps';
+import { formatDate } from '../../../utils';
+import { DATE_FORMAT } from '../../../constants/common';
 import './topicMessagesListItemStyles.scss';
 
 /**
@@ -21,21 +22,21 @@ import './topicMessagesListItemStyles.scss';
 export const TopicMessagesListItem: FC<TopicMessagesListItemProps> = (props) => {
   const { creationDate, creator, id, message, onDelete, onEdit } = props;
 
-  const creationDateFormatted = format(new Date(creationDate), 'dd.MM.yyyy');
+  const creationDateFormatted = formatDate(creationDate, DATE_FORMAT);
 
   /**
    * Обработчик редактирования сообщения
    */
-  const editMessageHandler = () => {
-    onEdit && onEdit(id);
-  };
+  const editMessageHandler = useCallback(() => {
+    onEdit?.(id);
+  }, []);
 
   /**
    * Обработчик удаления сообщения
    */
-  const deleteMessageHandler = () => {
-    onDelete && onDelete(id);
-  };
+  const deleteMessageHandler = useCallback(() => {
+    onDelete?.(id);
+  }, []);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
 import {
   Box,
   Divider,
@@ -49,23 +49,23 @@ export const TopicsList: FC<TopicsListProps> = (props) => {
   /**
    * Обработчик события удаления топика
    */
-  const onDeleteTopicHandler = (id: string) => {
-    onDeleteTopic && onDeleteTopic(id);
-  };
+  const onDeleteTopicHandler = useCallback((id: string) => {
+    onDeleteTopic?.(id);
+  }, []);
 
   /**
    * Обработчик события изменения топика
    */
-  const onEditTopicHandler = (id: string) => {
-    onEditTopic && onEditTopic(id);
-  };
+  const onEditTopicHandler = useCallback((id: string) => {
+    onEditTopic?.(id);
+  }, []);
 
   /**
    * Обработчик события клика по топику
    */
-  const onClickTopicHandler = (id: string) => {
-    onClickTopic && onClickTopic(id);
-  };
+  const onClickTopicHandler = useCallback((id: string) => {
+    onClickTopic?.(id);
+  }, []);
 
   /**
    * Обработчик смены страницы
