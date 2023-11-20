@@ -140,3 +140,34 @@ export interface Topic {
    */
   messages?: Array<TopicMessage>;
 }
+
+/**
+ * интерфейс данных пользователя
+ */
+export interface UserData {
+  login?: string;
+  display_name?: string;
+  first_name: string;
+  second_name: string;
+  phone: string;
+  email: string;
+  avatar?: string;
+  id?: string;
+}
+
+/**
+ * интерфейс данных для регистрации
+ */
+export interface RegistrationData {
+  login: string;
+  password: string;
+  email: string;
+  phone: string;
+  second_name: string;
+  first_name: string;
+}
+
+export interface PasswordData {
+  oldPassword: string;
+  newPassword: string;
+}

@@ -8,3 +8,4 @@ export { PenIcon } from './PenIcon';
 export { PictureIcon } from './PictureIcon';
 export { ProfileIcon } from './ProfileIcon';
 export { TrashIcon } from './TrashIcon';
+export { EditProfileIcon } from './EditProfileIcon';

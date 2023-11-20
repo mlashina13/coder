@@ -1,1 +1,1 @@
-export { InfoTextBlock } from './InfoTextBlock'
+export { InfoTextBlock } from './InfoTextBlock';
