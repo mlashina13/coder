@@ -5,5 +5,5 @@ export interface ErrorProps {
   icon: ReactElement;
   code: number;
   description: string;
-  buttonText: string;
+  buttonLabel: string;
 }

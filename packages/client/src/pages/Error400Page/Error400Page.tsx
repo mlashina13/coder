@@ -9,6 +9,7 @@ import './error400PageStyles.scss';
 export const Error400Page: FC<Error400PageProps> = ({
   code = 404,
   description = 'Страница не существует',
+  buttonLabel = 'Вернуться на главную',
 }) => (
   <Box className='error-page'>
     <Error
@@ -16,7 +17,7 @@ export const Error400Page: FC<Error400PageProps> = ({
       icon={<Error400Icon />}
       code={code}
       description={description}
-      buttonText='Вернуться на главную'
+      buttonLabel={buttonLabel}
     />
   </Box>
 );

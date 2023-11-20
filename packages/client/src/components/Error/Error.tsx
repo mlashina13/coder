@@ -4,7 +4,7 @@ import { Button } from '../common';
 import type { ErrorProps } from './ErrorProps';
 import './errorStyles.scss';
 
-export const Error: FC<ErrorProps> = ({ onClick, icon, code, description, buttonText }) => (
+export const Error: FC<ErrorProps> = ({ onClick, icon, code, description, buttonLabel }) => (
   <Box className='error-page__content' textAlign='center'>
     <>
       {icon}
@@ -14,7 +14,7 @@ export const Error: FC<ErrorProps> = ({ onClick, icon, code, description, button
       <Typography variant='body1' paragraph className='error-page__description'>
         {description}
       </Typography>
-      <Button onClick={onClick} type='submit' label={buttonText} className='error-page__button' />
+      <Button onClick={onClick} type='submit' label={buttonLabel} className='error-page__button' />
     </>
   </Box>
 );
