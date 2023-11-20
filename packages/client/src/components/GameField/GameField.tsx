@@ -12,7 +12,7 @@ const GameField: FC = () => {
   const onEndGame = (gameResult: Statistics) => {
     // TODO: временная заглушка с результатами игры
     if (gameResult.isWin) {
-      console.table([result]);
+      console.table([gameResult]);
     }
 
     setResult(gameResult);
