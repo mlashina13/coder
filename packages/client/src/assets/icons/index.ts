@@ -5,3 +5,5 @@ export { MessageIcon } from './MessageIcon';
 export { ProfileIcon } from './ProfileIcon';
 export { StartIcon } from './StartIcon';
 export { LockIcon } from './LockIcon';
+export { EditProfileIcon } from './EditProfileIcon';
+

@@ -1,0 +1,39 @@
+@import '../../../styles/color';
+@import '../../../styles/common';
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-m;
+
+  &__edit-icon {
+    &:hover {
+      cursor: pointer;
+      opacity: 0.75;
+      transform: scale(1.05);
+    }
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__user-name {
+      &.MuiTypography-root {
+        color: $red-cherry;
+        text-transform: none;
+        font-weight: 700;
+      }
+    }
+
+    &__label {
+      flex: 3;
+      min-width: 5rem;
+    }
+
+    &__value {
+      flex: 5;
+    }
+  }
+}

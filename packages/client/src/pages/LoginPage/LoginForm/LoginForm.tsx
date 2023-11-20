@@ -2,7 +2,8 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 
 import { Button, Input } from '../../../components';
-import { Auth } from '../../../services/auth';
+import { Auth } from '../../../services';
+import { useUserStore } from '../../../stores';
 
 import './loginFormStyles.scss';
 
@@ -30,6 +31,7 @@ const validationSchema = yup.object({
 
 /** форма авторизации */
 export const LoginForm = () => {
+  const { setUserData } = useUserStore();
   const formik = useFormik({
     initialValues: {
       login: '',
@@ -38,7 +40,7 @@ export const LoginForm = () => {
     validationSchema,
     onSubmit: (values) => {
       Auth.signIn(values).then(() => {
-        Auth.getAuthUser().then((data) => console.log(data));
+        Auth.getAuthUser().then((data) => setUserData?.(data));
       });
     },
     validateOnBlur: false,
