@@ -1,19 +1,37 @@
-import { SyntheticEvent, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { SyntheticEvent, useMemo, useState } from 'react';
 import { Box, Tab, Tabs, Typography } from '@mui/material';
-
 import { LogoIcon } from '../../assets';
 import { AuthHeaderProps } from './AuthHeaderProps';
-
 import './authHeaderStyles.scss';
+import { LOGIN_ROUTES } from '../../constants';
+
+type LoginTabsPaths = keyof typeof LOGIN_ROUTES;
+type Values = (typeof LOGIN_ROUTES)[LoginTabsPaths];
+
+const TABS_KEYS: Record<
+  string,
+  {
+    key: Values;
+    label: string;
+  }
+> = {
+  Login: {
+    key: LOGIN_ROUTES.Login,
+    label: 'Вход',
+  },
+  Registration: {
+    key: LOGIN_ROUTES.Registration,
+    label: 'Регистрация',
+  },
+};
 
 export const AuthHeader = (props: AuthHeaderProps) => {
-  /** TODO после рализации роутинга использовать функионал из реакт-роутер-дом для перехода по ссылкам и мониторинга текущего урла */
-  const [mockLocation, setMockLocation] = useState<'login' | 'registration'>('login');
+  const { pathname: mockLocation } = useLocation();
+  const navigate = useNavigate();
 
-  /** TODO убрать сетстейт и заменить на обработчик навигации */
-  const handleChange = (event: SyntheticEvent, newValue: 'login' | 'registration') => {
-    setMockLocation(newValue);
-  };
+  const handleChange = (_: SyntheticEvent, path: LoginTabsPaths) => navigate(path);
+
   return (
     <Box className='auth-header'>
       <Box className='auth-header__logo'>
@@ -22,8 +40,8 @@ export const AuthHeader = (props: AuthHeaderProps) => {
       </Box>
 
       <Tabs value={mockLocation} onChange={handleChange} centered>
-        <Tab label='Вход' value='login' />
-        <Tab label='Регистрация' value='registration' />
+        <Tab label={TABS_KEYS.Login.label} value={TABS_KEYS.Login.key} />
+        <Tab label={TABS_KEYS.Registration.label} value={TABS_KEYS.Registration.key} />
       </Tabs>
     </Box>
   );
