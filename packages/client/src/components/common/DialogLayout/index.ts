@@ -1,1 +1,1 @@
-export { DialogLayout } from './DialogLayout'
+export { DialogLayout } from './DialogLayout';

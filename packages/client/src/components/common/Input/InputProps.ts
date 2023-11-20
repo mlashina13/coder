@@ -1,4 +1,5 @@
-import { TextFieldProps, TextFieldVariants } from '@mui/material'
+import { TextFieldProps, TextFieldVariants } from '@mui/material';
 
-export type InputProps<Variant extends TextFieldVariants = TextFieldVariants> =
-  { variant?: Variant } & Omit<TextFieldProps, 'variant'>
+export type InputProps<Variant extends TextFieldVariants = TextFieldVariants> = {
+  variant?: Variant;
+} & Omit<TextFieldProps, 'variant'>;
