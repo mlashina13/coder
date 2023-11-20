@@ -29,14 +29,14 @@ export const TopicMessagesListItem: FC<TopicMessagesListItemProps> = (props) => 
    */
   const editMessageHandler = useCallback(() => {
     onEdit?.(id);
-  }, []);
+  }, [onEdit]);
 
   /**
    * Обработчик удаления сообщения
    */
   const deleteMessageHandler = useCallback(() => {
     onDelete?.(id);
-  }, []);
+  }, [onDelete]);
 
   return (
     <>

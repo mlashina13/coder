@@ -43,16 +43,22 @@ export const TopicMessagesList: FC<TopicMessagesListProps> = (props) => {
   /**
    * Обработчик события удаления сообщения
    */
-  const onDeleteMessageHandler = useCallback((id: string) => {
-    onDeleteMessage?.(id);
-  }, []);
+  const onDeleteMessageHandler = useCallback(
+    (id: string) => {
+      onDeleteMessage?.(id);
+    },
+    [onDeleteMessage]
+  );
 
   /**
    * Обработчик события изменения сообщения
    */
-  const onEditMessageHandler = useCallback((id: string) => {
-    onEditMessage?.(id);
-  }, []);
+  const onEditMessageHandler = useCallback(
+    (id: string) => {
+      onEditMessage?.(id);
+    },
+    [onEditMessage]
+  );
 
   return (
     <Box className={clsx('topic-msgs-list', className)}>

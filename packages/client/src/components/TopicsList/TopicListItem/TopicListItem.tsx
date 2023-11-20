@@ -29,21 +29,21 @@ export const TopicListItem: FC<TopicListItemProps> = (props) => {
    * Обработчик редактирования топика
    */
   const editTopicHandler = () => {
-    onEdit && onEdit(id);
+    onEdit?.(id);
   };
 
   /**
    * Обработчик удаления топика
    */
   const deleteTopicHandler = () => {
-    onDelete && onDelete(id);
+    onDelete?.(id);
   };
 
   /**
    * Обработчик клика по топику
    */
   const clickTopicHandler = () => {
-    onClick && onClick(id);
+    onClick?.(id);
   };
 
   return (

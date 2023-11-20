@@ -43,29 +43,38 @@ export const TopicsList: FC<TopicsListProps> = (props) => {
    * Обработчик события создания топика
    */
   const onCreateTopicHandler = () => {
-    onCreateTopic && onCreateTopic();
+    onCreateTopic?.();
   };
 
   /**
    * Обработчик события удаления топика
    */
-  const onDeleteTopicHandler = useCallback((id: string) => {
-    onDeleteTopic?.(id);
-  }, []);
+  const onDeleteTopicHandler = useCallback(
+    (id: string) => {
+      onDeleteTopic?.(id);
+    },
+    [onDeleteTopic]
+  );
 
   /**
    * Обработчик события изменения топика
    */
-  const onEditTopicHandler = useCallback((id: string) => {
-    onEditTopic?.(id);
-  }, []);
+  const onEditTopicHandler = useCallback(
+    (id: string) => {
+      onEditTopic?.(id);
+    },
+    [onEditTopic]
+  );
 
   /**
    * Обработчик события клика по топику
    */
-  const onClickTopicHandler = useCallback((id: string) => {
-    onClickTopic?.(id);
-  }, []);
+  const onClickTopicHandler = useCallback(
+    (id: string) => {
+      onClickTopic?.(id);
+    },
+    [onClickTopic]
+  );
 
   /**
    * Обработчик смены страницы
