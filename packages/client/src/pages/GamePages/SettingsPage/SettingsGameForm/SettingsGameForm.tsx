@@ -36,6 +36,7 @@ export const SettingsGameForm = () => {
       /**
             Передаем параметры настроект при старте игры
              */
+
       show(values);
     },
   });

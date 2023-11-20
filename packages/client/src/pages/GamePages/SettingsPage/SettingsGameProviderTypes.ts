@@ -31,6 +31,8 @@ export type SettingsGameProviderState = {
   /**
    * Финкция видимости игры
    * */
+
+  show?: () => void;
 };
 
 export type ActionType = {

@@ -1,4 +1,11 @@
-import React, { FC, PropsWithChildren, useContext, useMemo, useReducer } from 'react';
+import React, {
+  createContext,
+  FC,
+  PropsWithChildren,
+  useContext,
+  useMemo,
+  useReducer,
+} from 'react';
 import { SettingsGameFormProps } from './SettingsGameForm/SettingsGameFormProps';
 import { ActionType, SettingsGameProviderState } from './SettingsGameProviderTypes';
 
@@ -6,10 +13,9 @@ export const initialState: SettingsGameProviderState = {
   visible: false,
 };
 
-const SettingGameContext = React.createContext({
-  state: { visible: false },
+const SettingGameContext = createContext({
+  state: initialState,
   show: (settings: SettingsGameFormProps) => ({}),
-  hide: () => ({}),
 });
 
 export const SettingGame = () => useContext(SettingGameContext);
@@ -38,6 +44,7 @@ export const SettingsProvide: FC<PropsWithChildren> = ({ children }) => {
   const show = (settings: SettingsGameFormProps) => dispatch({ type: 'show', settings });
   const hide = () => dispatch({ type: 'hide' });
 
-  const value = useMemo(() => ({ state, show, hide }), [state]);
+  const value = useMemo(() => ({ state, show }), [state, show]);
+  // @ts-ignore
   return <SettingGameContext.Provider value={value}>{children}</SettingGameContext.Provider>;
 };
