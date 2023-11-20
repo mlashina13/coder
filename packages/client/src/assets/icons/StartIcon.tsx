@@ -5,14 +5,15 @@ import { IconProps } from '../../types/common';
  * Компонент иконки "Картинка для старта"
  */
 export const StartIcon: FC<IconProps> = (props) => {
-  const { className } = props;
+  const { className, onClick, width = '100', height = '100' } = props;
 
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
       className={className}
-      width='100'
-      height='100'
+      width={width}
+      height={height}
+      onClick={onClick}
       viewBox='0 0 500 500'
     >
       <g>
