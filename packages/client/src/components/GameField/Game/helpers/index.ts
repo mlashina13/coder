@@ -124,8 +124,8 @@ function* colorGenerator(colors: chipColors[]): Generator<chipColors> {
  */
 export const createGameChips = (length: number, width: number) => {
   const generateGameChipsCoordinate = coordinateGenerator(
-    startX,
-    startY,
+    startX + chipSize / 2,
+    startY + chipSize / 2,
     (width - length * chipSize) / (length - 1) + chipSize,
     length
   );
@@ -137,8 +137,7 @@ export const createGameChips = (length: number, width: number) => {
       new GameChip({
         ...generateGameChipsCoordinate.next().value,
         color: generateColor.next().value,
-        width: chipSize,
-        height: chipSize,
+        radius: chipSize / 2,
       })
   );
 };
@@ -150,8 +149,8 @@ export const createGameChips = (length: number, width: number) => {
  */
 export const createChipSlots = (rows: number, columns: number) => {
   const generateChipCellsCoordinate = coordinateGenerator(
-    startX,
-    startY * 2 + 50,
+    startX + chipSize / 2,
+    3 * startY + chipSize / 2,
     distanceBetweenChips + chipSize,
     columns
   );
@@ -163,8 +162,7 @@ export const createChipSlots = (rows: number, columns: number) => {
         new ChipSlot({
           ...generateChipCellsCoordinate.next().value,
           color: backgroundColor,
-          width: chipSize,
-          height: chipSize,
+          radius: chipSize / 2,
         })
     )
   );
@@ -177,8 +175,8 @@ export const createChipSlots = (rows: number, columns: number) => {
  */
 export const createCheckChips = (rows: number, columns: number) => {
   const generateCheckChipCoordinate = coordinateGenerator(
-    startX + 2 * chipSize * columns + chipSize / 2,
-    startY * 2 + 50,
+    startX + chipSize * (2 * columns + 0.5),
+    startY * 3,
     chipSize,
     columns / 2
   );

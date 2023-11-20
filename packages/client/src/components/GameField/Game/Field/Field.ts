@@ -132,6 +132,6 @@ export default class Field {
 
   /** Деинициализация игрового поля */
   public static destructor = () => {
-    Field._instance = undefined;
+    Field._instance = void 0;
   };
 }

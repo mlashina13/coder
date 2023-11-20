@@ -1,4 +1,3 @@
-import type { SetStateAction, Dispatch } from 'react';
 import { chipSize, leftMouseButton, backgroundColor } from './consts';
 import {
   generateRandomColorSequence,
@@ -13,7 +12,7 @@ import ChipSlot from './Figure/ChipSlot';
 import CheckChip from './Figure/CheckChip';
 import Mouse from './Mouse/Mouse';
 import Field from './Field/Field';
-import type { CheckStepResult, Reference, Statistics, OnEndGameCallback } from './types';
+import type { CheckStepResult, Reference, OnEndGameCallback } from './types';
 
 export default class Game {
   /** Инстанс игры */
@@ -70,18 +69,15 @@ export default class Game {
     onGameEnd?: OnEndGameCallback,
     colorsCount = 4,
     stepsCount = 10,
-    isColorsMayBeRepeated = true
+    isColorsMayBeRepeated = false
   ) {
     if (Game._instance) {
-      /* eslint-disable */
       return Game._instance;
     }
 
     this._reference = generateRandomColorSequence(colorsCount, isColorsMayBeRepeated);
-    // eslint-disable-next-line no-nested-ternary
     this._colorsInRowCount = colorsCount < 4 ? 4 : colorsCount > 10 ? 10 : colorsCount;
     this._allAvailableColorsCount = this._colorsInRowCount + 1;
-    // eslint-disable-next-line no-nested-ternary
     this._maxStepsCount = stepsCount < 1 ? 1 : stepsCount > 20 ? 20 : stepsCount;
     this._field = new Field(
       canvas,
@@ -105,8 +101,7 @@ export default class Game {
     this._movingFigure = new GameChip({
       x: 0,
       y: 0,
-      width: chipSize,
-      height: chipSize,
+      radius: chipSize / 2,
       color: backgroundColor,
       withoutSlot: true,
     });
@@ -218,6 +213,7 @@ export default class Game {
    * @param event Событие мыши mousedown
    */
   private mouseDownHandler = (event: Event) => {
+    console.log('DOWN');
     const mouseEvent = event as MouseEvent;
 
     if (mouseEvent.button === leftMouseButton) {
@@ -230,6 +226,7 @@ export default class Game {
    * @param event Событие мыши mouseup
    */
   private mouseUpHandler = (event: Event) => {
+    console.log('UP');
     const mouseEvent = event as MouseEvent;
 
     if (mouseEvent.button !== leftMouseButton) {
@@ -324,7 +321,6 @@ export default class Game {
       new Date().getTime() - this._startTime.getTime()
     );
 
-    // eslint-disable-next-line no-unused-expressions
     this._onGameEnd &&
       this._onGameEnd({
         isWin: true,
@@ -338,7 +334,6 @@ export default class Game {
 
   /** Завершение игры проигрышем */
   private setLoss = () => {
-    // eslint-disable-next-line no-unused-expressions
     this._onGameEnd && this._onGameEnd({ isWin: false });
 
     this.destructor();
@@ -477,6 +472,6 @@ export default class Game {
     Field.destructor();
     Mouse.destructor();
 
-    Game._instance = undefined;
+    Game._instance = void 0;
   };
 }
