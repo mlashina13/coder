@@ -52,6 +52,14 @@ export default abstract class BaseFigure {
 
   public abstract draw(ctx: CanvasRenderingContext2D): void;
 
+  /**
+   * Отрисовка фигуры
+   * @param ctx Контекст canvas
+   * @param fill Флаг, необходима ли заливка фигуры
+   * @param stroke Флаг, необходима ли обводка фигуры
+   * @param x Координата по оси X
+   * @param y Координата по оси Y
+   */
   protected drawFigure = (
     ctx: CanvasRenderingContext2D,
     fill = true,
@@ -59,21 +67,20 @@ export default abstract class BaseFigure {
     x = this._x,
     y = this._y
   ) => {
-    if (fill) {
-      ctx.fillStyle = this.color;
+    ctx.fillStyle = this.color;
 
-      ctx.beginPath();
-      ctx.arc(x, y, this._radius, 0, 2 * Math.PI);
+    ctx.beginPath();
+    ctx.arc(x, y, this._radius, 0, 2 * Math.PI);
+
+    if (fill) {
       ctx.fill();
-      ctx.save();
     }
 
     if (stroke) {
-      ctx.beginPath();
-      ctx.arc(x, y, this._radius, 0, 2 * Math.PI);
       ctx?.stroke();
-      ctx?.save();
     }
+
+    ctx.save();
   };
 
   /**
