@@ -1,0 +1,33 @@
+@import '../../styles/color';
+@import '../../styles/common';
+
+.topic-msgs-list {
+    display: flex;
+    flex-direction: column;
+
+    &__list-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: unset !important;
+        height: 50px;
+    }
+
+    &__views-counter {
+        display: flex;
+        align-items: center;
+        gap: $spacing-s;
+    }
+
+    &__list-title {
+        display: flex;
+        align-items: center;
+        color: $grey;
+    }
+
+    &__pagination {
+        margin-top: auto;
+        margin-left: auto;
+        padding: $spacing-m $spacing-none;
+    }
+}

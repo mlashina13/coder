@@ -1,0 +1,51 @@
+@import '../../../styles/color';
+@import '../../../styles/common';
+
+.topic-list-item {
+    cursor: pointer;
+
+    &:hover {
+        background: $input-bg-color;
+    }
+
+    & .MuiListItemText-primary {
+        font-size: $font-ls;
+    }
+    
+    & .MuiListItemText-secondary {
+        font-size: $font-ml;
+    }
+
+    &__theme {
+        width: 100%;
+        min-width: $topic-theme-min-width;
+
+        & .MuiListItemText-primary {
+            color: $main-blue;
+            font-weight: $font-weight-bold;
+        }
+        
+        & .MuiListItemText-secondary {
+            color: $grey-dark;
+            font-weight: $font-weight-bold;
+        }
+    }
+
+    &__counters {
+        min-width: $topic-counters-min-width !important;
+    }
+
+    &__creator {
+        min-width: $topic-creator-min-width !important;
+        margin-right: $spacing-xxs;
+    }
+
+    &__actions-container {
+        min-width: $topic-actions-width;
+    }
+
+    &__actions-wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+}

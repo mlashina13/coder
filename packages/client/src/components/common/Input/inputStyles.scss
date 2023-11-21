@@ -5,7 +5,6 @@
   border-radius: 3px !important;
   background: $white;
   margin-bottom: $spacing-m !important;
-
   .MuiFormHelperText-root {
     color: $red-cherry;
   }
@@ -20,15 +19,15 @@
   }
 
   span {
-    color: rgba(64, 58, 75, 0.60);
+
+    color: $input-lbl-color;
     font-style: normal;
     font-weight: $font-weight;
     line-height: normal;
   }
 
   label {
-    color: $grey-dark;
-    font-style: normal;
+    color: rgba(64, 58, 75, 0.60);  color: $grey-dark;    font-style: normal;
     font-weight: $font-weight;
     line-height: normal;
   }
@@ -43,9 +42,9 @@
   }
 
   input {
-    color: $grey-dark;
+color: $grey-dark;	
     text-align: left;
-    font-weight: 400;
+    font-weight: $font-weight;
     font-size: $font-ml;
   }
 }
