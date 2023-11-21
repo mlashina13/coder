@@ -1,16 +1,34 @@
 export const enum chipColors {
-  red = 'red',
-  yellow = 'yellow',
-  green = 'green',
-  blue = 'blue',
-  purple = 'purple',
-  orange = 'orange',
-  pink = 'pink',
-  brown = 'brown',
-  gray = 'gray',
-  cyan = 'cyan',
-  magenta = 'magenta',
+  red = '#7b001c',
+  yellow = '#fedd00',
+  green = '#0f3325',
+  blue = '#191970',
+  purple = '#4b0082',
+  orange = '#ff8c00',
+  pink = '#c71585',
+  brown = '#800000',
+  gray = '#696969',
+  cyan = '#008080',
+  olive = '#556b2F',
 }
+
+export const lighterChipColors = {
+  [chipColors.red]: '#ff6666',
+  [chipColors.yellow]: '#ffff66',
+  [chipColors.green]: '#66cc66',
+  [chipColors.blue]: '#6666ff',
+  [chipColors.purple]: '#cc66cc',
+  [chipColors.orange]: '#ffcc66',
+  [chipColors.pink]: '#ffe6f2',
+  [chipColors.brown]: '#e69999',
+  [chipColors.gray]: '#cccccc',
+  [chipColors.cyan]: '#99ffff',
+  [chipColors.olive]: '#b3b366',
+};
+
+export const gradientOffsetX = -3;
+export const gradientOffsetY = -2;
+export const gradientRadius = 2;
 
 export const enum fieldColors {
   white = 'white',
@@ -29,7 +47,7 @@ export const availableColors = [
   chipColors.brown,
   chipColors.gray,
   chipColors.cyan,
-  chipColors.magenta,
+  chipColors.olive,
 ];
 
 export const backgroundColor = 'lightSlateGray' as chipColors;

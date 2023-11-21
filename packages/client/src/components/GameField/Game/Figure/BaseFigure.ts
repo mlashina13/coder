@@ -1,4 +1,11 @@
-import { backgroundColor } from '../consts';
+import {
+  backgroundColor,
+  chipColors,
+  lighterChipColors,
+  gradientOffsetX,
+  gradientOffsetY,
+  gradientRadius,
+} from '../consts';
 import type { BaseFigureProps } from './types';
 import type { Colors } from '../types';
 
@@ -57,6 +64,7 @@ export default abstract class BaseFigure {
    * @param ctx Контекст canvas
    * @param fill Флаг, необходима ли заливка фигуры
    * @param stroke Флаг, необходима ли обводка фигуры
+   * @param gradient Флаг, необходим ли градиент при заливке фигуры
    * @param x Координата по оси X
    * @param y Координата по оси Y
    */
@@ -64,6 +72,7 @@ export default abstract class BaseFigure {
     ctx: CanvasRenderingContext2D,
     fill = true,
     stroke = true,
+    gradient = false,
     x = this._x,
     y = this._y
   ) => {
@@ -71,7 +80,25 @@ export default abstract class BaseFigure {
     ctx.arc(x, y, this._radius, 0, 2 * Math.PI);
 
     if (fill) {
-      ctx.fillStyle = this._color;
+      if (gradient) {
+        const gradientStyle = ctx.createRadialGradient(
+          x + gradientOffsetX,
+          y + gradientOffsetY,
+          gradientRadius,
+          x,
+          y,
+          this._radius
+        );
+
+        gradientStyle.addColorStop(0, lighterChipColors[this._color as chipColors]);
+        gradientStyle.addColorStop(1, this._color);
+
+        ctx.fillStyle = gradientStyle;
+      }
+
+      if (!gradient) {
+        ctx.fillStyle = this._color;
+      }
 
       ctx.fill();
     }

@@ -68,7 +68,7 @@ export default class Game {
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
     onGameEnd?: OnEndGameCallback,
-    colorsCount = 4,
+    colorsCount = 10,
     stepsCount = 10,
     isColorsMayBeRepeated = false
   ) {
