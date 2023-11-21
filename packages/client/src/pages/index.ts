@@ -1,7 +1,8 @@
-export * from './Forum';
+export { ForumPage } from './ForumPage';
 export { GamePage } from './GamePage';
 export { LeaderBoardPage } from './LeaderBoardPage';
-export { MainPage } from './MainPage';
 export { LoginPage } from './LoginPage';
-export { RegistrationPage } from './RegistrationPage';
+export { MainPage } from './MainPage';
 export { ProfilePage } from './ProfilePage';
+export { RegistrationPage } from './RegistrationPage';
+export { TopicPage } from './TopicPage';

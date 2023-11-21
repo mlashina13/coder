@@ -1,26 +1,29 @@
+@import '../../../styles/color';
+@import '../../../styles/common';
+
 .input {
+  width: 100%;
   border-radius: 3px;
-  background: #F8F1FF;
+  background: $input-bg-color;
 
   span {
-    color: rgba(64, 58, 75, 0.60);
+    color: $input-lbl-color;
     font-style: normal;
-    font-weight: 400;
+    font-weight: $font-weight;
     line-height: normal;
   }
 
   label {
-    color: rgba(64, 58, 75, 0.60);
+    color: $input-lbl-color;
     font-style: normal;
-    font-weight: 400;
+    font-weight: $font-weight;
     line-height: normal;
   }
 
   input {
-    color: #403A4B;
-    text-align: center;
+    color: $input-color;
     font-style: normal;
-    font-weight: 400;
+    font-weight: $font-weight;
     line-height: normal;
   }
 }

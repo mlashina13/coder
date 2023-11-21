@@ -76,7 +76,74 @@ export interface RouteInfo {
   renderIconFunction?: (className?: string) => ReactNode;
 }
 
-/** интерфейс данных пользователя */
+/**
+ * Модель сообщения топика
+ */
+export interface TopicMessage {
+  /**
+   * Идентификатор
+   */
+  id: string;
+
+  /**
+   * Автор
+   */
+  creator: string;
+
+  /**
+   * Дата создания топика (date string)
+   */
+  creationDate: string;
+
+  /**
+   * Сообщение
+   */
+  message: string;
+}
+
+/**
+ * Модель топика форума
+ */
+export interface Topic {
+  /**
+   * Идентификатор
+   */
+  id: string;
+
+  /**
+   * Тема
+   */
+  theme: string;
+
+  /**
+   * Дата создания топика (date string)
+   */
+  creationDate: string;
+
+  /**
+   * Автор
+   */
+  creator: string;
+
+  /**
+   * Кол-во сообщений
+   */
+  messagesCount: number;
+
+  /**
+   * Кол-во просмотров
+   */
+  viewsCount: number;
+
+  /**
+   * Список сообщений
+   */
+  messages?: Array<TopicMessage>;
+}
+
+/**
+ * интерфейс данных пользователя
+ */
 export interface UserData {
   login?: string;
   display_name?: string;
@@ -88,7 +155,9 @@ export interface UserData {
   id?: string;
 }
 
-/** интерфейс данных для регистрации */
+/**
+ * интерфейс данных для регистрации
+ */
 export interface RegistrationData {
   login: string;
   password: string;

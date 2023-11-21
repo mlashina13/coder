@@ -1,6 +1,11 @@
+export { AddConversationIcon } from './AddConversationIcon';
+export { EyeIcon } from './EyeIcon';
 export { HomeIcon } from './HomeIcon';
 export { LogoIcon } from './LogoIcon';
 export { LogoutIcon } from './LogoutIcon';
 export { MessageIcon } from './MessageIcon';
+export { PenIcon } from './PenIcon';
+export { PictureIcon } from './PictureIcon';
 export { ProfileIcon } from './ProfileIcon';
+export { TrashIcon } from './TrashIcon';
 export { EditProfileIcon } from './EditProfileIcon';
