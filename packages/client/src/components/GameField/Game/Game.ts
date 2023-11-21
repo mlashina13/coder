@@ -1,18 +1,19 @@
-import { chipSize, leftMouseButton, backgroundColor } from './consts';
+import { backgroundColor, chipSize, leftMouseButton } from './consts';
 import {
-  generateRandomColorSequence,
   calcNewCoordinate,
   convertMillisecondsToMinutesAndSeconds,
-  createGameChips,
-  createChipSlots,
   createCheckChips,
+  createChipSlots,
+  createGameChips,
+  generateRandomColorSequence,
 } from './helpers';
 import GameChip from './Figure/GameChip';
 import ChipSlot from './Figure/ChipSlot';
 import CheckChip from './Figure/CheckChip';
 import Mouse from './Mouse/Mouse';
 import Field from './Field/Field';
-import type { CheckStepResult, Reference, OnEndGameCallback } from './types';
+import type { CheckStepResult, OnEndGameCallback, Reference } from './types';
+import MovingGameChip from './Figure/MovingGameChip';
 
 export default class Game {
   /** Инстанс игры */
@@ -20,7 +21,7 @@ export default class Game {
   private static _instance: Game | void;
 
   /** Фишка для визуализации перемещения */
-  private _movingFigure!: GameChip;
+  private _movingFigure!: MovingGameChip;
 
   /** Игровые фишки */
   private readonly _gameChips: GameChip[] = [];
@@ -98,12 +99,11 @@ export default class Game {
     );
     this._chipSlots = createChipSlots(stepsCount, colorsCount);
     this._checkChips = createCheckChips(stepsCount, colorsCount);
-    this._movingFigure = new GameChip({
+    this._movingFigure = new MovingGameChip({
       x: 0,
       y: 0,
       radius: chipSize / 2,
       color: backgroundColor,
-      withoutSlot: true,
     });
 
     Game._instance = this;

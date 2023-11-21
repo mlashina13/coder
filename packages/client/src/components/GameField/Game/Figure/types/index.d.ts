@@ -6,7 +6,3 @@ export interface BaseFigureProps {
   color: chipColors;
   radius: number;
 }
-
-export interface MovingFigureProps extends BaseFigureProps {
-  withoutSlot?: true;
-}

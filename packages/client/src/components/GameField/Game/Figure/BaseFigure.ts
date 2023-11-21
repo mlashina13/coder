@@ -67,17 +67,17 @@ export default abstract class BaseFigure {
     x = this._x,
     y = this._y
   ) => {
-    ctx.fillStyle = this.color;
-
     ctx.beginPath();
     ctx.arc(x, y, this._radius, 0, 2 * Math.PI);
 
     if (fill) {
+      ctx.fillStyle = this._color;
+
       ctx.fill();
     }
 
     if (stroke) {
-      ctx?.stroke();
+      ctx.stroke();
     }
 
     ctx.save();
