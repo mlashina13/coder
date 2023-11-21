@@ -13,7 +13,7 @@ import {
 import GameChip from '../Figure/GameChip';
 import ChipSlot from '../Figure/ChipSlot';
 import CheckChip from '../Figure/CheckChip';
-import type { Reference, Colors } from '../types';
+import type { Reference } from '../types';
 
 /**
  * Генерация эталонной последовательности цветов
@@ -150,7 +150,7 @@ export const createGameChips = (length: number, width: number) => {
 export const createChipSlots = (rows: number, columns: number) => {
   const generateChipCellsCoordinate = coordinateGenerator(
     startX + chipSize / 2,
-    3 * startY + chipSize / 2,
+    3 * startY - chipSize / 2,
     distanceBetweenChips + chipSize,
     columns
   );
@@ -176,7 +176,7 @@ export const createChipSlots = (rows: number, columns: number) => {
 export const createCheckChips = (rows: number, columns: number) => {
   const generateCheckChipCoordinate = coordinateGenerator(
     startX + chipSize * (2 * columns + 0.5),
-    startY * 3,
+    startY * 3 - chipSize,
     chipSize,
     columns / 2
   );

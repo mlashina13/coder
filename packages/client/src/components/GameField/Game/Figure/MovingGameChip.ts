@@ -30,6 +30,6 @@ export default class MovingGameChip extends GameChip {
    * @param ctx Контекст canvas
    */
   public draw(ctx: CanvasRenderingContext2D) {
-    this.drawFigure(ctx, this.isMoving, false, true, this._newX, this._newY);
+    this.drawFigure(ctx, this.isMoving, false, true, true, this._newX, this._newY);
   }
 }

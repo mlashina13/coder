@@ -12,6 +12,8 @@ export const enum chipColors {
   olive = '#556b2F',
 }
 
+export const backgroundColor = '#9e9c9c' as chipColors;
+
 export const lighterChipColors = {
   [chipColors.red]: '#ff6666',
   [chipColors.yellow]: '#ffff66',
@@ -19,16 +21,17 @@ export const lighterChipColors = {
   [chipColors.blue]: '#6666ff',
   [chipColors.purple]: '#cc66cc',
   [chipColors.orange]: '#ffcc66',
-  [chipColors.pink]: '#ffe6f2',
+  [chipColors.pink]: '#F19EB5',
   [chipColors.brown]: '#e69999',
   [chipColors.gray]: '#cccccc',
   [chipColors.cyan]: '#99ffff',
   [chipColors.olive]: '#b3b366',
+  [backgroundColor]: '#c9c7c7',
 };
 
-export const gradientOffsetX = -3;
-export const gradientOffsetY = -2;
-export const gradientRadius = 2;
+export const gradientOffsetX = -5;
+export const gradientOffsetY = -7;
+export const gradientRadius = 5;
 
 export const enum fieldColors {
   white = 'white',
@@ -50,7 +53,6 @@ export const availableColors = [
   chipColors.olive,
 ];
 
-export const backgroundColor = 'lightSlateGray' as chipColors;
 export const chipSize = 25;
 export const checkChipRadius = 5;
 

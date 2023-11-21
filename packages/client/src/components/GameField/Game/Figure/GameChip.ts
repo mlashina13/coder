@@ -11,6 +11,6 @@ export default class GameChip extends BaseFigure {
    * @param ctx Контекст canvas
    */
   public draw(ctx: CanvasRenderingContext2D) {
-    this.drawFigure(ctx, !this.isMoving, true, true);
+    this.drawFigure(ctx, !this.isMoving, true, true, true);
   }
 }

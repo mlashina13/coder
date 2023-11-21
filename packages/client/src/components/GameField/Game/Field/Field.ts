@@ -54,7 +54,7 @@ export default class Field {
     this._chipSlotsFieldWidth = chipSize * (2 * colorsCount + 1);
     this._chipSlotsFieldHeight = chipSize * (2 * stepsCount + 1);
     this._checkChipsFieldWidth = chipSize * Math.ceil(colorsCount / 2);
-    this._chipSlotsFieldStartY = chipSize * 5;
+    this._chipSlotsFieldStartY = chipSize * 4;
     this._checkChipsFieldStartX = chipSize + this._chipSlotsFieldWidth;
 
     Field._instance = this;
@@ -81,7 +81,7 @@ export default class Field {
     maxStepsCount: number
   ) => {
     this._canvas.width = chipSize * (allAvailableColorsCount * 2 + colorsInRowCount / 2 + 1);
-    this._canvas.height = chipSize * (7 + 2 * maxStepsCount);
+    this._canvas.height = chipSize * (6 + 2 * maxStepsCount);
   };
 
   /** Отрисовка игрового поля */

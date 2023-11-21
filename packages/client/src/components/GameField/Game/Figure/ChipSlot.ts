@@ -11,6 +11,6 @@ export default class ChipSlot extends BaseFigure {
    * @param ctx Контекст canvas
    */
   public draw(ctx: CanvasRenderingContext2D) {
-    this.drawFigure(ctx, this.isFilled, true, true);
+    this.drawFigure(ctx, this.isFilled, true, true, this.isFilled);
   }
 }
