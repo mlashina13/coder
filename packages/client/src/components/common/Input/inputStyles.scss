@@ -2,11 +2,24 @@
 @import '../../../styles/common';
 
 .input {
-  width: 100%;
-  border-radius: 3px;
-  background: $input-bg-color;
+  border-radius: 3px !important;
+  background: $white;
+  margin-bottom: $spacing-m !important;
+  .MuiFormHelperText-root {
+    color: $red-cherry;
+  }
+
+  .MuiFilledInput-root {
+    border-radius: 3px;
+    border: 0px;
+  }
+  .MuiFilledInput-root:before {
+    content: none;
+    border-bottom-style: none;
+  }
 
   span {
+
     color: $input-lbl-color;
     font-style: normal;
     font-weight: $font-weight;
@@ -14,16 +27,26 @@
   }
 
   label {
-    color: $input-lbl-color;
-    font-style: normal;
+    color: rgba(64, 58, 75, 0.60);  color: $grey-dark;    font-style: normal;
     font-weight: $font-weight;
     line-height: normal;
   }
 
+  &.requiredField {
+    label {
+      &:before {
+        content: '* ';
+        color: $red-cherry;;
+      }
+    }
+  }
+
   input {
-    color: $input-color;
-    font-style: normal;
+color: $grey-dark;	
+    text-align: left;
     font-weight: $font-weight;
-    line-height: normal;
+    font-size: $font-ml;
   }
 }
+
+

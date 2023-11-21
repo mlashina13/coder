@@ -1,3 +1,6 @@
+@import '../../../styles/common';
+@import '../../../styles/color';
+
 .info-text-block {
   display: flex;
   gap: 2rem;
@@ -5,16 +8,17 @@
 
 .info-text-block__label {
   &.MuiFormLabel-root {
-    font-style: normal;
-    font-weight: 400;
-    color: #525252;
+    font-weight: $font-weight;
+    color: $grey;
+    font-size: $font-m;
   }
 }
 
 .info-text-block__value {
   &.MuiFormLabel-root {
     font-style: normal;
-    font-weight: 400;
-    color: #000;
+    font-weight: $font-weight;
+    color: $main-black;
+    font-size: $font-ml;
   }
 }

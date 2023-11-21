@@ -5,3 +5,4 @@ export { Checkbox } from './Checkbox';
 export { DialogLayout } from './DialogLayout';
 export { Title } from './Title';
 export { InfoTextBlock } from './InfoTextBlock';
+export { Image } from './Image';

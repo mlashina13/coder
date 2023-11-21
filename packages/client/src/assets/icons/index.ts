@@ -8,6 +8,8 @@ export { PenIcon } from './PenIcon';
 export { PictureIcon } from './PictureIcon';
 export { ProfileIcon } from './ProfileIcon';
 export { TrashIcon } from './TrashIcon';
+export { StartIcon } from './StartIcon';
+export { LockIcon } from './LockIcon';
 export { EditProfileIcon } from './EditProfileIcon';
 export { Error500Icon } from './Error500Icon';
 export { Error400Icon } from './Error400Icon';

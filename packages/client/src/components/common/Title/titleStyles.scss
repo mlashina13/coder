@@ -1,8 +1,12 @@
+@import '../../../styles/color';
+@import '../../../styles/common';
+
 .title {
   &.MuiTypography-root {
-    color: #0E4980;
+    color: $main-blue;
     font-style: normal;
-    font-weight: 800;
+    font-weight: $font-weight-bold;
     text-transform: uppercase;
+    font-size: $font-ml;
   }
 }

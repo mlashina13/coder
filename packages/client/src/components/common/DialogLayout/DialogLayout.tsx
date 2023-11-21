@@ -8,11 +8,11 @@ import './dialogLayoutStyles.scss';
 
 export const DialogLayout: React.FC<DialogLayoutProps> = ({
   children,
-  clasName,
+  className,
   contentClassName,
   headerClassName,
 }) => (
-  <Box className={clsx('dialog-layout', clasName)}>
+  <Box className={clsx('dialog-layout', className)}>
     <Box className={clsx('dialog-layout__header', headerClassName)} />
     <Box className={clsx('dialog-layout__content', contentClassName)}>{children}</Box>
   </Box>
