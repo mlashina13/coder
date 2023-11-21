@@ -6,3 +6,5 @@ export { MainPage } from './MainPage';
 export { ProfilePage } from './ProfilePage';
 export { RegistrationPage } from './RegistrationPage';
 export { TopicPage } from './TopicPage';
+export { Error500Page } from './Error500Page';
+export { Error400Page } from './Error400Page';

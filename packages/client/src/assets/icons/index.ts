@@ -9,3 +9,5 @@ export { PictureIcon } from './PictureIcon';
 export { ProfileIcon } from './ProfileIcon';
 export { TrashIcon } from './TrashIcon';
 export { EditProfileIcon } from './EditProfileIcon';
+export { Error500Icon } from './Error500Icon';
+export { Error400Icon } from './Error400Icon';
