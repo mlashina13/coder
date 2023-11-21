@@ -1,0 +1,15 @@
+@import '../../../styles/common';
+
+.confirm-dialog {
+    &__actions {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        gap: $spacing-xl;
+
+        & .button {
+            min-width: 140px;
+            width: 100%;
+        }
+    }
+}
