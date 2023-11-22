@@ -7,6 +7,9 @@
   margin-bottom: $spacing-m !important;
   .MuiFormHelperText-root {
     color: $red-cherry;
+    line-height: $spacing-ms;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .MuiFilledInput-root {
@@ -27,7 +30,7 @@
   }
 
   label {
-    color: rgba(64, 58, 75, 0.60);  color: $grey-dark;    font-style: normal;
+    color: $grey-dark;
     font-weight: $font-weight;
     line-height: normal;
   }
@@ -36,13 +39,13 @@
     label {
       &:before {
         content: '* ';
-        color: $red-cherry;;
+        color: $red-cherry;
       }
     }
   }
 
   input {
-color: $grey-dark;	
+    color: $grey-dark;
     text-align: left;
     font-weight: $font-weight;
     font-size: $font-ml;

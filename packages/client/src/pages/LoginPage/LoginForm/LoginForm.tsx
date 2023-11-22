@@ -49,25 +49,29 @@ export const LoginForm = () => {
     <form onSubmit={formik.handleSubmit} className='login-form'>
       <Input
         name='login'
+        variant='filled'
         value={formik.values.login}
         onChange={formik.handleChange}
         error={formik.touched.login && Boolean(formik.errors.login)}
         helperText={formik.touched.login && formik.errors.login}
-        className='login-form__input'
+        className='login-form__input requiredField'
         label='Логин'
         autoComplete='off'
+        size='small'
       />
       <Input
         name='password'
+        variant='filled'
         value={formik.values.password}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         error={formik.touched.password && Boolean(formik.errors.password)}
         helperText={formik.touched.password && formik.errors.password}
         type='password'
-        className='login-form__input'
+        className='login-form__input requiredField'
         label='Пароль'
         autoComplete='off'
+        size='small'
       />
       <Button label='Войти' type='submit' />
     </form>

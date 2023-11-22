@@ -6,12 +6,13 @@
   background-color: $grey;
   display: flex;
   align-items: center;
+  overflow: auto;
   justify-content: center;
 
   &__content {
-    padding: $spacing-m;
     display: flex;
     flex-direction: column;
     gap: $spacing-xl;
+    padding: $spacing-xxl;
   }
 }

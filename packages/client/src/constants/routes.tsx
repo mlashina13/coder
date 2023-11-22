@@ -9,6 +9,10 @@ export const ROUTER_URLS = {
    */
   Main: '/',
   /**
+   * Мтраница "Правила игры"
+   */
+  Rule: '/rule',
+  /**
    * Страница входа
    */
   Login: '/login',
@@ -69,6 +73,27 @@ export const ROUTES: Array<RouteInfo> = [
     key: 'profile',
     path: ROUTER_URLS.Profile,
     displayName: 'Профиль',
+    renderIconFunction: (className) => <ProfileIcon className={className} />,
+  },
+];
+
+export const SUBMENU_ROUTES: Array<RouteInfo> = [
+  {
+    key: '/',
+    path: ROUTER_URLS.Main,
+    displayName: 'Правила Игры',
+    renderIconFunction: (className) => <HomeIcon className={className} />,
+  },
+  {
+    key: 'game',
+    path: ROUTER_URLS.Game,
+    displayName: 'Начать игру',
+    renderIconFunction: (className) => <MessageIcon className={className} />,
+  },
+  {
+    key: 'leaderboard',
+    path: ROUTER_URLS.Leaderboard,
+    displayName: 'Результаты',
     renderIconFunction: (className) => <ProfileIcon className={className} />,
   },
 ];

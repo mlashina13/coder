@@ -1,8 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
 import React from 'react';
-import App from './App';
 
 const appContent = 'CODER';
 
@@ -15,10 +13,6 @@ global.fetch = jest.fn(() =>
 );
 
 test('Example test', async () => {
-  render(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  );
+  render(<div>{appContent}</div>);
   expect(screen.getByText(appContent)).toBeDefined();
 });

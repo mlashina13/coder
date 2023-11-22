@@ -4,9 +4,12 @@
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: $spacing-ms;
 
   &__input {
-    width: 25rem;
+    width: 20em;
+  }
+
+  button {
+    margin-top: $spacing-ml;
   }
 }

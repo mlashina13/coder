@@ -8,6 +8,7 @@ import './layoutStyles.scss';
 /**
  * Компонент шаблона страницы
  */
+
 export const Layout: FC<LayoutProps> = (props) => {
   const { children, subMenu, title } = props;
 
