@@ -1,6 +1,6 @@
-import BaseFigure from './BaseFigure';
+import Figure from './Figure';
 
-export default class ChipSlot extends BaseFigure {
+export default class ChipSlot extends Figure {
   /** Флаг, заполнена ли ячейка */
   private get isFilled() {
     return this.color !== this.baseColor;
@@ -11,6 +11,6 @@ export default class ChipSlot extends BaseFigure {
    * @param ctx Контекст canvas
    */
   public draw(ctx: CanvasRenderingContext2D) {
-    this.drawFigure(ctx, this.isFilled, true, true, this.isFilled);
+    this.drawFigure(ctx, this.isFilled ? Figure.types.convex : Figure.types.concave);
   }
 }

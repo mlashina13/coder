@@ -1,7 +1,7 @@
-import BaseFigure from './BaseFigure';
+import Figure from './Figure';
 import { chipColors } from '../consts';
 
-export default class CheckChip extends BaseFigure {
+export default class CheckChip extends Figure {
   /** Цвет фишки, если она отображает верное расположение и цвет игровой фишки */
   private readonly _allMatchColor = 'black' as chipColors;
 
@@ -23,6 +23,6 @@ export default class CheckChip extends BaseFigure {
    * @param ctx Контекст canvas
    */
   public draw = (ctx: CanvasRenderingContext2D) => {
-    this.drawFigure(ctx, !!this.color);
+    this.drawFigure(ctx, Figure.types.flat);
   };
 }
