@@ -1,4 +1,4 @@
-import { backgroundColor, chipSize } from '../consts';
+import { backgroundColor, chipSize, darkBackgroundColor } from '../consts';
 
 export default class Field {
   /* eslint-disable */
@@ -94,7 +94,7 @@ export default class Field {
 
   /** Заполнение фона */
   private fill = () => {
-    this._ctx.fillStyle = backgroundColor;
+    this._ctx.fillStyle = darkBackgroundColor;
 
     this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);
     this._ctx.strokeRect(0, 0, this._canvas.width, this._canvas.height);
@@ -102,11 +102,21 @@ export default class Field {
 
   /** Отрисовка поля для игровых фишек */
   private drawChipsField = () => {
+    this._ctx.fillStyle = backgroundColor;
+    this._ctx.strokeStyle = darkBackgroundColor;
+
+    this._ctx.fillRect(chipSize, chipSize, this._gameChipsFieldWidth, this._gameChipsFieldHeight);
     this._ctx.strokeRect(chipSize, chipSize, this._gameChipsFieldWidth, this._gameChipsFieldHeight);
   };
 
   /** Отрисовка поля для ячеек */
   private drawSlotsField = () => {
+    this._ctx.fillRect(
+      chipSize,
+      this._chipSlotsFieldStartY,
+      this._chipSlotsFieldWidth,
+      this._chipSlotsFieldHeight
+    );
     this._ctx.strokeRect(
       chipSize,
       this._chipSlotsFieldStartY,
@@ -117,6 +127,12 @@ export default class Field {
 
   /** Отрисовка поля для фишек проверки */
   private drawChecksField = () => {
+    this._ctx.fillRect(
+      this._checkChipsFieldStartX,
+      this._chipSlotsFieldStartY,
+      this._checkChipsFieldWidth,
+      this._chipSlotsFieldHeight
+    );
     this._ctx.strokeRect(
       this._checkChipsFieldStartX,
       this._chipSlotsFieldStartY,

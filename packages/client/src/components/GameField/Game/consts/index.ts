@@ -15,6 +15,7 @@ export const enum chipColors {
 export const backgroundColor = '#9e9c9c' as chipColors;
 export const shadowInnerColor = '#858383' as chipColors;
 export const shadowOuterColor = '#251717' as chipColors;
+export const darkBackgroundColor = '#525252' as chipColors;
 
 export const lighterChipColors = {
   [chipColors.red]: '#ff6666',
@@ -37,8 +38,8 @@ export const gradientOffsetY = 7;
 export const gradientRadius = 3;
 
 export const enum fieldColors {
-  white = 'white',
-  black = 'black',
+  white = '#ffffff',
+  black = '#000000',
 }
 
 export const availableColors = [
@@ -55,15 +56,12 @@ export const availableColors = [
   chipColors.olive,
 ];
 
-export const chipSize = 25;
-export const checkChipRadius = 5;
-
-export const distanceBetweenChips = 25;
-
+export const chipSize = 30;
+export const checkChipRadius = 8;
+export const distanceBetweenChips = chipSize;
 export const leftMouseButton = 0;
-
-export const startX = 50;
-export const startY = 50;
+export const startX = 2 * chipSize;
+export const startY = 2 * chipSize;
 
 const millisecond = 1;
 export const second = 1000 * millisecond;
