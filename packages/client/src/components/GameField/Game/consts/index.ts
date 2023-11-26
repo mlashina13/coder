@@ -33,6 +33,8 @@ export const lighterChipColors = {
   [shadowInnerColor]: backgroundColor,
 };
 
+export const lightX = -100;
+export const lightY = -200;
 export const gradientOffsetX = 5;
 export const gradientOffsetY = 7;
 export const gradientRadius = 3;

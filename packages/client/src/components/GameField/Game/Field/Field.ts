@@ -1,4 +1,6 @@
 import { backgroundColor, chipSize, darkBackgroundColor } from '../consts';
+import { clearShadow } from '../Figure/helpers';
+import { getFieldShadow } from './helpers';
 
 export default class Field {
   /* eslint-disable */
@@ -31,6 +33,10 @@ export default class Field {
   /** Стартовая координата по оси X поля с фишками проверки */
   private readonly _checkChipsFieldStartX!: number;
 
+  private readonly _shadowBlur!: number;
+  private readonly _shadowOffsetX!: number;
+  private readonly _shadowOffsetY!: number;
+
   constructor(
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
@@ -38,7 +44,9 @@ export default class Field {
     stepsCount: number,
     allAvailableColorsCount: number,
     colorsInRowCount: number,
-    maxStepsCount: number
+    maxStepsCount: number,
+    lightX: number,
+    lightY: number
   ) {
     if (Field._instance) {
       /* eslint-disable */
@@ -56,6 +64,19 @@ export default class Field {
     this._checkChipsFieldWidth = chipSize * Math.ceil(colorsCount / 2);
     this._chipSlotsFieldStartY = chipSize * 4;
     this._checkChipsFieldStartX = chipSize + this._chipSlotsFieldWidth;
+
+    const { shadowBlur, shadowOffsetX, shadowOffsetY } = getFieldShadow(
+      chipSize,
+      chipSize,
+      lightX,
+      lightY,
+      this._gameChipsFieldWidth,
+      this._gameChipsFieldHeight
+    );
+
+    this._shadowBlur = shadowBlur;
+    this._shadowOffsetX = shadowOffsetX;
+    this._shadowOffsetY = shadowOffsetY;
 
     Field._instance = this;
 
@@ -86,10 +107,12 @@ export default class Field {
 
   /** Отрисовка игрового поля */
   public draw = () => {
+    this.addShadow();
     this.fill();
     this.drawChipsField();
     this.drawSlotsField();
     this.drawChecksField();
+    clearShadow(this._ctx);
   };
 
   /** Заполнение фона */
@@ -139,6 +162,13 @@ export default class Field {
       this._checkChipsFieldWidth,
       this._chipSlotsFieldHeight
     );
+  };
+
+  /** Добавление тени к игровому полю */
+  private addShadow = () => {
+    this._ctx.shadowBlur = this._shadowBlur;
+    this._ctx.shadowOffsetX = this._shadowOffsetX;
+    this._ctx.shadowOffsetY = this._shadowOffsetY;
   };
 
   /** Очищение игрового поля */

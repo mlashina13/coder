@@ -5,6 +5,8 @@ export interface BaseFigureProps {
   y: number;
   color: chipColors;
   radius: number;
+  lightX: number;
+  lightY: number;
 }
 
 export type FigureTypes = 'flat' | 'concave' | 'convex';

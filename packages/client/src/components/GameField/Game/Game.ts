@@ -1,4 +1,4 @@
-import { backgroundColor, chipSize, leftMouseButton } from './consts';
+import { backgroundColor, chipSize, leftMouseButton, lightX, lightY } from './consts';
 import {
   calcNewCoordinate,
   convertMillisecondsToMinutesAndSeconds,
@@ -10,10 +10,10 @@ import {
 import GameChip from './Figure/GameChip';
 import ChipSlot from './Figure/ChipSlot';
 import CheckChip from './Figure/CheckChip';
-import Mouse from './Mouse/Mouse';
-import Field from './Field/Field';
-import type { CheckStepResult, OnEndGameCallback, Reference } from './types';
 import MovingGameChip from './Figure/MovingGameChip';
+import Field from './Field/Field';
+import Mouse from './Mouse/Mouse';
+import type { CheckStepResult, OnEndGameCallback, Reference } from './types';
 
 export default class Game {
   /** Инстанс игры */
@@ -68,7 +68,7 @@ export default class Game {
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
     onGameEnd?: OnEndGameCallback,
-    colorsCount = 9,
+    colorsCount = 4,
     stepsCount = 10,
     isColorsMayBeRepeated = false
   ) {
@@ -87,7 +87,9 @@ export default class Game {
       stepsCount,
       this._allAvailableColorsCount,
       this._colorsInRowCount,
-      this._maxStepsCount
+      this._maxStepsCount,
+      lightX,
+      lightY
     );
     this._isColorsMayBeRepeated = isColorsMayBeRepeated;
     this._currentChipSlotsRowIndex = 0;
@@ -104,6 +106,8 @@ export default class Game {
       y: 0,
       radius: chipSize / 2,
       color: backgroundColor,
+      lightX,
+      lightY,
     });
 
     Game._instance = this;

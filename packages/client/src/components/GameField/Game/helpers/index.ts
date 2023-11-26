@@ -9,11 +9,14 @@ import {
   second,
   startX,
   startY,
+  lightX,
+  lightY,
 } from '../consts';
 import GameChip from '../Figure/GameChip';
 import ChipSlot from '../Figure/ChipSlot';
 import CheckChip from '../Figure/CheckChip';
 import type { Reference } from '../types';
+import type { BaseFigureProps } from '../Figure/types';
 
 /**
  * Генерация эталонной последовательности цветов
@@ -138,7 +141,9 @@ export const createGameChips = (length: number, width: number) => {
         ...generateGameChipsCoordinate.next().value,
         color: generateColor.next().value,
         radius: chipSize / 2,
-      })
+        lightX,
+        lightY,
+      } as BaseFigureProps)
   );
 };
 
@@ -163,7 +168,9 @@ export const createChipSlots = (rows: number, columns: number) => {
           ...generateChipCellsCoordinate.next().value,
           color: backgroundColor,
           radius: chipSize / 2,
-        })
+          lightX,
+          lightY,
+        } as BaseFigureProps)
     )
   );
 };
@@ -189,7 +196,9 @@ export const createCheckChips = (rows: number, columns: number) => {
           ...generateCheckChipCoordinate.next().value,
           color: backgroundColor,
           radius: checkChipRadius,
-        })
+          lightX,
+          lightY,
+        } as BaseFigureProps)
     )
   );
 };

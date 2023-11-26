@@ -23,10 +23,10 @@ export default abstract class Figure {
   };
 
   /** Кооордината источника света по оси X */
-  private readonly _lightX = -100;
+  private readonly _lightX!: number;
 
   /** Кооордината источника света по оси Y */
-  private readonly _lightY = -200;
+  private readonly _lightY!: number;
 
   /** Радиус фишки */
   private readonly _radius: number;
@@ -43,12 +43,14 @@ export default abstract class Figure {
   /** Текущий цвет фигуры */
   private _color: Colors;
 
-  constructor({ x, y, radius, color }: BaseFigureProps) {
+  constructor({ x, y, radius, color, lightX, lightY }: BaseFigureProps) {
     this._x = x;
     this._y = y;
     this._radius = radius;
     this._color = color;
     this._baseColor = color;
+    this._lightX = lightX;
+    this._lightY = lightY;
   }
 
   protected get radius() {
