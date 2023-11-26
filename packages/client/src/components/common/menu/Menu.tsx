@@ -8,8 +8,7 @@ import './menuStyles.scss';
 /**
  * Компонент "Меню"
  */
-export const Menu: FC<MenuProps> = (props) => {
-  const { menuItems, defaultSelected } = props;
+export const Menu: FC<MenuProps> = ({ menuItems, defaultSelected }) => {
   const [selectedItem, selectedChangedHandler] = useState(menuItems[defaultSelected as number].key);
 
   /**
@@ -24,13 +23,13 @@ export const Menu: FC<MenuProps> = (props) => {
         value={selectedItem}
         onChange={(_, newValue) => selectedChangedHandler(newValue)}
       >
-        {menuItems.map((r) => (
+        {menuItems.map((item) => (
           <BottomNavigationAction
-            key={r.key}
-            label={r.displayName}
-            value={r.key}
+            key={item.key}
+            label={item.displayName}
+            value={item.key}
             component={Link}
-            to={r.path}
+            to={item.path}
           />
         ))}
       </BottomNavigation>
