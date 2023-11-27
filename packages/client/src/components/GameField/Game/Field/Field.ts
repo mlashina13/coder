@@ -101,7 +101,8 @@ export default class Field {
     colorsInRowCount: number,
     maxStepsCount: number
   ) => {
-    this._canvas.width = chipSize * (allAvailableColorsCount * 2 + colorsInRowCount / 2 + 1);
+    this._canvas.width =
+      chipSize * (allAvailableColorsCount * 2 + Math.ceil(colorsInRowCount / 2) + 1);
     this._canvas.height = chipSize * (6 + 2 * maxStepsCount);
   };
 
