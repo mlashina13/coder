@@ -1,12 +1,12 @@
 import Figure from './Figure';
-import { chipColors } from '../consts';
+import { CHIP_COLORS } from '../consts';
 
 export default class CheckChip extends Figure {
   /** Цвет фишки, если она отображает верное расположение и цвет игровой фишки */
-  private readonly _allMatchColor = 'black' as chipColors;
+  private readonly _allMatchColor = 'black' as CHIP_COLORS;
 
   /** Цвет фишки, если она отображает верный цвет игровой фишки */
-  private readonly _colorMatchColor = 'white' as chipColors;
+  private readonly _colorMatchColor = 'white' as CHIP_COLORS;
 
   /** Пометка фишки, отображающей верный цвет игровой фишки */
   public matchColor() {

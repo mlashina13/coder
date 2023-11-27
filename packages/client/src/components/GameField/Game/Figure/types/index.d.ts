@@ -1,9 +1,9 @@
-import type { chipColors } from '../../consts';
+import type { CHIP_COLORS } from '../../consts';
 
 export interface BaseFigureProps {
   x: number;
   y: number;
-  color: chipColors;
+  color: CHIP_COLORS;
   radius: number;
   lightX: number;
   lightY: number;

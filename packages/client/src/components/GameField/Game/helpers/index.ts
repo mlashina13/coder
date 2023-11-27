@@ -3,7 +3,7 @@ import {
   backgroundColor,
   checkChipRadius,
   chipSize,
-  chipColors,
+  CHIP_COLORS,
   distanceBetweenChips,
   minute,
   second,
@@ -111,7 +111,7 @@ function* coordinateGenerator(
  * Генератор цветов
  * @param colors Массив цветов
  */
-function* colorGenerator(colors: chipColors[]): Generator<chipColors> {
+function* colorGenerator(colors: CHIP_COLORS[]): Generator<CHIP_COLORS> {
   let index = 0;
 
   while (true) {

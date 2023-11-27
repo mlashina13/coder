@@ -1,5 +1,5 @@
 import {
-  chipColors,
+  CHIP_COLORS,
   backgroundColor,
   lighterChipColors,
   gradientOffsetX,
@@ -229,7 +229,7 @@ export default abstract class Figure {
 
     const color = isShadow ? shadowInnerColor : this._color;
 
-    gradientStyle.addColorStop(0, lighterChipColors[color as chipColors]);
+    gradientStyle.addColorStop(0, lighterChipColors[color as CHIP_COLORS]);
     gradientStyle.addColorStop(1, color);
 
     return gradientStyle;

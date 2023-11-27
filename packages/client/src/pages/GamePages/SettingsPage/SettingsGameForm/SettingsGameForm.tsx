@@ -9,6 +9,7 @@ import { DialogLayout } from '../../../../components/common/DialogLayout/DialogL
 import { Title } from '../../../../components/common/Title/Title';
 import { SettingGame } from '../SettingsProvider';
 import { SettingsGameFormProps } from './SettingsGameFormProps';
+import { GAME_TYPES } from '../../../../components/GameField/Game/consts';
 
 /**
  * Форма настроек игры*
@@ -28,7 +29,7 @@ export const SettingsGameForm = () => {
     initialValues: {
       colorsCount: '4',
       stepsCount: '10',
-      type: '1',
+      type: GAME_TYPES.withoutColorsRepeated,
       time: '',
     },
     validationSchema,
@@ -52,13 +53,13 @@ export const SettingsGameForm = () => {
           <RadioGroup defaultValue='1' name='type'>
             <FormControlLabel
               onChange={formik.handleChange}
-              value='1'
+              value={GAME_TYPES.withoutColorsRepeated}
               control={<Radio size='small' />}
               label='фишки с уникальными цветами'
             />
             <FormControlLabel
               onChange={formik.handleChange}
-              value='2'
+              value={GAME_TYPES.withColorsRepeated}
               control={<Radio size='small' />}
               label='фишки с повторяющимися цветами'
             />

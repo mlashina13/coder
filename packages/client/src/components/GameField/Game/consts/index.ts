@@ -1,4 +1,9 @@
-export const enum chipColors {
+export enum GAME_TYPES {
+  withoutColorsRepeated = '1',
+  withColorsRepeated = '2',
+}
+
+export const enum CHIP_COLORS {
   red = '#7b001c',
   yellow = '#fedd00',
   green = '#0f3325',
@@ -12,23 +17,23 @@ export const enum chipColors {
   olive = '#556b2F',
 }
 
-export const backgroundColor = '#9e9c9c' as chipColors;
-export const shadowInnerColor = '#858383' as chipColors;
-export const shadowOuterColor = '#251717' as chipColors;
-export const darkBackgroundColor = '#525252' as chipColors;
+export const backgroundColor = '#9e9c9c' as CHIP_COLORS;
+export const shadowInnerColor = '#858383' as CHIP_COLORS;
+export const shadowOuterColor = '#251717' as CHIP_COLORS;
+export const darkBackgroundColor = '#525252' as CHIP_COLORS;
 
 export const lighterChipColors = {
-  [chipColors.red]: '#ff6666',
-  [chipColors.yellow]: '#ffff66',
-  [chipColors.green]: '#66cc66',
-  [chipColors.blue]: '#6666ff',
-  [chipColors.purple]: '#cc66cc',
-  [chipColors.orange]: '#ffcc66',
-  [chipColors.pink]: '#F19EB5',
-  [chipColors.brown]: '#e69999',
-  [chipColors.gray]: '#cccccc',
-  [chipColors.cyan]: '#99ffff',
-  [chipColors.olive]: '#b3b366',
+  [CHIP_COLORS.red]: '#ff6666',
+  [CHIP_COLORS.yellow]: '#ffff66',
+  [CHIP_COLORS.green]: '#66cc66',
+  [CHIP_COLORS.blue]: '#6666ff',
+  [CHIP_COLORS.purple]: '#cc66cc',
+  [CHIP_COLORS.orange]: '#ffcc66',
+  [CHIP_COLORS.pink]: '#F19EB5',
+  [CHIP_COLORS.brown]: '#e69999',
+  [CHIP_COLORS.gray]: '#cccccc',
+  [CHIP_COLORS.cyan]: '#99ffff',
+  [CHIP_COLORS.olive]: '#b3b366',
   [backgroundColor]: '#c9c7c7',
   [shadowInnerColor]: backgroundColor,
 };
@@ -39,23 +44,23 @@ export const gradientOffsetX = 5;
 export const gradientOffsetY = 7;
 export const gradientRadius = 3;
 
-export const enum fieldColors {
+export const enum CHECK_CHIPS_COLORS {
   white = '#ffffff',
   black = '#000000',
 }
 
 export const availableColors = [
-  chipColors.red,
-  chipColors.yellow,
-  chipColors.green,
-  chipColors.blue,
-  chipColors.purple,
-  chipColors.orange,
-  chipColors.pink,
-  chipColors.brown,
-  chipColors.gray,
-  chipColors.cyan,
-  chipColors.olive,
+  CHIP_COLORS.red,
+  CHIP_COLORS.yellow,
+  CHIP_COLORS.green,
+  CHIP_COLORS.blue,
+  CHIP_COLORS.purple,
+  CHIP_COLORS.orange,
+  CHIP_COLORS.pink,
+  CHIP_COLORS.brown,
+  CHIP_COLORS.gray,
+  CHIP_COLORS.cyan,
+  CHIP_COLORS.olive,
 ];
 
 export const chipSize = 30;
