@@ -105,9 +105,11 @@ export const RegistrationForm = () => {
         onChange={formik.handleChange}
         error={formik.touched.first_name && Boolean(formik.errors.first_name)}
         helperText={formik.touched.first_name && formik.errors.first_name}
-        className='regstration-form__input'
+        className='regstration-form__input requiredField'
         label='Имя'
         autoComplete='off'
+        size='small'
+        variant='filled'
       />
       <Input
         name='second_name'
@@ -115,9 +117,11 @@ export const RegistrationForm = () => {
         onChange={formik.handleChange}
         error={formik.touched.second_name && Boolean(formik.errors.second_name)}
         helperText={formik.touched.second_name && formik.errors.second_name}
-        className='regstration-form__input'
+        className='regstration-form__input requiredField'
         label='Фамилия'
         autoComplete='off'
+        size='small'
+        variant='filled'
       />
       <Input
         name='email'
@@ -125,9 +129,11 @@ export const RegistrationForm = () => {
         onChange={formik.handleChange}
         error={formik.touched.email && Boolean(formik.errors.email)}
         helperText={formik.touched.email && formik.errors.email}
-        className='regstration-form__input'
+        className='regstration-form__input requiredField'
         label='E-mail'
         autoComplete='off'
+        size='small'
+        variant='filled'
       />
       <Input
         name='phone'
@@ -135,9 +141,11 @@ export const RegistrationForm = () => {
         onChange={formik.handleChange}
         error={formik.touched.phone && Boolean(formik.errors.phone)}
         helperText={formik.touched.phone && formik.errors.phone}
-        className='regstration-form__input'
+        className='regstration-form__input requiredField'
         label='Телефон'
         autoComplete='off'
+        size='small'
+        variant='filled'
       />
       <Input
         name='login'
@@ -145,9 +153,11 @@ export const RegistrationForm = () => {
         onChange={formik.handleChange}
         error={formik.touched.login && Boolean(formik.errors.login)}
         helperText={formik.touched.login && formik.errors.login}
-        className='regstration-form__input'
+        className='regstration-form__input requiredField'
         label='Логин'
         autoComplete='off'
+        size='small'
+        variant='filled'
       />
       <Input
         name='password'
@@ -157,9 +167,11 @@ export const RegistrationForm = () => {
         error={formik.touched.password && Boolean(formik.errors.password)}
         helperText={formik.touched.password && formik.errors.password}
         type='password'
-        className='regstration-form__input'
+        className='regstration-form__input requiredField'
         label='Пароль'
         autoComplete='off'
+        size='small'
+        variant='filled'
       />
       <Input
         name='passwordRepeat'
@@ -169,9 +181,11 @@ export const RegistrationForm = () => {
         error={formik.touched.passwordRepeat && Boolean(formik.errors.passwordRepeat)}
         helperText={formik.touched.passwordRepeat && formik.errors.passwordRepeat}
         type='password'
-        className='regstration-form__input'
+        className='regstration-form__input requiredField'
         label='Подтвердите пароль'
         autoComplete='off'
+        size='small'
+        variant='filled'
       />
       <Button label='Регистрация' type='submit' />
     </form>

@@ -25,7 +25,7 @@ export const AvatarBox: React.FC = () => {
   };
 
   return (
-    <DialogLayout clasName='avatar-box' contentClassName='avatar-box__content'>
+    <DialogLayout className='avatar-box' contentClassName='avatar-box__content'>
       <Avatar
         className='avatar-box__content__avatar'
         src={getImageSrc(userData?.avatar)}

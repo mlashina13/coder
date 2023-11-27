@@ -24,7 +24,14 @@ $spacing-ml: $spacing-unit * 2.5; //20
 $spacing-ls: $spacing-unit * 3; //24
 $spacing-lm: $spacing-unit * 3.5; //28
 $spacing-xl: $spacing-unit * 4; //32
+$spacing-xxs: $spacing-unit * 4.25; //34
 $spacing-xxl: $spacing-unit * 5; //40
 $spacing-auto: auto;
 $spacing-none: 0;
 
+$topic-message-r-space: 80px;
+$topic-message-min-width: 80px;
+$topic-actions-width: 80px;
+$topic-theme-min-width: 400px;
+$topic-counters-min-width: 165px;
+$topic-creator-min-width: 200px;
