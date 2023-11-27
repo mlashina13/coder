@@ -33,8 +33,13 @@ export default class Field {
   /** Стартовая координата по оси X поля с фишками проверки */
   private readonly _checkChipsFieldStartX!: number;
 
+  /** Степень размытия тени */
   private readonly _shadowBlur!: number;
+
+  /** Смещение тени по оси X */
   private readonly _shadowOffsetX!: number;
+
+  /** Смещение тени по оси Y */
   private readonly _shadowOffsetY!: number;
 
   constructor(
