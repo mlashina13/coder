@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { MenuItem } from '../../../types/common';
+import { MenuItem, RouteInfo } from '../../../types/common';
 
 /**
  * Свойства компонента "Основное меню"
@@ -8,15 +8,15 @@ export interface MenuProps {
   /**
    * Набор элементов меню
    */
-  menuItems: Array<MenuItem>;
+  menuItems: Array<RouteInfo>;
 
   /**
    * Событие изменения выбранного пункта меню
    */
-  selectedChanged: (id: string) => void;
+  selectedChanged?: (id: string) => void;
 
   /**
    * Выбранный по умолчанию пункт меню
    */
-  defaultSelected?: string;
+  defaultSelected?: number | string;
 }

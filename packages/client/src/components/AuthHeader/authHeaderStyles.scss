@@ -9,12 +9,14 @@
   &__logo {
     display: flex;
     flex-direction: column;
+    margin-top: -18px;
 
     &__title {
       color: $main-black;
-      font-size: $font-ls;
-      font-weight: $font-weight-bold;
       text-transform: uppercase;
+      text-shadow: 0px 4px 4px $text-shadow-color;
+      font-size: $font-lm;
+      font-weight: $font-weight-medium-bold;
     }
   }
 }
