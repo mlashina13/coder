@@ -96,11 +96,12 @@ export default class Game {
     this._onGameEnd = onGameEnd;
     this._startTime = new Date();
     this._gameChips = createGameChips(
+      ctx,
       colorsCount + 1,
       this._field.gameChipsFieldWidth - 2 * chipSize
     );
-    this._chipSlots = createChipSlots(stepsCount, colorsCount);
-    this._checkChips = createCheckChips(stepsCount, colorsCount);
+    this._chipSlots = createChipSlots(ctx, stepsCount, colorsCount);
+    this._checkChips = createCheckChips(ctx, stepsCount, colorsCount);
     this._movingFigure = new MovingGameChip({
       x: 0,
       y: 0,
@@ -108,6 +109,7 @@ export default class Game {
       color: backgroundColor,
       lightX,
       lightY,
+      ctx,
     });
 
     Game._instance = this;

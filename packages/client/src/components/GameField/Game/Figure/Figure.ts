@@ -34,6 +34,18 @@ export default abstract class Figure {
   /** Базовый цвет фигуры */
   private readonly _baseColor: Colors;
 
+  /** Градиент для заполнения фигуры */
+  private _innerGradient!: CanvasGradient | void;
+
+  /** Степень размытия тени */
+  private _outerShadowBlur!: number | void;
+
+  /** Смещение тени по оси X */
+  private _outerShadowOffsetX!: number | void;
+
+  /** Смещение тени по оси Y */
+  private _outerShadowOffsetY!: number | void;
+
   /** Координата по оси X */
   private _x: number;
 
@@ -43,7 +55,7 @@ export default abstract class Figure {
   /** Текущий цвет фигуры */
   private _color: Colors;
 
-  constructor({ x, y, radius, color, lightX, lightY }: BaseFigureProps) {
+  constructor({ x, y, radius, color, lightX, lightY, ctx }: BaseFigureProps) {
     this._x = x;
     this._y = y;
     this._radius = radius;
@@ -51,6 +63,9 @@ export default abstract class Figure {
     this._baseColor = color;
     this._lightX = lightX;
     this._lightY = lightY;
+
+    this.createInnerGradient(ctx);
+    this.createOuterShadow();
   }
 
   protected get radius() {
@@ -100,7 +115,7 @@ export default abstract class Figure {
     }
 
     if (type === Figure.types.concave) {
-      this.drawConcave(ctx, x, y);
+      this.drawConcave(ctx);
     }
 
     if (type === Figure.types.convex) {
@@ -126,11 +141,9 @@ export default abstract class Figure {
   /**
    * Отрисовка вогнутой фигуры
    * @param ctx Контекст canvas
-   * @param x Координата по оси X
-   * @param y Координата по оси Y
    */
-  private drawConcave = (ctx: CanvasRenderingContext2D, x: number, y: number) => {
-    this.addInnerShadow(ctx, x, y);
+  private drawConcave = (ctx: CanvasRenderingContext2D) => {
+    this.addInnerShadow(ctx);
 
     ctx.fill();
     ctx.stroke();
@@ -146,22 +159,33 @@ export default abstract class Figure {
   private drawConvex = (ctx: CanvasRenderingContext2D, x: number, y: number) => {
     ctx.fillStyle = this.createGradient(ctx, x, y);
 
-    this.addOuterShadow(ctx, x, y);
+    this.addOuterShadow(ctx);
     ctx.fill();
     clearShadow(ctx);
   };
 
   /**
-   * Добавление внутренней тени
+   * Создание градиента для заполнения выпуклой фигуры
    * @param ctx Контекст canvas
    * @param x Координата по оси X
    * @param y Координата по оси Y
    */
-  private addInnerShadow = (ctx: CanvasRenderingContext2D, x: number, y: number) => {
+  protected createInnerGradient = (ctx: CanvasRenderingContext2D, x = this._x, y = this._y) => {
     const { shadowX, shadowY } = this.calcShadowCoordinates(x, y);
 
-    ctx.fillStyle = this.createGradient(ctx, shadowX, shadowY, true);
+    this._innerGradient = this.createGradient(ctx, shadowX, shadowY, true);
+  };
+
+  /**
+   * Добавление внутренней тени
+   * @param ctx Контекст canvas
+   */
+  private addInnerShadow = (ctx: CanvasRenderingContext2D) => {
     ctx.strokeStyle = shadowInnerColor;
+
+    if (this._innerGradient) {
+      ctx.fillStyle = this._innerGradient;
+    }
   };
 
   /**
@@ -194,7 +218,6 @@ export default abstract class Figure {
     isShadow = false
   ) => {
     const { shineX, shineY } = this.calcShineCoordinates(x, y);
-
     const gradientStyle = ctx.createRadialGradient(
       shineX,
       shineY,
@@ -240,19 +263,37 @@ export default abstract class Figure {
   });
 
   /**
-   * Установка параметров тени
-   * @param ctx Контекст canvas
+   * Установка параметров внешней тени тени для выпуклых фигур
    * @param x Координата по оси X
    * @param y Координата по оси Y
    */
-  private addOuterShadow = (ctx: CanvasRenderingContext2D, x: number, y: number) => {
+  protected createOuterShadow = (x = this._x, y = this._y) => {
     const angleRadians = Math.atan2(y - this._lightY, x - this._lightX);
     const distanceToLight = Math.sqrt((this._lightX - x) ** 2 + (this._lightY - y) ** 2);
 
+    this._outerShadowBlur = Math.min(gradientRadius, distanceToLight / (5 * gradientRadius));
+    this._outerShadowOffsetX = Math.cos(angleRadians) * gradientOffsetX;
+    this._outerShadowOffsetY = Math.sin(angleRadians) * gradientOffsetY;
+  };
+
+  /**
+   * Установка параметров тени
+   * @param ctx Контекст canvas
+   */
+  private addOuterShadow = (ctx: CanvasRenderingContext2D) => {
     ctx.shadowColor = shadowOuterColor;
-    ctx.shadowBlur = Math.min(gradientRadius, distanceToLight / (5 * gradientRadius));
-    ctx.shadowOffsetX = Math.cos(angleRadians) * gradientOffsetX;
-    ctx.shadowOffsetY = Math.sin(angleRadians) * gradientOffsetY;
+
+    if (this._outerShadowBlur) {
+      ctx.shadowBlur = this._outerShadowBlur;
+    }
+
+    if (this._outerShadowOffsetX) {
+      ctx.shadowOffsetX = this._outerShadowOffsetX;
+    }
+
+    if (this._outerShadowOffsetY) {
+      ctx.shadowOffsetY = this._outerShadowOffsetY;
+    }
   };
 
   /**

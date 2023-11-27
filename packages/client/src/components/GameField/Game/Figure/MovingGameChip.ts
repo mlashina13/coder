@@ -31,6 +31,7 @@ export default class MovingGameChip extends GameChip {
    * @param ctx Контекст canvas
    */
   public draw(ctx: CanvasRenderingContext2D) {
+    this.createOuterShadow(this._newX, this._newY);
     this.drawFigure(ctx, Figure.types.convex, this._newX, this._newY);
   }
 }

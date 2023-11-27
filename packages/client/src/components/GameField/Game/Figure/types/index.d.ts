@@ -7,6 +7,7 @@ export interface BaseFigureProps {
   radius: number;
   lightX: number;
   lightY: number;
+  ctx: CanvasRenderingContext2D;
 }
 
 export type FigureTypes = 'flat' | 'concave' | 'convex';

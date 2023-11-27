@@ -122,10 +122,11 @@ function* colorGenerator(colors: chipColors[]): Generator<chipColors> {
 
 /**
  * Формирование списка игровых фишек
+ * @param ctx Контекст canvas
  * @param length Количество необходимых игровых фишек
  * @param width Ширина поля, в котором будут расположены координаты
  */
-export const createGameChips = (length: number, width: number) => {
+export const createGameChips = (ctx: CanvasRenderingContext2D, length: number, width: number) => {
   const generateGameChipsCoordinate = coordinateGenerator(
     startX + chipSize / 2,
     startY + chipSize / 2,
@@ -143,16 +144,18 @@ export const createGameChips = (length: number, width: number) => {
         radius: chipSize / 2,
         lightX,
         lightY,
+        ctx,
       } as BaseFigureProps)
   );
 };
 
 /**
  * Формирование списка ячеек для игровых фишек
+ * @param ctx Контекст canvas
  * @param rows Количество строк фишек
  * @param columns Количество фишек в строке
  */
-export const createChipSlots = (rows: number, columns: number) => {
+export const createChipSlots = (ctx: CanvasRenderingContext2D, rows: number, columns: number) => {
   const generateChipCellsCoordinate = coordinateGenerator(
     startX + chipSize / 2,
     3 * startY - chipSize / 2,
@@ -170,6 +173,7 @@ export const createChipSlots = (rows: number, columns: number) => {
           radius: chipSize / 2,
           lightX,
           lightY,
+          ctx,
         } as BaseFigureProps)
     )
   );
@@ -177,10 +181,11 @@ export const createChipSlots = (rows: number, columns: number) => {
 
 /**
  * Формирование списка фишек с результатами проверки
+ * @param ctx Контекст canvas
  * @param rows Количество строк фишек
  * @param columns Количество фишек в строке
  */
-export const createCheckChips = (rows: number, columns: number) => {
+export const createCheckChips = (ctx: CanvasRenderingContext2D, rows: number, columns: number) => {
   const generateCheckChipCoordinate = coordinateGenerator(
     startX + chipSize * (2 * columns + 0.5),
     startY * 3 - chipSize,
@@ -198,6 +203,7 @@ export const createCheckChips = (rows: number, columns: number) => {
           radius: checkChipRadius,
           lightX,
           lightY,
+          ctx,
         } as BaseFigureProps)
     )
   );
