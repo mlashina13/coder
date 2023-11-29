@@ -15,6 +15,7 @@ import {
 import GameChip from '../Figure/GameChip';
 import ChipSlot from '../Figure/ChipSlot';
 import CheckChip from '../Figure/CheckChip';
+import GameImage from '../GameImage/GameImage';
 import type { Reference } from '../types';
 import type { BaseFigureProps } from '../Figure/types';
 
@@ -208,3 +209,9 @@ export const createCheckChips = (ctx: CanvasRenderingContext2D, rows: number, co
     )
   );
 };
+
+export const createLockImages = (checkChips: CheckChip[][], availableColorsCount: number) =>
+  checkChips.map(
+    (chipRow, index) =>
+      new GameImage(chipRow[0].x, chipRow[chipRow.length - 1].x, chipRow[0].y, availableColorsCount)
+  );

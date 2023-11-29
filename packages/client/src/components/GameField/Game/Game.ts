@@ -5,6 +5,7 @@ import {
   createCheckChips,
   createChipSlots,
   createGameChips,
+  createLockImages,
   generateRandomColorSequence,
 } from './helpers';
 import GameChip from './Figure/GameChip';
@@ -14,6 +15,13 @@ import MovingGameChip from './Figure/MovingGameChip';
 import Field from './Field/Field';
 import Mouse from './Mouse/Mouse';
 import type { CheckStepResult, OnEndGameCallback, Reference } from './types';
+import GameImage from './GameImage/GameImage';
+
+// const lockImg = new Image();
+// lockImg.src = '/src/assets/img/lock-512.png';
+//
+// const redLockImg = new Image();
+// redLockImg.src = '/src/assets/img/red-lock-512.png';
 
 export default class Game {
   /** Инстанс игры */
@@ -68,6 +76,8 @@ export default class Game {
   /** Флаг остановки перерисовки canvas */
   private _isAnimationStopped = false;
 
+  private readonly _locksImages: GameImage[] = [];
+
   constructor(
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
@@ -104,6 +114,7 @@ export default class Game {
     );
     this._chipSlots = createChipSlots(ctx, stepsCount, this._colorsInRowCount);
     this._checkChips = createCheckChips(ctx, stepsCount, this._colorsInRowCount);
+    this._locksImages = createLockImages(this._checkChips, this._allAvailableColorsCount);
     this._movingFigure = new MovingGameChip({
       x: 0,
       y: 0,
@@ -156,7 +167,21 @@ export default class Game {
 
   /** Отрисовка результатов проверки */
   private drawCheckChips = () => {
-    this._checkChips.forEach((row) => row.forEach((check) => check.draw(this._field.ctx)));
+    this._checkChips.forEach((row, index) => {
+      if (index < this._currentChipSlotsRowIndex) {
+        row.forEach((check) => check.draw(this._field.ctx));
+      } else {
+        if (
+          index === this._currentChipSlotsRowIndex &&
+          this.isRowFilled &&
+          !this._locksImages[index].isActive
+        ) {
+          this._locksImages[index].activate();
+        }
+
+        this._locksImages[index].draw(this._field.ctx);
+      }
+    });
   };
 
   /** Запуск анимации */
@@ -208,6 +233,15 @@ export default class Game {
 
   /** Обработчик двойного клика мыши */
   private mouseDblClickHandler = () => {
+    if (this.checkSlotClear()) {
+      return;
+    }
+
+    this.checkRowUnlock();
+  };
+
+  /** Проверка, была ли очищена ячейка */
+  private checkSlotClear = () => {
     const currentSlot = this._chipSlots[this._currentChipSlotsRowIndex].find((slot) =>
       slot.isCoordinatesInFigure(this._mouse.x, this._mouse.y)
     );
@@ -215,6 +249,21 @@ export default class Game {
     if (currentSlot) {
       this.checkSlotFilling(currentSlot);
       currentSlot.fill();
+
+      return true;
+    }
+
+    return false;
+  };
+
+  /** Проверка, была ли нажата иконка для разблокировки результата */
+  private checkRowUnlock = () => {
+    const isCurrentRowUnlock = this._locksImages[
+      this._currentChipSlotsRowIndex
+    ].isCoordinatesInImage(this._mouse.x, this._mouse.y);
+
+    if (isCurrentRowUnlock) {
+      this.openNewChipSlotsRow();
     }
   };
 
@@ -301,7 +350,6 @@ export default class Game {
 
     this.checkGameResult();
     this.fillBaseGameChips();
-    this.openNewChipSlotsRow();
   };
 
   /** Проверка результата игры */
