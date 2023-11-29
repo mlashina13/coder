@@ -32,6 +32,7 @@ export default class Game {
   /** Фишки с результатами проверки */
   private readonly _checkChips: CheckChip[][] = [];
 
+  /** Игровое поле */
   private readonly _field!: Field;
 
   /** Коллбэк для выполнения после окончания игры */
@@ -71,7 +72,7 @@ export default class Game {
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
     onGameEnd: OnEndGameCallback | void,
-    colorsCount = 4,
+    colorsCount = 5,
     stepsCount = 10,
     isColorsMayBeRepeated = false
   ) {
@@ -79,16 +80,13 @@ export default class Game {
       return Game._instance;
     }
 
-    this._reference = generateRandomColorSequence(colorsCount, isColorsMayBeRepeated);
-    console.log(this._reference);
-    this._colorsInRowCount = colorsCount < 4 ? 4 : colorsCount > 10 ? 10 : colorsCount;
+    this._colorsInRowCount = colorsCount < 5 ? 4 : colorsCount > 11 ? 10 : colorsCount - 1;
+    this._reference = generateRandomColorSequence(this._colorsInRowCount, isColorsMayBeRepeated);
     this._allAvailableColorsCount = this._colorsInRowCount + 1;
     this._maxStepsCount = stepsCount < 1 ? 1 : stepsCount > 20 ? 20 : stepsCount;
     this._field = new Field(
       canvas,
       ctx,
-      colorsCount,
-      stepsCount,
       this._allAvailableColorsCount,
       this._colorsInRowCount,
       this._maxStepsCount,
@@ -101,11 +99,11 @@ export default class Game {
     this._startTime = new Date();
     this._gameChips = createGameChips(
       ctx,
-      colorsCount + 1,
+      this._allAvailableColorsCount,
       this._field.gameChipsFieldWidth - 2 * chipSize
     );
-    this._chipSlots = createChipSlots(ctx, stepsCount, colorsCount);
-    this._checkChips = createCheckChips(ctx, stepsCount, colorsCount);
+    this._chipSlots = createChipSlots(ctx, stepsCount, this._colorsInRowCount);
+    this._checkChips = createCheckChips(ctx, stepsCount, this._colorsInRowCount);
     this._movingFigure = new MovingGameChip({
       x: 0,
       y: 0,

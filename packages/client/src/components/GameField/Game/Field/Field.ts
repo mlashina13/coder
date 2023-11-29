@@ -45,8 +45,6 @@ export default class Field {
   constructor(
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
-    colorsCount: number,
-    stepsCount: number,
     allAvailableColorsCount: number,
     colorsInRowCount: number,
     maxStepsCount: number,
@@ -62,11 +60,11 @@ export default class Field {
 
     this._ctx = ctx;
     this._gameChipsFieldWidth =
-      chipSize + 2 * colorsCount * chipSize + chipSize * Math.ceil(colorsCount / 2);
+      chipSize + 2 * colorsInRowCount * chipSize + chipSize * Math.ceil(colorsInRowCount / 2);
     this._gameChipsFieldHeight = chipSize * 3;
-    this._chipSlotsFieldWidth = chipSize * (2 * colorsCount + 1);
-    this._chipSlotsFieldHeight = chipSize * (2 * stepsCount + 1);
-    this._checkChipsFieldWidth = chipSize * Math.ceil(colorsCount / 2);
+    this._chipSlotsFieldWidth = chipSize * (2 * colorsInRowCount + 1);
+    this._chipSlotsFieldHeight = chipSize * (2 * maxStepsCount + 1);
+    this._checkChipsFieldWidth = chipSize * Math.ceil(colorsInRowCount / 2);
     this._chipSlotsFieldStartY = chipSize * 4;
     this._checkChipsFieldStartX = chipSize + this._chipSlotsFieldWidth;
 
