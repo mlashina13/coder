@@ -7,6 +7,7 @@ export default class GameImage extends Image {
   /** Координата по оси Y */
   private readonly _y: number;
 
+  /** Активно ли изображение */
   private _isActive = false;
 
   constructor(startX: number, endX: number, y: number, availableColorsCount: number) {
@@ -24,7 +25,6 @@ export default class GameImage extends Image {
   }
 
   public activate = () => {
-    console.log('activate');
     this.src = '/src/assets/img/red-lock-512.png';
     this._isActive = true;
   };

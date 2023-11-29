@@ -17,12 +17,6 @@ import Mouse from './Mouse/Mouse';
 import type { CheckStepResult, OnEndGameCallback, Reference } from './types';
 import GameImage from './GameImage/GameImage';
 
-// const lockImg = new Image();
-// lockImg.src = '/src/assets/img/lock-512.png';
-//
-// const redLockImg = new Image();
-// redLockImg.src = '/src/assets/img/red-lock-512.png';
-
 export default class Game {
   /** Инстанс игры */
   /* eslint-disable */
