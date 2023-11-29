@@ -21,7 +21,7 @@ export default class Game {
   private static _instance: Game | void;
 
   /** Фишка для визуализации перемещения */
-  private _movingFigure!: MovingGameChip;
+  private readonly _movingFigure!: MovingGameChip;
 
   /** Игровые фишки */
   private readonly _gameChips: GameChip[] = [];
@@ -38,7 +38,7 @@ export default class Game {
   private readonly _onGameEnd: OnEndGameCallback | void;
 
   /** Время запуска игры */
-  private readonly _startTime!: Date;
+  private _startTime!: Date;
 
   /** Максимальное количество шагов игры */
   private readonly _maxStepsCount!: number;
@@ -62,12 +62,15 @@ export default class Game {
   private _currentChipSlotsRowIndex = 0;
 
   /** Эталонная последовательность цветов */
-  private _reference: Reference = [];
+  private readonly _reference: Reference = [];
+
+  /** Флаг остановки перерисовки canvas */
+  private _isAnimationStopped = false;
 
   constructor(
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
-    onGameEnd?: OnEndGameCallback,
+    onGameEnd: OnEndGameCallback | void,
     colorsCount = 4,
     stepsCount = 10,
     isColorsMayBeRepeated = false
@@ -77,6 +80,7 @@ export default class Game {
     }
 
     this._reference = generateRandomColorSequence(colorsCount, isColorsMayBeRepeated);
+    console.log(this._reference);
     this._colorsInRowCount = colorsCount < 4 ? 4 : colorsCount > 10 ? 10 : colorsCount;
     this._allAvailableColorsCount = this._colorsInRowCount + 1;
     this._maxStepsCount = stepsCount < 1 ? 1 : stepsCount > 20 ? 20 : stepsCount;
@@ -159,7 +163,9 @@ export default class Game {
 
   /** Запуск анимации */
   private startAnimation() {
-    requestAnimationFrame(this.tick);
+    if (!this._isAnimationStopped) {
+      requestAnimationFrame(this.tick);
+    }
   }
 
   /** Обновление {@link _canvas} */
@@ -333,14 +339,14 @@ export default class Game {
         time: `${minutes}:${seconds}`,
       });
 
-    this.destructor();
+    this._isAnimationStopped = true;
   };
 
   /** Завершение игры проигрышем */
   private setLoss = () => {
     this._onGameEnd && this._onGameEnd({ isWin: false });
 
-    this.destructor();
+    this._isAnimationStopped = true;
   };
 
   /**
@@ -477,5 +483,73 @@ export default class Game {
     Mouse.destructor();
 
     Game._instance = void 0;
+  };
+
+  /** Перерисовка фишек */
+  private redrawChips = () => {
+    this._gameChips.forEach((chip) => chip.fill());
+    this._chipSlots.forEach((row) => row.forEach((slot) => slot.fill()));
+    this._checkChips.forEach((row) => row.forEach((chip) => chip.fill()));
+  };
+
+  /** Перезапуск анимации */
+  private restartAnimation = () => {
+    if (!this._isAnimationStopped) {
+      return;
+    }
+
+    this._isAnimationStopped = false;
+    this.startAnimation();
+  };
+
+  /**
+   * Старт новой игры
+   * @param _colorsCount Количество цветов в последовательности
+   * @param _stepsCount Максимальное количество ходов
+   * @param _isColorsMayBeRepeated Флаг, показывающий, могут ли повторяться цвета в последовательности
+   */
+  public static start = (
+    _colorsCount?: number,
+    _stepsCount?: number,
+    _isColorsMayBeRepeated?: boolean
+  ) => {
+    if (!Game._instance) {
+      console.warn('Инстанс Game не существует. Необходимо запустить игру с начала');
+
+      return;
+    }
+
+    const canvas = Game._instance._field.canvas;
+    const ctx = Game._instance._field.ctx;
+    const onGameEnd = Game._instance._onGameEnd;
+    const colorsCount = _colorsCount ?? Game._instance._colorsInRowCount;
+    const stepsCount = _stepsCount ?? Game._instance._maxStepsCount;
+    const isColorsMayBeRepeated = _isColorsMayBeRepeated ?? Game._instance._isColorsMayBeRepeated;
+
+    Game._instance.destructor();
+
+    Game._instance = new Game(
+      canvas,
+      ctx,
+      onGameEnd,
+      colorsCount,
+      stepsCount,
+      isColorsMayBeRepeated
+    );
+  };
+
+  /** Рестарт текущей игры */
+  public static restart = () => {
+    if (!Game._instance) {
+      console.warn('Инстанс Game не существует. Необходимо запустить игру с начала');
+
+      return;
+    }
+
+    Game._instance._movingFigureIndex = null;
+    Game._instance._currentChipSlotsRowIndex = 0;
+
+    Game._instance.redrawChips();
+    Game._instance.restartAnimation();
   };
 }

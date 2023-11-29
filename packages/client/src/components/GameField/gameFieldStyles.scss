@@ -1,6 +1,15 @@
 .game-field {
-  height: 100%;
   display: flex;
   justify-content: center;
+
+  .field {
+    &_visible {
+      display: block;
+    }
+
+    &_hidden {
+      display: none;
+    }
+  }
 }
 

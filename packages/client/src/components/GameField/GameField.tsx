@@ -4,9 +4,9 @@ import Game from './Game/Game';
 import { SettingGame } from '../../pages/GamePages/SettingsPage/SettingsProvider';
 import { EndGameFailDialog } from '../../pages/GamePages/SettingsPage/EndGameForm/EndGameFailDialog';
 import { EndGameDialog } from '../../pages/GamePages/SettingsPage/EndGameForm/EndGameDialog';
+import { GAME_TYPES } from './Game/consts';
 import type { Statistics } from './Game/types';
 import './gameFieldStyles.scss';
-import { GAME_TYPES } from './Game/consts';
 
 export const GameField: FC = () => {
   const {
@@ -35,6 +35,12 @@ export const GameField: FC = () => {
     if (!canvasRef.current || !ctx) {
       console.warn('Не найден элемент canvas или его контекст');
     } else {
+      /*
+       * При монтировании компонента сразу создается инстанс игры. После этого из других компонентов
+       * можно вызывать новую игру с помощью Game.start() или перезапускать текущую игру с помощью
+       * Game.restart(). В метод start можно передать новые настройки. Без них игра перезапустится
+       * с теми же настройками, что и предыдущая.
+       */
       setGame(
         new Game(
           canvasRef.current,
@@ -50,16 +56,14 @@ export const GameField: FC = () => {
 
   return (
     <Box className='game-field'>
-      {result ? (
-        // TODO Доработка передачи параметров в диалоговое окно
-        result.isWin ? (
+      {result &&
+        (result.isWin ? (
+          // TODO Доработка передачи параметров в диалоговое окно
           <EndGameDialog place='10 место' time={result.time} />
         ) : (
           <EndGameFailDialog />
-        )
-      ) : (
-        <canvas ref={canvasRef} />
-      )}
+        ))}
+      <canvas ref={canvasRef} className={`${result ? 'field_hidden' : 'field_visible'}`} />
     </Box>
   );
 };
