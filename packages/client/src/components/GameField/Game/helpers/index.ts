@@ -2,10 +2,10 @@ import {
   availableColors,
   backgroundColor,
   CHIP_COLORS,
-  minute,
-  second,
   lightX,
   lightY,
+  minute,
+  second,
 } from '../consts';
 import GameChip from '../Figure/GameChip';
 import ChipSlot from '../Figure/ChipSlot';
@@ -38,7 +38,10 @@ export const generateRandomColorSequence = (
     }
   }
 
-  return sequence;
+  console.log(sequence.length);
+
+  // return sequence;
+  return [CHIP_COLORS.blue, CHIP_COLORS.blue, CHIP_COLORS.purple, CHIP_COLORS.green];
 };
 
 /**

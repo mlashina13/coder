@@ -76,6 +76,9 @@ export default class Game {
   /** Размер игровой фишки */
   private readonly _chipSize!: number;
 
+  /** Результат игры */
+  private _isWin: boolean | null = null;
+
   constructor(
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
@@ -267,6 +270,10 @@ export default class Game {
       this._currentChipSlotsRowIndex
     ].isCoordinatesInImage(this._mouse.x, this._mouse.y);
 
+    if (this._isWin !== null) {
+      this._isWin ? this.setWinnings() : this.setLoss();
+    }
+
     if (isCurrentRowUnlock) {
       this.openNewChipSlotsRow();
     }
@@ -362,13 +369,13 @@ export default class Game {
     const { allMatchCount, colorMatchCount } = this.compareRowWithReference();
 
     if (allMatchCount === this._colorsInRowCount) {
-      this.setWinnings();
+      this._isWin = true;
 
       return;
     }
 
     if (this._currentChipSlotsRowIndex === this._maxStepsCount - 1) {
-      this.setLoss();
+      this._isWin = false;
 
       return;
     }

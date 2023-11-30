@@ -8,7 +8,8 @@ export default class GameImage extends Image {
   /** Активно ли изображение */
   private _isActive = false;
 
-  private _chipSize: number;
+  /** Размер изображения */
+  private readonly _chipSize: number;
 
   constructor(
     startX: number,
