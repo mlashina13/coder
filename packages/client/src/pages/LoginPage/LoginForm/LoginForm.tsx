@@ -1,7 +1,9 @@
 import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 
 import { Button, Input } from '../../../components';
+import { ROUTER_URLS } from '../../../constants';
 import { Auth } from '../../../services';
 import { useUserStore } from '../../../stores';
 
@@ -32,6 +34,7 @@ const validationSchema = yup.object({
 /** форма авторизации */
 export const LoginForm = () => {
   const { setUserData } = useUserStore();
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       login: '',
@@ -40,7 +43,10 @@ export const LoginForm = () => {
     validationSchema,
     onSubmit: (values) => {
       Auth.signIn(values).then(() => {
-        Auth.getAuthUser().then((data) => setUserData?.(data));
+        Auth.getAuthUser().then((data) => {
+          navigate(ROUTER_URLS.Main);
+          setUserData?.(data);
+        });
       });
     },
     validateOnBlur: false,

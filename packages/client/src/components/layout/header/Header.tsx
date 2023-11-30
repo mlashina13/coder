@@ -1,8 +1,11 @@
 /* eslint-disable no-console */
 import React, { FC } from 'react';
 import { Box, IconButton, Tooltip, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+
 import { LogoIcon, LogoutIcon } from '../../../assets';
 import { HeaderProps } from './HeaderProps';
+import { ROUTER_URLS } from '../../../constants';
 import { Auth } from '../../../services';
 import { useUserStore } from '../../../stores';
 
@@ -13,6 +16,7 @@ import './headerStyles.scss';
  */
 export const Header: FC<HeaderProps> = (props) => {
   const { setUserData } = useUserStore();
+  const navigate = useNavigate();
   const { title } = props;
 
   /**
@@ -21,7 +25,7 @@ export const Header: FC<HeaderProps> = (props) => {
   const logoutHandler = () => {
     Auth.logOut().then(() => {
       // TODO: В будущем необходимо реализовать стор с данными пользователя!
-      console.log('Logout clicked!');
+      navigate(ROUTER_URLS.Login);
       setUserData?.();
     });
   };
