@@ -80,23 +80,42 @@ export default class Game {
   private _isWin: boolean | null = null;
 
   constructor(
+    /** Объект canvas */
     canvas: HTMLCanvasElement,
+    /** Контекст canvas */
     ctx: CanvasRenderingContext2D,
+    /** Доступная высота родительского контейнера */
     containerHeight: number,
+    /** Коллбэк для выполнения после окончания игры */
     onGameEnd: OnEndGameCallback | void,
+    /** Количество цветов, выбранное пользователем в настройках */
     colorsCount = 5,
+    /** Количество ходов, выбранное пользователем в настройках */
     stepsCount = 10,
+    /** Флаг, могут ли цвета в эталонной последовательности повторяться, выбранные пользователем в настройках */
     isColorsMayBeRepeated = false
   ) {
     if (Game._instance) {
       return Game._instance;
     }
 
+    /** Заполнение количества ячеек в строке от 4 до 10 */
     this._colorsInRowCount = colorsCount < 5 ? 4 : colorsCount > 11 ? 10 : colorsCount - 1;
+    /**
+     * Генерация эталонной последовательности на основании количества ячеек в строке и флага,
+     * могут ли повторяться цвета
+     */
     this._reference = generateRandomColorSequence(this._colorsInRowCount, isColorsMayBeRepeated);
+    /** Заполнение количества доступных цветов, на 1 превышает количество ячеек в строке */
     this._allAvailableColorsCount = this._colorsInRowCount + 1;
+    /** Заполнение максимального количества ходов от 1 до 20 */
     this._maxStepsCount = stepsCount < 1 ? 1 : stepsCount > 20 ? 20 : stepsCount;
+    /**
+     * Расчет размера игровой фишки на основании доступной высоты контейнера для игрового поля и
+     * максимального количества ходов
+     */
     this._chipSize = containerHeight / (6.5 + 1.5 * this._maxStepsCount);
+    /** Создание игрового поля */
     this._field = new Field(
       canvas,
       ctx,
@@ -106,23 +125,32 @@ export default class Game {
       lightX,
       lightY
     );
+    /** Заполнение флага, могут ли повторяться цвета в последовательности */
     this._isColorsMayBeRepeated = isColorsMayBeRepeated;
+    /** Установка первой строки ячеек активной */
     this._currentChipSlotsRowIndex = 0;
+    /** Сохранение коллбэка для выполнения после окончания игры */
     this._onGameEnd = onGameEnd;
+    /** Сохранение времени начала игры */
     this._startTime = new Date();
+    /** Создание игровых фишек */
     this._gameChips = createGameChips(
       ctx,
       this._chipSize,
       this._allAvailableColorsCount,
       this._field.gameChipsFieldWidth - 2 * this._chipSize
     );
+    /** Создание игровых ячеек */
     this._chipSlots = createChipSlots(ctx, this._chipSize, stepsCount, this._colorsInRowCount);
+    /** Создание проверочных фишек */
     this._checkChips = createCheckChips(ctx, this._chipSize, stepsCount, this._colorsInRowCount);
+    /** Создание объектов изображений замка */
     this._locksImages = createLockImages(
       this._checkChips,
       this._chipSize,
       this._allAvailableColorsCount
     );
+    /** Создание передвигаемой игровой фишки */
     this._movingFigure = new MovingGameChip({
       x: 0,
       y: 0,
@@ -133,8 +161,10 @@ export default class Game {
       ctx,
     });
 
+    /** Сохранение инстанса для резализации синглтона */
     Game._instance = this;
 
+    /** Запуск инициализации игры */
     this.init();
   }
 
@@ -514,7 +544,7 @@ export default class Game {
     }
   };
 
-  /** Очищение {@link _canvas} */
+  /** Очищение canvas */
   private clear = () => {
     this._field.clear();
     this._field.draw();

@@ -1,8 +1,12 @@
+/** Типы игры */
 export enum GAME_TYPES {
+  /** Игра без повторения цветов в эталонной последовательности */
   withoutColorsRepeated = '1',
+  /** Игра с возможным повторением цветов в эталонной последовательности */
   withColorsRepeated = '2',
 }
 
+/** Значения используемых в игре цветов для фишек */
 export const enum CHIP_COLORS {
   red = '#7b001c',
   yellow = '#fedd00',
@@ -17,11 +21,16 @@ export const enum CHIP_COLORS {
   olive = '#556b2F',
 }
 
+/** Основной фоновый цвет */
 export const backgroundColor = '#9e9c9c' as CHIP_COLORS;
+/** Цвет для внутренней тени */
 export const shadowInnerColor = '#858383' as CHIP_COLORS;
+/** Цвет для внешней тени */
 export const shadowOuterColor = '#251717' as CHIP_COLORS;
+/** Затемненный фоновый цвет */
 export const darkBackgroundColor = '#525252' as CHIP_COLORS;
 
+/** Цвета для создания градиента внутри фишек */
 export const lighterChipColors = {
   [CHIP_COLORS.red]: '#ff6666',
   [CHIP_COLORS.yellow]: '#ffff66',
@@ -38,17 +47,24 @@ export const lighterChipColors = {
   [shadowInnerColor]: backgroundColor,
 };
 
+/** Координата источника света по оси X */
 export const lightX = -100;
+/** Координата источника света по оси Y */
 export const lightY = -200;
+/** Смещение тени по оси X */
 export const gradientOffsetX = 5;
+/** Смещение тени по оси Y */
 export const gradientOffsetY = 7;
+/** Радиус градиента */
 export const gradientRadius = 3;
 
+/** Цвета проверочных фишек */
 export const enum CHECK_CHIPS_COLORS {
   white = '#ffffff',
   black = '#000000',
 }
 
+/** Массив доступных в игре цветов фишек. Из этого массива формируется эталонная последовательность цветов */
 export const availableColors = [
   CHIP_COLORS.red,
   CHIP_COLORS.yellow,
@@ -64,6 +80,9 @@ export const availableColors = [
 ];
 export const leftMouseButton = 0;
 
+/** Милисекунда */
 const millisecond = 1;
+/** Секунда */
 export const second = 1000 * millisecond;
+/** Минута */
 export const minute = 60 * second;

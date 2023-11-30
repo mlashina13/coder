@@ -46,12 +46,19 @@ export default class Field {
   private readonly _chipSize!: number;
 
   constructor(
+    /** Объект canvas */
     canvas: HTMLCanvasElement,
+    /** Контекст canvas */
     ctx: CanvasRenderingContext2D,
+    /** Размер игровой фишки */
     chipSize: number,
+    /** Количество цветов в последовательности */
     colorsInRowCount: number,
+    /** Максимальное количество ходов */
     maxStepsCount: number,
+    /** Координата источника освещения по оси X */
     lightX: number,
+    /** Координата источника освещения по оси Y */
     lightY: number
   ) {
     if (Field._instance) {
@@ -62,13 +69,51 @@ export default class Field {
     this._canvas = canvas;
     this._chipSize = chipSize;
     this._ctx = ctx;
+    /**
+     * Высота поля с игровыми фишками определяется как высота 3-х фишек:
+     * 2 для отступа и 1 для отрисовки самих фишек
+     */
     this._gameChipsFieldHeight = chipSize * 3;
+    /**
+     * Ширина поля с игровыми ячейками определяется как количество ячеек в строке + 1,
+     * и это умножается на полтора размера ячейки. По этой формуле получается задать ширину поля,
+     * соответствующую тому, что справа и слева от ячеек до края поля будет отступ по размеру ячейки,
+     * а между ячейками (в ширину) будет расстояние в половину размера ячейки
+     */
     this._chipSlotsFieldWidth = 1.5 * chipSize * (colorsInRowCount + 1);
-    this._chipSlotsFieldHeight = 1.5 * this._chipSize * (1 + maxStepsCount);
-    this._checkChipsFieldWidth = chipSize * Math.ceil(colorsInRowCount / 2) + chipSize;
+    /**
+     * Высота поля с игровыми ячейками определяется как максимальное количество шагов + 1,
+     * и это умножается на полтора размера ячейки. По этой формуле получается задать высоту поля,
+     * соответствующую тому, что сверху и снизу от ячеек до края поля будет отступ по размеру ячейки,
+     * а между ячейками (в высоту) будет расстояние в половину размера ячейки
+     */
+    this._chipSlotsFieldHeight = 1.5 * this._chipSize * (maxStepsCount + 1);
+    /**
+     * Ширина поля с проверочными фишками определяется как половина от количества ячеек в строке
+     * + 1, и это умножается на размер игровой фишки. Половина от количества ячеек округляется в
+     * большую сторону – это позволяет рассчитать, сколько максимум проверочных фишек будет в одном
+     * из двух рядов. По этой формуле получается задать ширину поля, соответствующую тому, что
+     * справа и слева от проверочных фишек до края поля будет отступ по размеру игровой фишки, а
+     * расстояния между центрами окружностей (в ширину) проверочных фишек будут соответствовать
+     * размеру игровой фишки
+     */
+    this._checkChipsFieldWidth = chipSize * (Math.ceil(colorsInRowCount / 2) + 1);
+    /**
+     * Ширина поля с игровыми фишками определяется как сумма ширин поля с игровыми ячейками и поля
+     * с проверочными фишками. Расстояние (в ширину) между игровыми фишками определяется в
+     * зависимости от количества доступных цветов (фишек) и ширины поля.
+     */
     this._gameChipsFieldWidth = this._chipSlotsFieldWidth + this._checkChipsFieldWidth;
-    this._chipSlotsFieldStartY = chipSize * 4;
-    this._checkChipsFieldStartX = chipSize + this._chipSlotsFieldWidth;
+    /**
+     * Координата верхней границы поля с игровыми ячейками по оси Y определяется как высота поля с
+     * игровыми фишками + размер игровой ячейки в качестве отступа от границы поля.
+     */
+    this._chipSlotsFieldStartY = this._gameChipsFieldHeight + chipSize;
+    /**
+     * Координата левой границы поля с проверочными фишками по оси X определяется как ширина поля с
+     * игровыми ячейками + размер игровой ячейки в качестве отступа от границы поля.
+     */
+    this._checkChipsFieldStartX = this._chipSlotsFieldWidth + chipSize;
 
     const { shadowBlur, shadowOffsetX, shadowOffsetY } = getFieldShadow(
       chipSize,
