@@ -38,10 +38,7 @@ export const generateRandomColorSequence = (
     }
   }
 
-  console.log(sequence.length);
-
-  // return sequence;
-  return [CHIP_COLORS.blue, CHIP_COLORS.blue, CHIP_COLORS.purple, CHIP_COLORS.green];
+  return sequence;
 };
 
 /**
