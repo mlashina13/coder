@@ -38,6 +38,8 @@ export const generateRandomColorSequence = (
     }
   }
 
+  console.info('Сгенерированная последовательность:', sequence);
+
   return sequence;
 };
 
