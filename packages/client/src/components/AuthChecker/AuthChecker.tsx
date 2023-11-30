@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import { FC, PropsWithChildren, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -39,5 +40,5 @@ export const AuthChecker: FC<PropsWithChildren> = (props) => {
     }
   }, [currentUser, location]);
 
-  return children;
+  return <>{children}</>;
 };
