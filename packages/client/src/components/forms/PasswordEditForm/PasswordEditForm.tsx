@@ -1,26 +1,35 @@
-import { useFormik } from 'formik';
-
 import { FC } from 'react';
-import { Button, Input } from '../../../common';
-import { User } from '../../../../services';
-import { PasswordEditFormProps, PasswordEditFormValues } from './types';
-
-import { passwordValidationSchema } from './validationSchema';
-
+import { useFormik } from 'formik';
+import { Button, Input } from '../../common';
+import { User } from '../../../api';
+import { validationSchema } from './validationSchema';
+import { PasswordData } from '../../../types/common';
+import { PasswordEditFormProps } from './PasswordEditFormProps';
 import './passwordEditFormStyles.scss';
 
-export const PasswordEditForm: FC<PasswordEditFormProps> = ({ handleClose }) => {
-  const formik = useFormik<PasswordEditFormValues>({
+/**
+ * Модель данных формы
+ */
+export interface PasswordEditFormData extends PasswordData {
+  repeatNewPassword: string;
+}
+
+/**
+ * Компонент формы редактирования пароля
+ */
+export const PasswordEditForm: FC<PasswordEditFormProps> = (props) => {
+  const { onClose } = props;
+  const formik = useFormik<PasswordEditFormData>({
     initialValues: {
       oldPassword: '',
       newPassword: '',
       repeatNewPassword: '',
     },
-    validationSchema: passwordValidationSchema,
+    validationSchema,
     onSubmit: async (formValues) => {
       try {
         await User.updatePassword(formValues);
-        handleClose();
+        onClose();
       } catch (error) {
         console.error(error);
       }

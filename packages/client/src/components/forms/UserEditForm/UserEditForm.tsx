@@ -1,25 +1,28 @@
-import { useFormik } from 'formik';
-
 import { FC } from 'react';
-import { Button, Input } from '../../../common';
-import { User } from '../../../../services';
-import { useUserStore } from '../../../../stores';
-
-import { UserEditFormProps, UserEditFormValues } from './types';
-import { userDataValidationSchema } from './validationSchema';
-
+import { useFormik } from 'formik';
+import { Button, Input } from '../../common';
+import { UserEditFormProps } from './UserEditFormProps';
+import { validationSchema } from './validationSchema';
+import { UserEditProfileData } from '../../../types/common';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { updatePersonalData } from '../../../services';
 import './userEditFormStyles.scss';
 
-export const UserEditForm: FC<UserEditFormProps> = ({ handleClose }) => {
-  const { userData, setUserData } = useUserStore();
-  const formik = useFormik<UserEditFormValues>({
+/**
+ * Форма редактирования персональных данных пользователя
+ */
+export const UserEditForm: FC<UserEditFormProps> = (props) => {
+  const { onClose } = props;
+  const { currentUser } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const formik = useFormik<UserEditProfileData>({
     initialValues: {
-      email: userData?.email,
-      phone: userData?.phone,
-      second_name: userData?.second_name,
-      first_name: userData?.first_name,
+      email: currentUser?.email,
+      phone: currentUser?.phone,
+      second_name: currentUser?.second_name,
+      first_name: currentUser?.first_name,
     },
-    validationSchema: userDataValidationSchema,
+    validationSchema,
     onSubmit: async (formValues) => {
       if (
         formValues?.email &&
@@ -33,13 +36,8 @@ export const UserEditForm: FC<UserEditFormProps> = ({ handleClose }) => {
           second_name: formValues.second_name,
           first_name: formValues.first_name,
         };
-        try {
-          const data = await User.updateUserData(values);
-          setUserData?.(data);
-          handleClose();
-        } catch (error) {
-          console.error(error);
-        }
+        dispatch(updatePersonalData(values));
+        onClose();
       }
     },
   });

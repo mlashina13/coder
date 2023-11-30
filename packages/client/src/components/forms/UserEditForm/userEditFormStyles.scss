@@ -1,7 +1,7 @@
-@import '../../../../styles/color';
-@import '../../../../styles/common';
+@import '../../../styles/color';
+@import '../../../styles/common';
 
-.password-edit-form {
+.user-edit-form {
   display: flex;
   flex-direction: column;
   gap: $spacing-ms;

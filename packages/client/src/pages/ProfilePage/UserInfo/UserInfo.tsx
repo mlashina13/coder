@@ -1,18 +1,22 @@
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import { Box } from '@mui/material';
-
 import { EditProfileIcon } from '../../../assets';
 import { EditUserDataDialog, InfoTextBlock, Title } from '../../../components';
-import { useUserStore } from '../../../stores';
-
+import { useAppSelector } from '../../../hooks';
 import './userInfoStyles.scss';
 
-/** данные пользователя */
+/**
+ * Компонент отображения персоналбных данных пользователя
+ */
 export const UserInfo: FC = () => {
+  const { currentUser } = useAppSelector((state) => state.user);
   const [open, setOpen] = useState(false);
-  const { userData } = useUserStore();
 
-  const handleClose = () => {
+  /**
+   * Обработчик закрытия диалогового окна
+   * редактирования данных пользователя
+   */
+  const handleUserEditDialogClose = () => {
     setOpen(false);
   };
 
@@ -21,9 +25,9 @@ export const UserInfo: FC = () => {
       <Box className='user-info'>
         <Box className='user-info__row'>
           <Title variant='h6' className='user-info__row__user-name'>
-            {userData?.first_name} {userData?.second_name}
+            {currentUser?.first_name} {currentUser?.second_name}
           </Title>
-          {userData ? (
+          {currentUser ? (
             <EditProfileIcon className='user-info__edit-icon' onClick={() => setOpen(true)} />
           ) : null}
         </Box>
@@ -31,34 +35,34 @@ export const UserInfo: FC = () => {
           labelClassName='user-info__row__label'
           valueClassName='user-info__row__value'
           label='Логин'
-          value={userData?.login}
+          value={currentUser?.login}
         />
         <InfoTextBlock
           labelClassName='user-info__row__label'
           valueClassName='user-info__row__value'
           label='Почта'
-          value={userData?.email}
+          value={currentUser?.email}
         />
         <InfoTextBlock
           labelClassName='user-info__row__label'
           valueClassName='user-info__row__value'
           label='Имя'
-          value={userData?.first_name}
+          value={currentUser?.first_name}
         />
         <InfoTextBlock
           labelClassName='user-info__row__label'
           valueClassName='user-info__row__value'
           label='Фамилия'
-          value={userData?.second_name}
+          value={currentUser?.second_name}
         />
         <InfoTextBlock
           labelClassName='user-info__row__label'
           valueClassName='user-info__row__value'
           label='Телефон'
-          value={userData?.phone}
+          value={currentUser?.phone}
         />
       </Box>
-      <EditUserDataDialog handleClose={handleClose} open={open} />
+      <EditUserDataDialog onClose={handleUserEditDialogClose} open={open} />
     </>
   );
 };
