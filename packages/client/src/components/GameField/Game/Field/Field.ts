@@ -1,4 +1,4 @@
-import { backgroundColor, chipSize, darkBackgroundColor } from '../consts';
+import { backgroundColor, darkBackgroundColor } from '../consts';
 import { clearShadow } from '../Figure/helpers';
 import { getFieldShadow } from './helpers';
 
@@ -42,10 +42,13 @@ export default class Field {
   /** Смещение тени по оси Y */
   private readonly _shadowOffsetY!: number;
 
+  /** Размер игровой фишки */
+  private readonly _chipSize!: number;
+
   constructor(
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
-    allAvailableColorsCount: number,
+    chipSize: number,
     colorsInRowCount: number,
     maxStepsCount: number,
     lightX: number,
@@ -57,14 +60,13 @@ export default class Field {
     }
 
     this._canvas = canvas;
-
+    this._chipSize = chipSize;
     this._ctx = ctx;
-    this._gameChipsFieldWidth =
-      chipSize + 2 * colorsInRowCount * chipSize + chipSize * Math.ceil(colorsInRowCount / 2);
     this._gameChipsFieldHeight = chipSize * 3;
-    this._chipSlotsFieldWidth = chipSize * (2 * colorsInRowCount + 1);
-    this._chipSlotsFieldHeight = chipSize * (2 * maxStepsCount + 1);
-    this._checkChipsFieldWidth = chipSize * Math.ceil(colorsInRowCount / 2);
+    this._chipSlotsFieldWidth = 1.5 * chipSize * (colorsInRowCount + 1);
+    this._chipSlotsFieldHeight = 1.5 * this._chipSize * (1 + maxStepsCount);
+    this._checkChipsFieldWidth = chipSize * Math.ceil(colorsInRowCount / 2) + chipSize;
+    this._gameChipsFieldWidth = this._chipSlotsFieldWidth + this._checkChipsFieldWidth;
     this._chipSlotsFieldStartY = chipSize * 4;
     this._checkChipsFieldStartX = chipSize + this._chipSlotsFieldWidth;
 
@@ -83,7 +85,7 @@ export default class Field {
 
     Field._instance = this;
 
-    this.setSize(allAvailableColorsCount, colorsInRowCount, maxStepsCount);
+    this.setSize(maxStepsCount);
   }
 
   public get canvas() {
@@ -99,14 +101,9 @@ export default class Field {
   }
 
   /** Установка размера игрового поля */
-  private setSize = (
-    allAvailableColorsCount: number,
-    colorsInRowCount: number,
-    maxStepsCount: number
-  ) => {
-    this._canvas.width =
-      chipSize * (allAvailableColorsCount * 2 + Math.ceil(colorsInRowCount / 2) + 1);
-    this._canvas.height = chipSize * (6 + 2 * maxStepsCount);
+  private setSize = (maxStepsCount: number) => {
+    this._canvas.width = this._gameChipsFieldWidth + 2 * this._chipSize;
+    this._canvas.height = this._chipSize * (6.5 + 1.5 * maxStepsCount);
   };
 
   /** Отрисовка игрового поля */
@@ -132,20 +129,30 @@ export default class Field {
     this._ctx.fillStyle = backgroundColor;
     this._ctx.strokeStyle = darkBackgroundColor;
 
-    this._ctx.fillRect(chipSize, chipSize, this._gameChipsFieldWidth, this._gameChipsFieldHeight);
-    this._ctx.strokeRect(chipSize, chipSize, this._gameChipsFieldWidth, this._gameChipsFieldHeight);
+    this._ctx.fillRect(
+      this._chipSize,
+      this._chipSize,
+      this._gameChipsFieldWidth,
+      this._gameChipsFieldHeight
+    );
+    this._ctx.strokeRect(
+      this._chipSize,
+      this._chipSize,
+      this._gameChipsFieldWidth,
+      this._gameChipsFieldHeight
+    );
   };
 
   /** Отрисовка поля для ячеек */
   private drawSlotsField = () => {
     this._ctx.fillRect(
-      chipSize,
+      this._chipSize,
       this._chipSlotsFieldStartY,
       this._chipSlotsFieldWidth,
       this._chipSlotsFieldHeight
     );
     this._ctx.strokeRect(
-      chipSize,
+      this._chipSize,
       this._chipSlotsFieldStartY,
       this._chipSlotsFieldWidth,
       this._chipSlotsFieldHeight

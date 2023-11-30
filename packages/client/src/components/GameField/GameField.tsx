@@ -45,6 +45,14 @@ export const GameField: FC = () => {
         new Game(
           canvasRef.current,
           ctx,
+          /*
+           * Здесь происходит расчет высоты, которую может занять игровое поле на экране.
+           * По очереди учитывается высота .page-header, .navigation-panel, .layout__divider, .main-menu
+           * и паддинги внутри .layout__content.
+           * Пока не нашла способа сделать это изящнее, поэтому если высота указанных выше элементов
+           * будет меняться, дополнительно придется исправлять ее здесь.
+           */
+          window.innerHeight - 48 - 40 - 4 - 40 - 24 - 24,
           onEndGame,
           Number.parseInt(colorsCount || '', 10),
           Number.parseInt(stepsCount || '', 10),

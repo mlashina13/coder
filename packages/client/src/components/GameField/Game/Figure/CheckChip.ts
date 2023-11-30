@@ -23,6 +23,6 @@ export default class CheckChip extends Figure {
    * @param ctx Контекст canvas
    */
   public draw = (ctx: CanvasRenderingContext2D) => {
-    this.drawFigure(ctx, Figure.types.flat);
+    this.drawFigure(ctx, Figure.types.flat, this.x, this.y + this.radius / 2);
   };
 }

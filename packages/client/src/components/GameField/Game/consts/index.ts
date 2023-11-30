@@ -62,13 +62,7 @@ export const availableColors = [
   CHIP_COLORS.cyan,
   CHIP_COLORS.olive,
 ];
-
-export const chipSize = 30;
-export const checkChipRadius = 8;
-export const distanceBetweenChips = chipSize;
 export const leftMouseButton = 0;
-export const startX = 2 * chipSize;
-export const startY = 2 * chipSize;
 
 const millisecond = 1;
 export const second = 1000 * millisecond;

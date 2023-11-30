@@ -1,4 +1,4 @@
-import { backgroundColor, chipSize, leftMouseButton, lightX, lightY } from './consts';
+import { backgroundColor, leftMouseButton, lightX, lightY } from './consts';
 import {
   calcNewCoordinate,
   convertMillisecondsToMinutesAndSeconds,
@@ -14,8 +14,8 @@ import CheckChip from './Figure/CheckChip';
 import MovingGameChip from './Figure/MovingGameChip';
 import Field from './Field/Field';
 import Mouse from './Mouse/Mouse';
-import type { CheckStepResult, OnEndGameCallback, Reference } from './types';
 import GameImage from './GameImage/GameImage';
+import type { CheckStepResult, OnEndGameCallback, Reference } from './types';
 
 export default class Game {
   /** Инстанс игры */
@@ -70,11 +70,16 @@ export default class Game {
   /** Флаг остановки перерисовки canvas */
   private _isAnimationStopped = false;
 
+  /** Объекты изображений замка */
   private readonly _locksImages: GameImage[] = [];
+
+  /** Размер игровой фишки */
+  private readonly _chipSize!: number;
 
   constructor(
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D,
+    containerHeight: number,
     onGameEnd: OnEndGameCallback | void,
     colorsCount = 5,
     stepsCount = 10,
@@ -88,10 +93,11 @@ export default class Game {
     this._reference = generateRandomColorSequence(this._colorsInRowCount, isColorsMayBeRepeated);
     this._allAvailableColorsCount = this._colorsInRowCount + 1;
     this._maxStepsCount = stepsCount < 1 ? 1 : stepsCount > 20 ? 20 : stepsCount;
+    this._chipSize = containerHeight / (6.5 + 1.5 * this._maxStepsCount);
     this._field = new Field(
       canvas,
       ctx,
-      this._allAvailableColorsCount,
+      this._chipSize,
       this._colorsInRowCount,
       this._maxStepsCount,
       lightX,
@@ -103,16 +109,21 @@ export default class Game {
     this._startTime = new Date();
     this._gameChips = createGameChips(
       ctx,
+      this._chipSize,
       this._allAvailableColorsCount,
-      this._field.gameChipsFieldWidth - 2 * chipSize
+      this._field.gameChipsFieldWidth - 2 * this._chipSize
     );
-    this._chipSlots = createChipSlots(ctx, stepsCount, this._colorsInRowCount);
-    this._checkChips = createCheckChips(ctx, stepsCount, this._colorsInRowCount);
-    this._locksImages = createLockImages(this._checkChips, this._allAvailableColorsCount);
+    this._chipSlots = createChipSlots(ctx, this._chipSize, stepsCount, this._colorsInRowCount);
+    this._checkChips = createCheckChips(ctx, this._chipSize, stepsCount, this._colorsInRowCount);
+    this._locksImages = createLockImages(
+      this._checkChips,
+      this._chipSize,
+      this._allAvailableColorsCount
+    );
     this._movingFigure = new MovingGameChip({
       x: 0,
       y: 0,
-      radius: chipSize / 2,
+      radius: this._chipSize / 2,
       color: backgroundColor,
       lightX,
       lightY,
@@ -561,6 +572,7 @@ export default class Game {
 
     const canvas = Game._instance._field.canvas;
     const ctx = Game._instance._field.ctx;
+    const containerHeight = Game._instance._field.canvas.height;
     const onGameEnd = Game._instance._onGameEnd;
     const colorsCount = _colorsCount ?? Game._instance._colorsInRowCount;
     const stepsCount = _stepsCount ?? Game._instance._maxStepsCount;
@@ -571,6 +583,7 @@ export default class Game {
     Game._instance = new Game(
       canvas,
       ctx,
+      containerHeight,
       onGameEnd,
       colorsCount,
       stepsCount,

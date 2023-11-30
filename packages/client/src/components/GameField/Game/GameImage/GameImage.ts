@@ -1,5 +1,3 @@
-import { chipSize } from '../consts';
-
 export default class GameImage extends Image {
   /** Координата по оси X */
   private readonly _x: number;
@@ -10,12 +8,21 @@ export default class GameImage extends Image {
   /** Активно ли изображение */
   private _isActive = false;
 
-  constructor(startX: number, endX: number, y: number, availableColorsCount: number) {
+  private _chipSize: number;
+
+  constructor(
+    startX: number,
+    endX: number,
+    y: number,
+    chipSize: number,
+    availableColorsCount: number
+  ) {
     super();
 
     const dx = availableColorsCount % 2 !== 0 ? chipSize / 2 : 0;
     this._x = (startX + endX) / 2 - dx;
     this._y = y;
+    this._chipSize = chipSize;
 
     this.deactivate();
   }
@@ -35,7 +42,7 @@ export default class GameImage extends Image {
   };
 
   public draw = (ctx: CanvasRenderingContext2D) => {
-    ctx.drawImage(this, this._x, this._y, chipSize, chipSize);
+    ctx.drawImage(this, this._x, this._y, this._chipSize, this._chipSize);
   };
 
   /**
@@ -46,7 +53,7 @@ export default class GameImage extends Image {
   public isCoordinatesInImage = (x: number, y: number) =>
     this._isActive &&
     x >= this._x &&
-    x <= this._x + chipSize &&
+    x <= this._x + this._chipSize &&
     y >= this._y &&
-    y <= this._y + chipSize;
+    y <= this._y + this._chipSize;
 }
