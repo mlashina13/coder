@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import {
   LoginPage,
@@ -14,7 +14,10 @@ import { PrivateRoute } from './PrivateRoute';
 import { PublicRoute } from './PublicRoute';
 import { ROUTER_URLS } from '../constants';
 
-export const AppRouter: React.FC = () => (
+/**
+ * Компонент-роутер
+ */
+export const AppRouter: FC = () => (
   <Routes>
     <Route element={<PublicRoute />}>
       <Route element={<LoginPage />} path={ROUTER_URLS.Login} />

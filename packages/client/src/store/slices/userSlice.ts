@@ -1,7 +1,29 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, AnyAction } from '@reduxjs/toolkit';
-import { login, logout, registration } from '../../services';
+import { checkAuth, login, logout, registration } from '../../services';
 import { UserData } from '../../types/common';
+
+/**
+ * Получить сохраненное значение пользователя из localStorage
+ */
+const getUserFromLocalStorage = () => {
+  const savedUserJSON = localStorage.getItem('currentUser');
+  if (savedUserJSON) {
+    return JSON.parse(savedUserJSON) as UserData;
+  }
+  return undefined;
+};
+
+/**
+ * Установит значение пользователя в localStorage
+ */
+const setUserToLocalStorage = (user?: UserData) => {
+  if (!user) {
+    localStorage.removeItem('currentUser');
+  } else {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+  }
+};
 
 /**
  * Имя среза
@@ -20,7 +42,7 @@ interface UserState {
  * Начальные значения стейта
  */
 const initialState: UserState = {
-  currentUser: undefined,
+  currentUser: getUserFromLocalStorage(),
   loading: false,
 };
 
@@ -43,17 +65,25 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(checkAuth.fulfilled, (state, action) => {
+        state.loading = false;
+        state.currentUser = action.payload;
+        setUserToLocalStorage(action.payload);
+      })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.currentUser = action.payload;
+        setUserToLocalStorage(action.payload);
       })
       .addCase(logout.fulfilled, (state) => {
         state.loading = false;
         state.currentUser = undefined;
+        setUserToLocalStorage();
       })
       .addCase(registration.fulfilled, (state, action) => {
         state.loading = false;
         state.currentUser = action.payload;
+        setUserToLocalStorage(action.payload);
       })
       .addMatcher(isLoading, (state) => {
         state.loading = true;

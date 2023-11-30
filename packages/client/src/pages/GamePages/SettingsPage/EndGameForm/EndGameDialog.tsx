@@ -1,9 +1,9 @@
 import './EndGameDialog.scss';
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Box } from '@mui/material';
 import { Button } from '../../../../components';
 import { StartIcon } from '../../../../assets/icons/StartIcon';
-import { DialogLayout } from '../../../../components/common/DialogLayout/DialogLayout';
+import { DialogLayout } from '../../../../components/DialogLayout/DialogLayout';
 import { Title } from '../../../../components/common/Title/Title';
 import { InfoTextBlock } from '../../../../components/common/InfoTextBlock/InfoTextBlock';
 import { EndGameDialogProps } from './EndGameDialogProps';

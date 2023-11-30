@@ -8,6 +8,21 @@ import { Auth, User } from '../api';
 const NAMESPACE = 'user';
 
 /**
+ * Проверить, авторизован ли пользователь
+ */
+export const checkAuth = createAsyncThunk<UserData | undefined>(
+  `${NAMESPACE}/checkAuth`,
+  async () => {
+    try {
+      const user = await Auth.getAuthUser();
+      return user;
+    } catch (error) {
+      return undefined;
+    }
+  }
+);
+
+/**
  * Вход в систему
  */
 export const login = createAsyncThunk<UserData, LoginData>(

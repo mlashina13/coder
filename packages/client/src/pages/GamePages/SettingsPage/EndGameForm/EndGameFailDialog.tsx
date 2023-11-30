@@ -3,7 +3,7 @@ import React from 'react';
 import { Box } from '@mui/material';
 import { Button } from '../../../../components';
 import { StartIcon } from '../../../../assets/icons/StartIcon';
-import { DialogLayout } from '../../../../components/common/DialogLayout/DialogLayout';
+import { DialogLayout } from '../../../../components/DialogLayout/DialogLayout';
 import { Title } from '../../../../components/common/Title/Title';
 
 /**
