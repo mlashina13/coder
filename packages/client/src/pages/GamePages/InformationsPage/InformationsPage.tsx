@@ -24,7 +24,7 @@ export const InformationsPage: FC = () => {
     <Layout subMenu={<Menu menuItems={SUBMENU_ROUTES} defaultSelected='3' />}>
       <Container className='information-page'>
         {images.map((image) => (
-          <Box component={Link} to={`/info/${image.id}`}>
+          <Box component={Link} to={`/info/${image.id}`} key={image.id}>
             <Title>{image.title}</Title>
             <Image src={image.src} alt='' className='information-page__image' />
           </Box>

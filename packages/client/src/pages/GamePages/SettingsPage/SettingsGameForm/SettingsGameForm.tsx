@@ -29,7 +29,7 @@ export const SettingsGameForm = () => {
     validationSchema,
     onSubmit: (values: SettingsGameProviderState) => {
       /** Передаем параметры настроект при старте игры * */
-      startGame(values);
+      startGame(values as SettingsGameProviderState);
     },
   });
   return (

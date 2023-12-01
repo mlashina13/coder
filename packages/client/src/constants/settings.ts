@@ -2,8 +2,8 @@
  * Настроки по умолчанию для игры
  */
 export const SETTINGS = {
-  colorsCount: '4',
-  stepsCount: '1',
+  colorsCount: 4,
+  stepsCount: 1,
   isColorsMayBeRepeated: '1',
-  time: '10',
+  time: 10,
 };

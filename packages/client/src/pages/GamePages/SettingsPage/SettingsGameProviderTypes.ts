@@ -7,12 +7,12 @@ export type SettingsGameProviderState = {
   /**
    * Врема прохождение игра
    */
-  time: string;
+  time?: number;
 
   /**
    * Количество цветов
    */
-  colorsCount: string;
+  colorsCount?: number;
 
   /**
    * Уровень сложности, есть ли в последовательности повторяющиеся цвета или нет
@@ -22,7 +22,7 @@ export type SettingsGameProviderState = {
   /**
    * Размер поля
    */
-  stepsCount: string;
+  stepsCount?: number;
 
   /**
    * Переключатель между игрой  и информацией

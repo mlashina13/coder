@@ -2,49 +2,50 @@
 @import '../../../../styles/color';
 
 .end-game-dialog {
-    position: relative;
-   &__content__icon {
-        position: absolute;
-        top: $spacing-s;
-        right: $spacing-xxl;
+  position: relative;
+
+  &__content-icon {
+    position: absolute;
+    top: $spacing-s;
+    right: $spacing-xxl;
+  }
+
+  &__content-field {
+    margin-bottom: $spacing-ms;
+    label {
+      line-height: $spacing-ml;
+    }
+  }
+
+  &__content__buttons-block {
+    display: flex;
+    gap: $spacing-ml;
+    justify-content: space-between;
+
+    button {
+      margin-top: $spacing-ml;
+
+      &.cancel {
+        background-color: $white;
+        color: $grey-dark;
+      }
     }
 
-    &__content__field {
-        margin-bottom: $spacing-ms;
+    .MuiTypography-root {
+      color: $grey-dark;
+      font-weight: $font-weight;
+      font-size: $font-ml;
     }
-
-    &__content__title {
-        margin-bottom: $spacing-xxl;
-    }
-
-    &__content__buttons-block {
-        display: flex;
-        gap: $spacing-ml;
-        justify-content: space-between;
-    }
+  }
 
   &.error {
     h2 {
       color: $red-cherry !important;
     }
-    .end-game-dialog__content__icon {
+
+    .end-game-dialog__content-icon {
       right: $spacing-m;
       top: $spacing-ml;
     }
   }
-
-  button{
-        margin-top: $spacing-ml;
-        &.cancel {
-            background-color: $white;
-            color: $grey-dark;
-        }
-    }
-
-    .MuiTypography-root {
-        color: $grey-dark;
-        font-weight: $font-weight;
-        font-size: $font-ml;
-    }
-
 }

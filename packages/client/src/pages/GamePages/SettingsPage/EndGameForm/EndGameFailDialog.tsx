@@ -16,7 +16,7 @@ export const EndGameFailDialog: FC<EndGameDialogProps> = ({
   onRestart,
 }) => (
   <Dialog open={openDialog} className='end-game-dialog error' title='Увы, Вы проиграли!'>
-    <StartIcon className='end-game-dialog__content__icon' />
+    <StartIcon className='end-game-dialog__content-icon' />
     <Box className='end-game-dialog__content__buttons-block'>
       <Button onClick={onStartNewGame} label='Новая игра' />
       <Button onClick={onGoToMainPage} label='На главную' />

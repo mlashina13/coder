@@ -18,21 +18,21 @@ export const EndGameDialog: FC<EndGameDialogProps> = ({
   onGoToInfoPage,
 }) => (
   <Dialog open={openDialog} className='end-game-dialog' title='Победа!'>
-    <StartIcon className='end-game-dialog__content__icon' />
+    <StartIcon className='end-game-dialog__content-icon' />
     <InfoTextBlock
       label='Ваше время:'
       value={statistic?.time?.toString()}
-      className='end-game-dialog__content__field'
+      className='end-game-dialog__content-field'
     />
     <InfoTextBlock
       label='Количесттво цветов:'
       value={statistic?.colorsCount?.toString()}
-      className='end-game-dialog__content__field'
+      className='end-game-dialog__content-field'
     />
     <InfoTextBlock
       label='Размер поля:'
       value={statistic?.stepsCount?.toString()}
-      className='end-game-dialog__content__field'
+      className='end-game-dialog__content-field'
     />
     <Box className='end-game-dialog__content__buttons-block'>
       <Button onClick={onStartNewGame} label='Новая игра' />

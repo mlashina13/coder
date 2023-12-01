@@ -16,7 +16,7 @@ export const GameField: FC = () => {
 
   // Для отображение времени на экране
   const time = settings.time || 1;
-  const [seconds, setSeconds] = useState<number>(Number(time) * 60);
+  const [seconds, setSeconds] = useState<number>(time * 60);
 
   // Запуск таймера
   const [isTimerRunner, setIsTimerRunner] = useState(true);
@@ -56,8 +56,8 @@ export const GameField: FC = () => {
           canvasRef.current,
           ctx,
           onEndGame,
-          Number(settings.colorsCount),
-          Number(settings.stepsCount),
+          settings.colorsCount,
+          settings.stepsCount,
           Boolean(settings.isColorsMayBeRepeated)
         )
       );
@@ -108,37 +108,50 @@ export const GameField: FC = () => {
     // TODO реализация игры на весь экран
   };
 
-  return (
-    <Box className='game-field'>
-      {result ? (
-        result.isWin ? (
-          <EndGameDialog
-            statistic={result}
-            onStartNewGame={handleRestartGame}
-            onGoToMainPage={handleGoToMain}
-            onGoToInfoPage={handleGoToInfo}
-            openDialog={openDialog}
-          />
-        ) : (
-          <EndGameFailDialog
-            onRestart={handleRestartGame}
-            onStartNewGame={handleRestartGame}
-            onGoToMainPage={handleGoToMain}
-            onGoToInfoPage={handleGoToInfo}
-            openDialog={openDialog}
-          />
-        )
-      ) : (
-        <Box>
-          <Container className='game-page__buttons-block'>
-            <span className={isDanger ? 'text-danger' : 'text-slate'}>
+  const contentRenderer = () => {
+    if (!result) {
+      return (
+        <Box className='game-page'>
+          <Box className='game-page__block'>
+            <span
+              className={
+                isDanger ? 'game-page__block__timer-danger' : 'game-page__block__timer-slate'
+              }
+            >
               Время: {minuteString}:{secondString}
             </span>
-            <Button onClick={handleFullScreen} label='На полный экран' />
-          </Container>
+            <Button
+              onClick={handleFullScreen}
+              label='На полный экран'
+              className='game-page__block__button'
+            />
+          </Box>
           <canvas ref={canvasRef} />
         </Box>
-      )}
-    </Box>
-  );
+      );
+    }
+
+    if (result.isWin) {
+      return (
+        <EndGameDialog
+          statistic={result}
+          onStartNewGame={handleRestartGame}
+          onGoToMainPage={handleGoToMain}
+          onGoToInfoPage={handleGoToInfo}
+          openDialog={openDialog}
+        />
+      );
+    }
+    return (
+      <EndGameFailDialog
+        onRestart={handleRestartGame}
+        onStartNewGame={handleRestartGame}
+        onGoToMainPage={handleGoToMain}
+        onGoToInfoPage={handleGoToInfo}
+        openDialog={openDialog}
+      />
+    );
+  };
+
+  return <Box className='game-field'>{contentRenderer()}</Box>;
 };
