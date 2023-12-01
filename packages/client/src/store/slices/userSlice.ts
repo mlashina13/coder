@@ -1,6 +1,14 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, AnyAction } from '@reduxjs/toolkit';
-import { checkAuth, login, logout, registration } from '../../services';
+import {
+  checkAuth,
+  login,
+  logout,
+  registration,
+  updateAvatar,
+  updatePassword,
+  updatePersonalData,
+} from '../../services';
 import { UserData } from '../../types/common';
 
 /**
@@ -84,6 +92,19 @@ const userSlice = createSlice({
         state.loading = false;
         state.currentUser = action.payload;
         setUserToLocalStorage(action.payload);
+      })
+      .addCase(updateAvatar.fulfilled, (state, action) => {
+        state.loading = false;
+        state.currentUser = action.payload;
+        setUserToLocalStorage(action.payload);
+      })
+      .addCase(updatePersonalData.fulfilled, (state, action) => {
+        state.loading = false;
+        state.currentUser = action.payload;
+        setUserToLocalStorage(action.payload);
+      })
+      .addCase(updatePassword.fulfilled, (state) => {
+        state.loading = false;
       })
       .addMatcher(isLoading, (state) => {
         state.loading = true;
