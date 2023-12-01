@@ -3,17 +3,6 @@
 
 .end-game-dialog {
     position: relative;
-
-    &.error {
-        h2 {
-            color: $red-cherry !important;
-        }
-        .end-game-dialog__content__icon {
-            right: $spacing-m;
-            top: $spacing-ml;
-        }
-    }
-
    &__content__icon {
         position: absolute;
         top: $spacing-s;
@@ -34,7 +23,17 @@
         justify-content: space-between;
     }
 
-    button{
+  &.error {
+    h2 {
+      color: $red-cherry !important;
+    }
+    .end-game-dialog__content__icon {
+      right: $spacing-m;
+      top: $spacing-ml;
+    }
+  }
+
+  button{
         margin-top: $spacing-ml;
         &.cancel {
             background-color: $white;
