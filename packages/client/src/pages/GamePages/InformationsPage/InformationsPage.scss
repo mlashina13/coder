@@ -3,7 +3,7 @@
 
 .information-page {
   display: flex !important;
-  gap: 20px;
+  gap: $spacing-ml;
   justify-content: space-between;
   &__image {
     width: 300px;

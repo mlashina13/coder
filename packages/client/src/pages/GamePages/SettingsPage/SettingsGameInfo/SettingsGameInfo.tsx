@@ -9,13 +9,13 @@ import { GameField } from '../../../../components/GameField/GameField';
 import { getImage } from '../../../../utils';
 /**
  *  Компонент отображения "Интересных фактов" при выйгрыше в игре
- *  */
+ */
 export const SettingsGameInfo: FC = () => {
   const [image, setImage] = useState(() => getImage(FakeInfoList));
   const { settings } = SettingGame();
   /**
    * Условие отображения компонента, после старта, вместо "Интересных фактов отображается игра"
-   * */
+   */
   if (!settings.visible) {
     return (
       <Container className='settings-game-info'>
