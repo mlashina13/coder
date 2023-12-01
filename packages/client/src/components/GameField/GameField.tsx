@@ -1,28 +1,49 @@
-import React, { useEffect, useState, useRef, FC } from 'react';
-import { Box, Typography } from '@mui/material';
+import React, { FC, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Box, Container } from '@mui/material';
 import Game from './Game/Game';
-import type { Statistics } from './Game/types';
 import './gameFieldStyles.scss';
 import { EndGameFailDialog } from '../../pages/GamePages/SettingsPage/EndGameForm/EndGameFailDialog';
 import { EndGameDialog } from '../../pages/GamePages/SettingsPage/EndGameForm/EndGameDialog';
+import { SettingGame } from '../../pages/GamePages/SettingsPage/SettingsProvider';
+import type { Statistics } from './Game/types';
+import { ROUTER_URLS } from '../../constants/routes';
+import { Button } from '../common/Button/Button';
 
 export const GameField: FC = () => {
+  // Параметры для настройки игры
+  const { settings, endGame } = SettingGame();
+
+  // Для отображение времени на экране
+  const time = settings.time || 1;
+  const [seconds, setSeconds] = useState<number>(Number(time) * 60);
+
+  // Запуск таймера
+  const [isTimerRunner, setIsTimerRunner] = useState(true);
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [game, setGame] = useState<Game | null>(null);
   const [result, setResult] = useState<Statistics | null>(null);
+
+  // Открытиые диалогового окна выйграл/проиграл
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+
+  // Навигация по системе
+  const navigate = useNavigate();
 
   const onEndGame = (gameResult: Statistics) => {
     // TODO: временная заглушка с результатами игры
     if (gameResult.isWin) {
       console.table([result]);
     }
-
     setResult(gameResult);
+    setIsTimerRunner(false);
+    setOpenDialog(true);
   };
 
   useEffect(() => {
     if (game) {
-      return () => game.destructor();
+      game.destructor();
     }
 
     const ctx = canvasRef.current?.getContext('2d');
@@ -30,21 +51,94 @@ export const GameField: FC = () => {
     if (!canvasRef.current || !ctx) {
       console.warn('Не найден элемент canvas или его контекст');
     } else {
-      setGame(new Game(canvasRef.current, ctx, onEndGame));
+      setGame(
+        new Game(
+          canvasRef.current,
+          ctx,
+          onEndGame,
+          Number(settings.colorsCount),
+          Number(settings.stepsCount),
+          Boolean(settings.isColorsMayBeRepeated)
+        )
+      );
     }
-  }, []);
+  }, [settings, isTimerRunner]);
+
+  const minuteString = String(Math.floor(Number(seconds) / 60)).padStart(2, '0');
+  const secondString = String(Number(seconds) % 60).padStart(2, '0');
+  const isDanger = seconds < 10;
+
+  useEffect(() => {
+    console.log(isTimerRunner);
+    if (isTimerRunner) {
+      const interval = setInterval(() => {
+        // @ts-ignore
+        setSeconds((second) => {
+          if (second) {
+            return Math.max(Number(second) - 1, 0);
+          }
+          onEndGame({ isWin: false });
+        });
+      }, 1000);
+
+      return () => {
+        console.log('1', interval);
+        clearInterval(interval);
+      };
+    }
+  }, [isTimerRunner]);
+
+  // Функция, перезапуска игры
+  const handleRestartGame = () => {
+    setOpenDialog(false);
+    setResult(null);
+    endGame(settings);
+  };
+
+  // Навигация на главную страницу
+  const handleGoToMain = () => {
+    navigate(ROUTER_URLS.Main);
+  };
+
+  // Навигация на страницу Интересной информации
+  const handleGoToInfo = () => {
+    navigate(ROUTER_URLS.Informations);
+  };
+
+  const handleFullScreen = () => {
+    // TODO реализация игра на весь экран
+  };
 
   return (
     <Box className='game-field'>
       {result ? (
-        // TODO Доработка передачи параметров в диалоговое окно
         result.isWin ? (
-          <EndGameDialog place='10 место' time='10 мин.' />
+          <EndGameDialog
+            statistic={result}
+            onStartNewGame={handleRestartGame}
+            onGoToMainPage={handleGoToMain}
+            onGoToInfoPage={handleGoToInfo}
+            openDialog={openDialog}
+          />
         ) : (
-          <EndGameFailDialog />
+          <EndGameFailDialog
+            onRestart={handleRestartGame}
+            onStartNewGame={handleRestartGame}
+            onGoToMainPage={handleGoToMain}
+            onGoToInfoPage={handleGoToInfo}
+            openDialog={openDialog}
+          />
         )
       ) : (
-        <canvas ref={canvasRef} />
+        <Box>
+          <Container className='game-page__buttons-block'>
+            <span className={isDanger ? 'text-danger' : 'text-slate'}>
+              Время: {minuteString}:{secondString}
+            </span>
+            <Button onClick={handleFullScreen} label='На полный экран' />
+          </Container>
+          <canvas ref={canvasRef} />
+        </Box>
       )}
     </Box>
   );

@@ -1,5 +1,5 @@
 export { ForumPage } from './ForumPage';
-export { GamePage } from './GamePage';
+export { GamePage } from './GamePages/index';
 export { LeaderBoardPage } from './LeaderBoardPage';
 export { LoginPage } from './LoginPage';
 export { MainPage } from './MainPage/MainPage';
@@ -8,3 +8,4 @@ export { RegistrationPage } from './RegistrationPage';
 export { TopicPage } from './TopicPage';
 export { Error500Page } from './Error500Page';
 export { Error400Page } from './Error400Page';
+export { InformationsPage } from './GamePages/InformationsPage';

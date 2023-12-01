@@ -14,6 +14,8 @@ import {
 import { PrivateRoute } from './PrivateRoute';
 import { PublicRoute } from './PublicRoute';
 import { ROUTER_URLS } from '../constants';
+import { InformationsPage } from '../pages/GamePages/InformationsPage/InformationsPage';
+import { InformationFactPage } from '../pages/GamePages/InformationFactPage/InformationFactPage';
 
 export const AppRouter: React.FC = () => {
   const navigate = useNavigate();
@@ -39,6 +41,10 @@ export const AppRouter: React.FC = () => {
         <Route path={ROUTER_URLS.Forum}>
           <Route index element={<ForumPage />} />
           <Route element={<TopicPage />} path={ROUTER_URLS.ForumTopic} />
+        </Route>
+        <Route path={ROUTER_URLS.Informations}>
+          <Route index element={<InformationsPage />} />
+          <Route element={<InformationFactPage />} path={ROUTER_URLS.InformationFact} />
         </Route>
       </Route>
     </Routes>

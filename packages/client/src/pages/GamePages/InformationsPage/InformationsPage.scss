@@ -1,0 +1,16 @@
+@import '../../../styles/color';
+@import '../../../styles/common';
+
+.information-page {
+  display: flex !important;
+  gap: 20px;
+  justify-content: space-between;
+  &__image {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    margin-top: $spacing-m;
+    box-shadow: 1px 1px 10px $grey-dark;
+    border-radius: 3px;
+  }
+}

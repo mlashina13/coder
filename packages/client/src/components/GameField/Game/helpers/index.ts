@@ -38,7 +38,7 @@ export const generateRandomColorSequence = (
       colors.splice(randomIndex, 1);
     }
   }
-
+  console.log(sequence);
   return sequence;
 };
 

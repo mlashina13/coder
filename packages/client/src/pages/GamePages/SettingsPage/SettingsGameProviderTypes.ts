@@ -7,35 +7,30 @@ export type SettingsGameProviderState = {
   /**
    * Врема прохождение игра
    */
-  time?: string;
+  time: string;
 
   /**
    * Количество цветов
    */
-  colorsCount?: string;
+  colorsCount: string;
 
   /**
-   * Уровень сложности
+   * Уровень сложности, есть ли в последовательности повторяющиеся цвета или нет
    */
-  type?: string;
+  isColorsMayBeRepeated: string;
 
   /**
    * Размер поля
    */
-  stepsCount?: string;
+  stepsCount: string;
 
   /**
    * Переключатель между игрой  и информацией
    * */
   visible: boolean;
-  /**
-   * Финкция видимости игры
-   * */
-
-  show?: () => void;
 };
 
 export type ActionType = {
   type: string;
-  settings?: SettingsGameFormProps;
+  settingsGame: SettingsGameProviderState;
 };

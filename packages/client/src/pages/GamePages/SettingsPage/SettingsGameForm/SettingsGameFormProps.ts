@@ -15,7 +15,7 @@ export interface SettingsGameFormProps {
   /**
    * Уровень сложности
    */
-  type: string;
+  isColorsMayBeRepeated: boolean;
 
   /**
    * Размер поля

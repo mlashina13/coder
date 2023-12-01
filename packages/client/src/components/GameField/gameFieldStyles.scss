@@ -1,5 +1,18 @@
+@import '../../styles/color';
+@import '../../styles/common';
+
 .game-field {
   height: 100vh;
   justify-content: center;
   align-items: center;
+}
+.text-danger {
+  color: $red;
+}
+.game-page__buttons-block {
+  margin-bottom: $spacing-ml;
+
+  button {
+    margin-left: $spacing-ml;
+  }
 }

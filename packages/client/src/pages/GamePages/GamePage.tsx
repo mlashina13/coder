@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout } from '../../components/index';
 import { Menu } from '../../components/common/menu/Menu';
-import { SettingsGamePage } from '../GamePages/SettingsPage/SettingsGamePage';
+import { SettingsGamePage } from './SettingsPage/SettingsGamePage';
 import { SUBMENU_ROUTES } from '../../constants/routes';
 
 export const GamePage = () => (
