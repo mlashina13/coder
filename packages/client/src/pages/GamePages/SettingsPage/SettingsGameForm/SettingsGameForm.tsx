@@ -21,7 +21,7 @@ const validationSchema = yup.object().shape({
 });
 
 export const SettingsGameForm = () => {
-  /** Параметры переданные из контекста c данными настроек игры */
+  /** Параметры переданные из контекста c данными  для настройки игры */
   const { settings, startGame } = SettingGame();
 
   const formik = useFormik({

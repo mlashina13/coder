@@ -15,12 +15,12 @@ export interface EndGameDialogProps {
   openDialog: boolean;
 
   /**
-   * Функция перезагрузки текущей игры
+   * Функция перезапуска текущей игры
    * */
   onRestart?: () => void;
 
   /**
-   * Играть заново новую игру
+   * Функци запуска новой игры
    * */
   onStartNewGame?: () => void;
 

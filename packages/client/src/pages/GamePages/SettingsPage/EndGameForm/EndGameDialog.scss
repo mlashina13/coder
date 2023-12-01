@@ -30,7 +30,7 @@
 
     &__content__buttons-block {
         display: flex;
-        gap: 20px;
+        gap: $spacing-ml;
         justify-content: space-between;
     }
 

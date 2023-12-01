@@ -69,8 +69,8 @@ export const GameField: FC = () => {
   const isDanger = seconds < 10;
 
   useEffect(() => {
-    console.log(isTimerRunner);
     if (isTimerRunner) {
+      /** Запускаем таймер */
       const interval = setInterval(() => {
         // @ts-ignore
         setSeconds((second) => {
@@ -82,31 +82,30 @@ export const GameField: FC = () => {
       }, 1000);
 
       return () => {
-        console.log('1', interval);
         clearInterval(interval);
       };
     }
   }, [isTimerRunner]);
 
-  // Функция, перезапуска игры
+  /** Функция, перезапуска игры */
   const handleRestartGame = () => {
     setOpenDialog(false);
     setResult(null);
     endGame(settings);
   };
 
-  // Навигация на главную страницу
+  /** Навигация на главную страницу */
   const handleGoToMain = () => {
     navigate(ROUTER_URLS.Main);
   };
 
-  // Навигация на страницу Интересной информации
+  /** Навигация на страницу Интересной информации */
   const handleGoToInfo = () => {
     navigate(ROUTER_URLS.Informations);
   };
 
   const handleFullScreen = () => {
-    // TODO реализация игра на весь экран
+    // TODO реализация игры на весь экран
   };
 
   return (
