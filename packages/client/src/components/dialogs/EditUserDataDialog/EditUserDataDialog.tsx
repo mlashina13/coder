@@ -1,33 +1,35 @@
-import React, { FC, SyntheticEvent, useState } from 'react';
-import { Box, Dialog, Tab, Tabs } from '@mui/material';
-
+import { FC, SyntheticEvent, useState } from 'react';
+import { Dialog, Tab, Tabs } from '@mui/material';
 import { DialogLayout } from '../../common';
 import { EditUserDataDialogProps } from './EditUserDataDialogProps';
-
-import './editUserDataDialogStyles.scss';
-import { UserEditForm } from './UserEditForm';
-import { PasswordEditForm } from './PasswordEditForm';
-import { EditUserDataDialogState } from './EditUserDataDialogState';
+import { UserEditForm, PasswordEditForm } from '../../forms';
+import { EditUserDataDialogMode } from './EditUserDataDialogMode';
 import { TABS_VALUE } from './constants';
+import './editUserDataDialogStyles.scss';
 
-export const EditUserDataDialog: FC<EditUserDataDialogProps> = ({ handleClose, open }) => {
-  const [activeTab, setActiveTab] = useState<EditUserDataDialogState>(TABS_VALUE.userEditForm);
+/**
+ * Компонент диалогового окна редактирования пользователя
+ */
+export const EditUserDataDialog: FC<EditUserDataDialogProps> = (props) => {
+  const { onClose, open } = props;
+  const [activeTab, setActiveTab] = useState<EditUserDataDialogMode>(TABS_VALUE.userEditForm);
 
-  const handleChange = (event: SyntheticEvent, newValue: EditUserDataDialogState) => {
+  /**
+   * Обработчик события смены таба
+   */
+  const handleTabChange = (event: SyntheticEvent, newValue: EditUserDataDialogMode) => {
     setActiveTab(newValue);
   };
 
   return (
-    <Dialog onClose={handleClose} open={open}>
+    <Dialog onClose={onClose} open={open}>
       <DialogLayout contentClassName='edit-user-data-dialog'>
-        <Tabs value={activeTab} onChange={handleChange} centered>
+        <Tabs value={activeTab} onChange={handleTabChange} centered>
           <Tab label='Редатировать профиль' value={TABS_VALUE.userEditForm} />
           <Tab label='Редатировать пароль' value={TABS_VALUE.passwordEditForm} />
         </Tabs>
-        {activeTab === TABS_VALUE.userEditForm && <UserEditForm handleClose={handleClose} />}
-        {activeTab === TABS_VALUE.passwordEditForm && (
-          <PasswordEditForm handleClose={handleClose} />
-        )}
+        {activeTab === TABS_VALUE.userEditForm && <UserEditForm onClose={onClose} />}
+        {activeTab === TABS_VALUE.passwordEditForm && <PasswordEditForm onClose={onClose} />}
       </DialogLayout>
     </Dialog>
   );
