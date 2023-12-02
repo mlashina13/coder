@@ -167,7 +167,28 @@ export interface RegistrationData {
   first_name: string;
 }
 
+/**
+ * Модель данных для изменения пароля
+ */
 export interface PasswordData {
   oldPassword: string;
   newPassword: string;
+}
+
+/**
+ * Модель данных для логина
+ */
+export interface LoginData {
+  login: string;
+  password: string;
+}
+
+/**
+ * Модель данных для изменения данных профиля пользователя
+ */
+export interface UserEditProfileData {
+  email?: string;
+  phone?: string;
+  second_name?: string;
+  first_name?: string;
 }

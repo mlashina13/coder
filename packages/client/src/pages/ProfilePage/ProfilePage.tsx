@@ -1,17 +1,14 @@
-import React, { useEffect } from 'react';
+import { FC } from 'react';
 import { Box } from '@mui/material';
-
 import { Layout } from '../../components';
-import { Auth } from '../../services';
-import { useUserStore } from '../../stores';
-
 import { AvatarBox } from './AvatarBox';
-
-import './profilePageStyles.scss';
 import { UserInfo } from './UserInfo';
+import './profilePageStyles.scss';
 
-/** страница пользователя */
-export const ProfilePage: React.FC = () => (
+/**
+ * Страница профиля пользователя
+ */
+export const ProfilePage: FC = () => (
   <Layout>
     <Box className='profile-page'>
       <AvatarBox />

@@ -43,7 +43,7 @@ export const GameField: FC = () => {
 
   useEffect(() => {
     if (game) {
-      game.destructor();
+      return () => game.destructor();
     }
 
     const ctx = canvasRef.current?.getContext('2d');
@@ -51,10 +51,24 @@ export const GameField: FC = () => {
     if (!canvasRef.current || !ctx) {
       console.warn('Не найден элемент canvas или его контекст');
     } else {
+      /*
+       * При монтировании компонента сразу создается инстанс игры. После этого из других компонентов
+       * можно вызывать новую игру с помощью Game.start() или перезапускать текущую игру с помощью
+       * Game.restart(). В метод start можно передать новые настройки. Без них игра перезапустится
+       * с теми же настройками, что и предыдущая.
+       */
       setGame(
         new Game(
           canvasRef.current,
           ctx,
+          /*
+           * Здесь происходит расчет высоты, которую может занять игровое поле на экране.
+           * По очереди учитывается высота .page-header, .navigation-panel, .layout__divider, .main-menu
+           * и паддинги внутри .layout__content.
+           * Пока не нашла способа сделать это изящнее, поэтому если высота указанных выше элементов
+           * будет меняться, дополнительно придется исправлять ее здесь.
+           */
+          window.innerHeight - 48 - 40 - 4 - 40 - 24 - 24,
           onEndGame,
           settings.colorsCount,
           settings.stepsCount,

@@ -1,4 +1,14 @@
+/**
+ * Свойства компонента диалогового окна редактирования пользователя
+ */
 export interface EditUserDataDialogProps {
+  /**
+   * Признак того, что окно открыто
+   */
   open: boolean;
-  handleClose: () => void;
+
+  /**
+   * Событие закрытия
+   */
+  onClose: () => void;
 }

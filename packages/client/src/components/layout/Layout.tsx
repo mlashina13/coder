@@ -4,6 +4,7 @@ import { Header } from './header';
 import { NavigationPanel } from './navigationPanel';
 import { LayoutProps } from './LayoutProps';
 import './layoutStyles.scss';
+import { AuthChecker } from '../AuthChecker';
 
 /**
  * Компонент шаблона страницы
@@ -12,12 +13,14 @@ export const Layout: FC<LayoutProps> = (props) => {
   const { children, subMenu, title } = props;
 
   return (
-    <Box className='layout'>
-      <Header title={title} />
-      <NavigationPanel />
-      <Divider className='layout__divider' />
-      {subMenu}
-      <Box className='layout__content'>{children}</Box>
-    </Box>
+    <AuthChecker>
+      <Box className='layout'>
+        <Header title={title} />
+        <NavigationPanel />
+        <Divider className='layout__divider' />
+        {subMenu}
+        <Box className='layout__content'>{children}</Box>
+      </Box>
+    </AuthChecker>
   );
 };

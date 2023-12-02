@@ -1,33 +1,24 @@
 /* eslint-disable no-console */
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Box, IconButton, Tooltip, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-
 import { LogoIcon, LogoutIcon } from '../../../assets';
 import { HeaderProps } from './HeaderProps';
-import { ROUTER_URLS } from '../../../constants';
-import { Auth } from '../../../services';
-import { useUserStore } from '../../../stores';
-
+import { useAppDispatch } from '../../../hooks';
+import { logout } from '../../../services';
 import './headerStyles.scss';
 
 /**
  * Компонент заголовка страницы
  */
 export const Header: FC<HeaderProps> = (props) => {
-  const { setUserData } = useUserStore();
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { title } = props;
 
   /**
    * Обработчик разлогина
    */
   const logoutHandler = () => {
-    Auth.logOut().then(() => {
-      // TODO: В будущем необходимо реализовать стор с данными пользователя!
-      navigate(ROUTER_URLS.Login);
-      setUserData?.();
-    });
+    dispatch(logout());
   };
 
   return (

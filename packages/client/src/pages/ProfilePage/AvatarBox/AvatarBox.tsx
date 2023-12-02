@@ -1,26 +1,28 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Avatar, Box } from '@mui/material';
-
+import { ChangeEventHandler, FC, useRef } from 'react';
+import { Avatar } from '@mui/material';
 import { Button, DialogLayout } from '../../../components';
-import { User } from '../../../services';
-import { useUserStore } from '../../../stores';
 import { getImageSrc } from '../../../utils';
-
+import { updateAvatar } from '../../../services';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import './avatarBoxStyles.scss';
 
-/**  аватарка пользователя */
-export const AvatarBox: React.FC = () => {
-  const { userData, setUserData } = useUserStore();
+/**
+ * Компонент аватара пользователя
+ */
+export const AvatarBox: FC = () => {
+  const { currentUser } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+  /**
+   * Обработчик события смены аватарки
+   */
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const files = e.target?.files;
     if (files?.length) {
       const formData = new FormData();
       formData.append('avatar', files[0]);
-      User.updateUserAvatar(formData).then((data) => {
-        setUserData?.(data);
-      });
+      dispatch(updateAvatar(formData));
     }
   };
 
@@ -28,10 +30,10 @@ export const AvatarBox: React.FC = () => {
     <DialogLayout className='avatar-box' contentClassName='avatar-box__content'>
       <Avatar
         className='avatar-box__content__avatar'
-        src={getImageSrc(userData?.avatar)}
+        src={getImageSrc(currentUser?.avatar)}
         variant='square'
       />
-      {userData ? (
+      {currentUser ? (
         <Button
           className='avatar-box__content__btn'
           label='Редактировать'

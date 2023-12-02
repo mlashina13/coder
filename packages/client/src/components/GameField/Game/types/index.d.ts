@@ -1,5 +1,5 @@
 import type { Dispatch, SetStateAction } from 'react';
-import type { chipColors, fieldColors } from '../consts';
+import type { CHIP_COLORS, CHECK_CHIPS_COLORS } from '../consts';
 
 interface BaseStatistics {
   isWin: boolean;
@@ -24,7 +24,7 @@ interface LossStatistics extends BaseStatistics {
 
 export type Statistics = WinStatistics | LossStatistics;
 
-export type Colors = chipColors | fieldColors;
+export type Colors = CHIP_COLORS | CHECK_CHIPS_COLORS;
 
 export type Reference = Colors[];
 

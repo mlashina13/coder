@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
 import { Button, Input } from '../../../../components';
 import { StartIcon } from '../../../../assets/icons/StartIcon';
-import { DialogLayout } from '../../../../components/common/DialogLayout/DialogLayout';
+import { DialogLayout } from '../../../../components/DialogLayout/DialogLayout';
 import { Title } from '../../../../components/common/Title/Title';
 import { useSettingGame } from '../SettingsProvider';
 import { SettingsGameProviderState } from '../SettingsGameProviderTypes';

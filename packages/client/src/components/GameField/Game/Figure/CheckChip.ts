@@ -1,22 +1,12 @@
-import BaseFigure from './BaseFigure';
-import { chipColors } from '../consts';
-import type { CircleFigureProps } from './types';
+import Figure from './Figure';
+import { CHIP_COLORS } from '../consts';
 
-export default class CheckChip extends BaseFigure {
-  /** Радиус фишки */
-  private readonly _radius: number;
-
+export default class CheckChip extends Figure {
   /** Цвет фишки, если она отображает верное расположение и цвет игровой фишки */
-  private readonly _allMatchColor = 'black' as chipColors;
+  private readonly _allMatchColor = 'black' as CHIP_COLORS;
 
   /** Цвет фишки, если она отображает верный цвет игровой фишки */
-  private readonly _colorMatchColor = 'white' as chipColors;
-
-  constructor(props: CircleFigureProps) {
-    super(props);
-
-    this._radius = props.radius;
-  }
+  private readonly _colorMatchColor = 'white' as CHIP_COLORS;
 
   /** Пометка фишки, отображающей верный цвет игровой фишки */
   public matchColor() {
@@ -32,20 +22,7 @@ export default class CheckChip extends BaseFigure {
    * Отрисовка фишки
    * @param ctx Контекст canvas
    */
-  public draw(ctx: CanvasRenderingContext2D) {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this._radius, 0, 2 * Math.PI);
-    ctx?.stroke();
-    ctx?.save();
-
-    if (!this.color) {
-      return;
-    }
-
-    ctx.fillStyle = this.color;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this._radius, 0, 2 * Math.PI);
-    ctx?.fill();
-    ctx?.save();
-  }
+  public draw = (ctx: CanvasRenderingContext2D) => {
+    this.drawFigure(ctx, Figure.types.flat, this.x, this.y + this.radius / 2);
+  };
 }
