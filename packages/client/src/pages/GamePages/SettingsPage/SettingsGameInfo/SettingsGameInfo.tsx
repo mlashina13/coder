@@ -4,7 +4,7 @@ import React, { FC, useState } from 'react';
 import { Image } from '../../../../components/common/Image/Image';
 import { LockIcon } from '../../../../assets/icons/LockIcon';
 import { FakeInfoList } from './FakeInfoList';
-import { SettingGame } from '../SettingsProvider';
+import { useSettingGame } from '../SettingsProvider';
 import { GameField } from '../../../../components/GameField/GameField';
 import { getImage } from '../../../../utils';
 /**
@@ -12,7 +12,7 @@ import { getImage } from '../../../../utils';
  */
 export const SettingsGameInfo: FC = () => {
   const [image, setImage] = useState(() => getImage(FakeInfoList));
-  const { settings } = SettingGame();
+  const { settings } = useSettingGame();
   /**
    * Условие отображения компонента, после старта, вместо "Интересных фактов отображается игра"
    */

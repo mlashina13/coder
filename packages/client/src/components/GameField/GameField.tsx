@@ -5,14 +5,14 @@ import Game from './Game/Game';
 import './gameFieldStyles.scss';
 import { EndGameFailDialog } from '../../pages/GamePages/SettingsPage/EndGameForm/EndGameFailDialog';
 import { EndGameDialog } from '../../pages/GamePages/SettingsPage/EndGameForm/EndGameDialog';
-import { SettingGame } from '../../pages/GamePages/SettingsPage/SettingsProvider';
+import { useSettingGame } from '../../pages/GamePages/SettingsPage/SettingsProvider';
 import type { Statistics } from './Game/types';
 import { ROUTER_URLS } from '../../constants/routes';
 import { Button } from '../common/Button/Button';
 
 export const GameField: FC = () => {
   // Параметры для настройки игры
-  const { settings, endGame } = SettingGame();
+  const { settings, endGame } = useSettingGame();
 
   // Для отображение времени на экране
   const time = settings.time || 1;
@@ -75,7 +75,7 @@ export const GameField: FC = () => {
         // @ts-ignore
         setSeconds((second) => {
           if (second) {
-            return Math.max(Number(second) - 1, 0);
+            return second - 1;
           }
           onEndGame({ isWin: false });
         });

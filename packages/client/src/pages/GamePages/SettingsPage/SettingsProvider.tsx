@@ -22,7 +22,7 @@ const SettingGameContext = createContext({
   endGame: (settings: SettingsGameProviderState) => ({}),
 });
 
-export const SettingGame = () => useContext(SettingGameContext);
+export const useSettingGame = () => useContext(SettingGameContext);
 
 const reducer = (
   state: SettingsGameProviderState,

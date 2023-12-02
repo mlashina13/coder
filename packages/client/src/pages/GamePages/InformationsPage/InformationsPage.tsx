@@ -10,15 +10,11 @@ import { Image } from '../../../components/common/Image/Image';
 import { ImageInterface } from '../SettingsPage/SettingsGameInfo/ImageInterface';
 import { Title } from '../../../components/common/Title/Title';
 
+/**
+ * Страница информации
+ * */
 export const InformationsPage: FC = () => {
-  const [images, setImages] = useState<Array<ImageInterface>>([]);
-
-  /**
-   * Устанавливаем список Интересных фактов
-   * */
-  useEffect(() => {
-    setImages(FakeInfoList);
-  }, []);
+  const [images, setImages] = useState<Array<ImageInterface>>(FakeInfoList);
 
   return (
     <Layout subMenu={<Menu menuItems={SUBMENU_ROUTES} defaultSelected='3' />}>
