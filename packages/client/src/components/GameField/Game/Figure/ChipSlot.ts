@@ -1,19 +1,9 @@
-import BaseFigure from './BaseFigure';
-import { backgroundColor } from '../consts';
-import type { RectangleFigureProps } from './types';
+import Figure from './Figure';
 
-export default class ChipSlot extends BaseFigure {
-  /** Ширина ячейки */
-  private readonly _width: number;
-
-  /** Высота ячейки */
-  private readonly _height: number;
-
-  constructor(props: RectangleFigureProps) {
-    super(props);
-
-    this._width = props.width;
-    this._height = props.height;
+export default class ChipSlot extends Figure {
+  /** Флаг, заполнена ли ячейка */
+  private get isFilled() {
+    return this.color !== this.baseColor;
   }
 
   /**
@@ -21,19 +11,6 @@ export default class ChipSlot extends BaseFigure {
    * @param ctx Контекст canvas
    */
   public draw(ctx: CanvasRenderingContext2D) {
-    ctx.lineWidth = 1;
-    ctx.strokeRect(this.x, this.y, this._width, this._height);
-
-    ctx.fillStyle = this.color || backgroundColor;
-    ctx.fillRect(this.x, this.y, this._width, this._height);
-  }
-
-  /**
-   * Проверка, что координаты находятся внутри ячейки
-   * @param x Координата по оси X
-   * @param y Координата по оси Y
-   */
-  public isCoordinatesInFigure(x: number, y: number) {
-    return x <= this.x + this._width && x >= this.x && y <= this.y + this._height && y >= this.y;
+    this.drawFigure(ctx, this.isFilled ? Figure.types.convex : Figure.types.concave);
   }
 }

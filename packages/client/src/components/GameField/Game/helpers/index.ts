@@ -1,19 +1,18 @@
 import {
   availableColors,
   backgroundColor,
-  checkChipRadius,
-  chipSize,
-  chipColors,
-  distanceBetweenChips,
+  CHIP_COLORS,
+  lightX,
+  lightY,
   minute,
   second,
-  startX,
-  startY,
 } from '../consts';
 import GameChip from '../Figure/GameChip';
 import ChipSlot from '../Figure/ChipSlot';
 import CheckChip from '../Figure/CheckChip';
-import type { Reference, Colors } from '../types';
+import GameImage from '../GameImage/GameImage';
+import type { Reference } from '../types';
+import type { BaseFigureProps } from '../Figure/types';
 
 /**
  * Генерация эталонной последовательности цветов
@@ -38,6 +37,8 @@ export const generateRandomColorSequence = (
       colors.splice(randomIndex, 1);
     }
   }
+
+  console.info('Сгенерированная последовательность:', sequence);
 
   return sequence;
 };
@@ -70,14 +71,16 @@ export const convertMillisecondsToMinutesAndSeconds = (ms: number) => ({
  * Генератор координат
  * @param initialX Стартовая координата по оси X
  * @param initialY Стартовая координата по оси Y
- * @param distance Расстояние между координатами
+ * @param distanceX Расстояние между координатами по оси X
+ * @param distanceY Расстояние между координатами по оси Y
  * @param repeatCount Количество повторений значений x в ряду перед увеличением значения y
  * @param maxCount Максимальное количество координат
  */
 function* coordinateGenerator(
   initialX = 0,
   initialY = 0,
-  distance = 1,
+  distanceX = 1,
+  distanceY = 1,
   repeatCount = 1,
   maxCount = Infinity
 ): Generator<{ x: number; y: number }> {
@@ -95,11 +98,11 @@ function* coordinateGenerator(
 
     for (let i = 0; i < xCount; i++) {
       yield { x, y };
-      x += distance;
+      x += distanceX;
       count += 1;
     }
 
-    y += distance;
+    y += distanceY;
     x = initialX;
   }
 }
@@ -108,7 +111,7 @@ function* coordinateGenerator(
  * Генератор цветов
  * @param colors Массив цветов
  */
-function* colorGenerator(colors: chipColors[]): Generator<chipColors> {
+function* colorGenerator(colors: CHIP_COLORS[]): Generator<CHIP_COLORS> {
   let index = 0;
 
   while (true) {
@@ -119,13 +122,21 @@ function* colorGenerator(colors: chipColors[]): Generator<chipColors> {
 
 /**
  * Формирование списка игровых фишек
+ * @param ctx Контекст canvas
+ * @param chipSize Размер фишки
  * @param length Количество необходимых игровых фишек
  * @param width Ширина поля, в котором будут расположены координаты
  */
-export const createGameChips = (length: number, width: number) => {
+export const createGameChips = (
+  ctx: CanvasRenderingContext2D,
+  chipSize: number,
+  length: number,
+  width: number
+) => {
   const generateGameChipsCoordinate = coordinateGenerator(
-    startX,
-    startY,
+    2.5 * chipSize,
+    2.5 * chipSize,
+    (width - length * chipSize) / (length - 1) + chipSize,
     (width - length * chipSize) / (length - 1) + chipSize,
     length
   );
@@ -137,22 +148,32 @@ export const createGameChips = (length: number, width: number) => {
       new GameChip({
         ...generateGameChipsCoordinate.next().value,
         color: generateColor.next().value,
-        width: chipSize,
-        height: chipSize,
-      })
+        radius: chipSize / 2,
+        lightX,
+        lightY,
+        ctx,
+      } as BaseFigureProps)
   );
 };
 
 /**
  * Формирование списка ячеек для игровых фишек
+ * @param ctx Контекст canvas
+ * @param chipSize Размер фишки
  * @param rows Количество строк фишек
  * @param columns Количество фишек в строке
  */
-export const createChipSlots = (rows: number, columns: number) => {
+export const createChipSlots = (
+  ctx: CanvasRenderingContext2D,
+  chipSize: number,
+  rows: number,
+  columns: number
+) => {
   const generateChipCellsCoordinate = coordinateGenerator(
-    startX,
-    startY * 2 + 50,
-    distanceBetweenChips + chipSize,
+    2.5 * chipSize,
+    5.5 * chipSize,
+    1.5 * chipSize,
+    1.5 * chipSize,
     columns
   );
 
@@ -163,23 +184,33 @@ export const createChipSlots = (rows: number, columns: number) => {
         new ChipSlot({
           ...generateChipCellsCoordinate.next().value,
           color: backgroundColor,
-          width: chipSize,
-          height: chipSize,
-        })
+          radius: chipSize / 2,
+          lightX,
+          lightY,
+          ctx,
+        } as BaseFigureProps)
     )
   );
 };
 
 /**
  * Формирование списка фишек с результатами проверки
+ * @param ctx Контекст canvas
+ * @param chipSize Размер фишки
  * @param rows Количество строк фишек
  * @param columns Количество фишек в строке
  */
-export const createCheckChips = (rows: number, columns: number) => {
+export const createCheckChips = (
+  ctx: CanvasRenderingContext2D,
+  chipSize: number,
+  rows: number,
+  columns: number
+) => {
   const generateCheckChipCoordinate = coordinateGenerator(
-    startX + 2 * chipSize * columns + chipSize / 2,
-    startY * 2 + 50,
+    chipSize * (1.5 * columns + 3.5),
+    5 * chipSize,
     chipSize,
+    0.75 * chipSize,
     columns / 2
   );
 
@@ -190,8 +221,33 @@ export const createCheckChips = (rows: number, columns: number) => {
         new CheckChip({
           ...generateCheckChipCoordinate.next().value,
           color: backgroundColor,
-          radius: checkChipRadius,
-        })
+          radius: chipSize / 4,
+          lightX,
+          lightY,
+          ctx,
+        } as BaseFigureProps)
     )
   );
 };
+
+/**
+ * Формирование объектов изображений замка
+ * @param checkChips Проверочные фишки
+ * @param chipSize Размер игровой фишки
+ * @param availableColorsCount Доступное количество цветов
+ */
+export const createLockImages = (
+  checkChips: CheckChip[][],
+  chipSize: number,
+  availableColorsCount: number
+) =>
+  checkChips.map(
+    (chipRow) =>
+      new GameImage(
+        chipRow[0].x,
+        chipRow[chipRow.length - 1].x,
+        chipRow[0].y,
+        chipSize,
+        availableColorsCount
+      )
+  );

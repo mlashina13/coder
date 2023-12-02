@@ -1,12 +1,17 @@
 import React, { useEffect, useState, useRef, FC } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import Game from './Game/Game';
-import type { Statistics } from './Game/types';
-import './gameFieldStyles.scss';
+import { SettingGame } from '../../pages/GamePages/SettingsPage/SettingsProvider';
 import { EndGameFailDialog } from '../../pages/GamePages/SettingsPage/EndGameForm/EndGameFailDialog';
 import { EndGameDialog } from '../../pages/GamePages/SettingsPage/EndGameForm/EndGameDialog';
+import { GAME_TYPES } from './Game/consts';
+import type { Statistics } from './Game/types';
+import './gameFieldStyles.scss';
 
 export const GameField: FC = () => {
+  const {
+    state: { colorsCount, stepsCount, type },
+  } = SettingGame();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [game, setGame] = useState<Game | null>(null);
   const [result, setResult] = useState<Statistics | null>(null);
@@ -14,7 +19,7 @@ export const GameField: FC = () => {
   const onEndGame = (gameResult: Statistics) => {
     // TODO: временная заглушка с результатами игры
     if (gameResult.isWin) {
-      console.table([result]);
+      console.table([gameResult]);
     }
 
     setResult(gameResult);
@@ -30,22 +35,43 @@ export const GameField: FC = () => {
     if (!canvasRef.current || !ctx) {
       console.warn('Не найден элемент canvas или его контекст');
     } else {
-      setGame(new Game(canvasRef.current, ctx, onEndGame));
+      /*
+       * При монтировании компонента сразу создается инстанс игры. После этого из других компонентов
+       * можно вызывать новую игру с помощью Game.start() или перезапускать текущую игру с помощью
+       * Game.restart(). В метод start можно передать новые настройки. Без них игра перезапустится
+       * с теми же настройками, что и предыдущая.
+       */
+      setGame(
+        new Game(
+          canvasRef.current,
+          ctx,
+          /*
+           * Здесь происходит расчет высоты, которую может занять игровое поле на экране.
+           * По очереди учитывается высота .page-header, .navigation-panel, .layout__divider, .main-menu
+           * и паддинги внутри .layout__content.
+           * Пока не нашла способа сделать это изящнее, поэтому если высота указанных выше элементов
+           * будет меняться, дополнительно придется исправлять ее здесь.
+           */
+          window.innerHeight - 48 - 40 - 4 - 40 - 24 - 24,
+          onEndGame,
+          Number.parseInt(colorsCount || '', 10),
+          Number.parseInt(stepsCount || '', 10),
+          type === GAME_TYPES.withColorsRepeated
+        )
+      );
     }
   }, []);
 
   return (
     <Box className='game-field'>
-      {result ? (
-        // TODO Доработка передачи параметров в диалоговое окно
-        result.isWin ? (
-          <EndGameDialog place='10 место' time='10 мин.' />
+      {result &&
+        (result.isWin ? (
+          // TODO Доработка передачи параметров в диалоговое окно
+          <EndGameDialog place='10 место' time={result.time} />
         ) : (
           <EndGameFailDialog />
-        )
-      ) : (
-        <canvas ref={canvasRef} />
-      )}
+        ))}
+      <canvas ref={canvasRef} className={`${result ? 'field_hidden' : 'field_visible'}`} />
     </Box>
   );
 };
