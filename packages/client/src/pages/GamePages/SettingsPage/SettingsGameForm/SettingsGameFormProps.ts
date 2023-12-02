@@ -1,5 +1,3 @@
-import type { GAME_TYPES } from '../../../../components/GameField/Game/consts';
-
 /**
  * Интерфейс настроек для игры"
  */
@@ -17,7 +15,7 @@ export interface SettingsGameFormProps {
   /**
    * Уровень сложности
    */
-  type: GAME_TYPES;
+  isColorsMayBeRepeated: boolean;
 
   /**
    * Размер поля

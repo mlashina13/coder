@@ -8,27 +8,31 @@ import React, {
 } from 'react';
 import { SettingsGameFormProps } from './SettingsGameForm/SettingsGameFormProps';
 import { ActionType, SettingsGameProviderState } from './SettingsGameProviderTypes';
+import { SETTINGS } from '../../../constants/settings';
 
+/** Инициализация параметров для формы настроек в игре * */
 export const initialState: SettingsGameProviderState = {
+  ...SETTINGS,
   visible: false,
 };
 
 const SettingGameContext = createContext({
-  state: initialState,
-  show: (settings: SettingsGameFormProps) => ({}),
+  settings: initialState,
+  startGame: (settings: SettingsGameProviderState) => ({}),
+  endGame: (settings: SettingsGameProviderState) => ({}),
 });
 
-export const SettingGame = () => useContext(SettingGameContext);
+export const useSettingGame = () => useContext(SettingGameContext);
 
 const reducer = (
   state: SettingsGameProviderState,
   actions: ActionType
 ): SettingsGameProviderState => {
   switch (actions.type) {
-    case 'show':
-      return { ...actions.settings, visible: true };
-    case 'hide':
-      return { ...state, visible: false };
+    case 'startGame':
+      return { ...actions.settingsGame, visible: true };
+    case 'endGame':
+      return { ...actions.settingsGame, visible: false };
     default:
       return state;
   }
@@ -39,12 +43,14 @@ const reducer = (
  * */
 export const SettingsProvide: FC<PropsWithChildren> = ({ children }) => {
   const dispatchWithoutActions = useReducer(reducer, initialState);
-  const [state, dispatch] = dispatchWithoutActions;
+  const [settings, dispatch] = dispatchWithoutActions;
 
-  const show = (settings: SettingsGameFormProps) => dispatch({ type: 'show', settings });
-  const hide = () => dispatch({ type: 'hide' });
+  const startGame = (settingsGame: SettingsGameProviderState) =>
+    dispatch({ type: 'startGame', settingsGame });
+  const endGame = (settingsGame: SettingsGameProviderState) =>
+    dispatch({ type: 'endGame', settingsGame });
 
-  const value = useMemo(() => ({ state, show }), [state, show]);
+  const value = useMemo(() => ({ settings, startGame, endGame }), [settings, startGame, endGame]);
   // @ts-ignore
   return <SettingGameContext.Provider value={value}>{children}</SettingGameContext.Provider>;
 };

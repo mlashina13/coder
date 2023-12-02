@@ -1,0 +1,26 @@
+@import '../../../styles/color';
+@import '../../../styles/common';
+
+.information-fact-page {
+  &__title {
+    margin-bottom: $spacing-lm !important;
+    text-align: center;
+  }
+  &__block {
+    display: flex !important;
+    gap: $spacing-ml;
+    justify-content: space-between;
+
+    &__image {
+      width: 50%;
+      height: auto;
+      object-fit: cover;
+      box-shadow: 1px 1px 10px $grey-dark;
+      border-radius: 3px;
+    }
+    &__description {
+      width: 50%;
+      padding: $spacing-lm;
+    }
+  }
+}
