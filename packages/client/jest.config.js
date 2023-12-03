@@ -9,8 +9,9 @@ export default {
   globals: {
     __SERVER_PORT__: process.env.SERVER_PORT,
   },
+  resetMocks: false,
   moduleNameMapper: {
     '^.+\\.(css|less|scss)$': 'identity-obj-proxy',
   },
-  setupFiles: ['jest-canvas-mock']
+  setupFiles: ['jest-canvas-mock'],
 };
