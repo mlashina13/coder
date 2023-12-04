@@ -26,9 +26,9 @@
     }
   }
 
-  &__place {
+  .leader-bord-item__place {
     text-align: left;
-    div {
+    > div {
       width: 25px;
       text-align: center;
     }

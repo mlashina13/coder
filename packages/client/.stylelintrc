@@ -1,6 +1,7 @@
 {
   "extends": ["stylelint-config-recommended-scss"],
   "plugins": ["stylelint-scss"],
+  "ignore": ["no-descending-specificity"],
   "rules": {
     "at-rule-empty-line-before": [
       "always",
