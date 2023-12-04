@@ -1,6 +1,6 @@
 import { CHIP_COLORS, backgroundColor, lightX, lightY } from '../../consts';
 import Figure from '../Figure';
-import { BaseFigureProps, FigureTypes } from '../types';
+import type { BaseFigureProps, FigureTypes } from '../types';
 
 describe('Тестирование ф-сти игры: класс Figure', () => {
   const getCanvas = () => document.createElement('canvas');
