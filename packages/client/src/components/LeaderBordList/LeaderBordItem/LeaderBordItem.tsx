@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { ListItem, ListItemText } from '@mui/material';
 import './LeaderBordItemStyles.scss';
 import { LeaderBordItemProps } from './LeaderBordItemProps';

@@ -15,12 +15,14 @@
     .leader-bord-item__point {
       color: $grey;
     }
-    .leader-bord-item__place div {
-      color: white;
-      background: $red-cherry;
-      border-radius: 15px;
-      width: 25px;
-      text-align: center;
+    .leader-bord-item__place {
+      div {
+        color: white;
+        background: $red-cherry;
+        border-radius: 15px;
+        width: 25px;
+        text-align: center;
+      }
     }
   }
 
