@@ -20,10 +20,10 @@ export const ErrorPlug: FC<ErrorPlugProps> = (props) => {
         CODER
       </Box>
       <Divider className='error-plug__divider' />
-      <Box className='error-plug__error-wrapper'>
+      <Box className='error-plug-error-wrapper'>
         <Error
           icon={<UnexpectedErrorIcon />}
-          className='error-plug__error'
+          className='error-plug-error-wrapper__error'
           title='Произошла непредвиденная ошибка'
           description={
             <Box>

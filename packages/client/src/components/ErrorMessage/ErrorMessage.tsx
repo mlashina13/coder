@@ -22,7 +22,7 @@ export const ErrorMessage: FC = () => {
       dispatch(resetError());
     }, 3000);
     setTimeoutId(id);
-    () => {
+    return () => {
       clearTimeout(id);
     };
   }, [error, resetError, dispatch]);

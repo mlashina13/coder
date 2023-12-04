@@ -6,8 +6,8 @@
     flex-direction: column;
 
     &__header {
-        min-height: 48px;
-        max-height: 48px;
+        min-height: $header-height;
+        max-height: $header-height;
         padding: $spacing-none $spacing-xl;
         display: flex;
         align-items: center;
@@ -23,7 +23,7 @@
         background: $red-cherry;
     }
 
-    &__error-wrapper {
+    &-error-wrapper {
         width: 100%;
         padding: $spacing-xl;
         max-height: calc(100vh - 52px);
@@ -31,10 +31,10 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-    }
-
-    &__error {
-        min-width: 800px;
-        max-width: 800px;
+        
+        &__error {
+            min-width: 800px;
+            max-width: 800px;
+        }
     }
 }
