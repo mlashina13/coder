@@ -1,4 +1,3 @@
-import React from 'react';
 import { HomeIcon, MessageIcon, ProfileIcon } from '../assets';
 import { RouteInfo } from '../types/common';
 
@@ -48,6 +47,10 @@ export const ROUTER_URLS = {
    * Страница топика форума
    */
   ForumTopic: '/forum/:topicId',
+  /**
+   * Страница 500 ошибок
+   */
+  ServerError: '/servererror',
 } as const;
 
 export const LOGIN_ROUTES = {
