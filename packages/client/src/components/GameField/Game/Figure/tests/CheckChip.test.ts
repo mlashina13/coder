@@ -2,7 +2,7 @@ import { CHIP_COLORS, lightX, lightY } from '../../consts';
 import CheckChip from '../CheckChip';
 import type { BaseFigureProps } from '../types';
 
-describe('Тестирование ф-сти игры: класс CheckChip', () => {
+describe('CheckChip', () => {
   const getCanvas = () => document.createElement('canvas');
 
   const getCtx = (canvas: HTMLCanvasElement) => {
@@ -29,19 +29,19 @@ describe('Тестирование ф-сти игры: класс CheckChip', ()
   };
 
   test('Должен имплементировать метод draw', () => {
-    const TestClass = getComponent();
-    expect(TestClass.draw).toBeDefined();
+    const testClass = getComponent();
+    expect(testClass.draw).toBeDefined();
   });
 
-  test('matchColor должен устанавливать значение color как white ', () => {
-    const TestClass = getComponent();
-    TestClass.matchColor();
-    expect(TestClass.color).toBe('white');
+  test('matchColor должен устанавливать значение color как white', () => {
+    const testClass = getComponent();
+    testClass.matchColor();
+    expect(testClass.color).toBe('white');
   });
 
-  test('matchColorAndPosition должен устанавливать значение color как black ', () => {
-    const TestClass = getComponent();
-    TestClass.matchColorAndPosition();
-    expect(TestClass.color).toBe('black');
+  test('matchColorAndPosition должен устанавливать значение color как black', () => {
+    const testClass = getComponent();
+    testClass.matchColorAndPosition();
+    expect(testClass.color).toBe('black');
   });
 });

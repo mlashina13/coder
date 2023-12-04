@@ -2,7 +2,7 @@ import { CHIP_COLORS, lightX, lightY } from '../../consts';
 import ChipSlot from '../ChipSlot';
 import type { BaseFigureProps } from '../types';
 
-describe('Тестирование ф-сти игры: класс ChipSlot', () => {
+describe('ChipSlot', () => {
   const getCanvas = () => document.createElement('canvas');
 
   const getCtx = (canvas: HTMLCanvasElement) => {
@@ -29,7 +29,7 @@ describe('Тестирование ф-сти игры: класс ChipSlot', () 
   };
 
   test('Должен имплементировать метод draw', () => {
-    const TestClass = getComponent();
-    expect(TestClass.draw).toBeDefined();
+    const testClass = getComponent();
+    expect(testClass.draw).toBeDefined();
   });
 });

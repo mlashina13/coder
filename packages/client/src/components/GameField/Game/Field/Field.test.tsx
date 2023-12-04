@@ -5,7 +5,7 @@ import Field from './Field';
 import { FieldProps } from './FieldProps';
 import { lightX, lightY } from '../consts';
 
-describe('Тестирование ф-сти игры: класс Field', () => {
+describe('Field', () => {
   beforeAll(() => {
     setupJestCanvasMock();
   });
@@ -33,7 +33,7 @@ describe('Тестирование ф-сти игры: класс Field', () => 
       };
     };
 
-    const getDefaultFieldClass = () => {
+    const getDefaultfieldClass = () => {
       const {
         canvas,
         chipSize,
@@ -54,39 +54,39 @@ describe('Тестирование ф-сти игры: класс Field', () => 
       );
     };
     test('Должен создавать идентичные классы при одинаковом наборе параметров', () => {
-      const FirstField = getDefaultFieldClass();
-      const SecondField = getDefaultFieldClass();
+      const firstField = getDefaultfieldClass();
+      const secondField = getDefaultfieldClass();
 
-      expect(FirstField).toEqual(SecondField);
+      expect(firstField).toEqual(secondField);
     });
 
     describe('Геттеры', () => {
       test('canvas не должен быть null', () => {
-        const FieldClass = getDefaultFieldClass();
-        expect(FieldClass.canvas).not.toBeNull();
+        const fieldClass = getDefaultfieldClass();
+        expect(fieldClass.canvas).not.toBeNull();
       });
       test('ctx не должен быть null', () => {
-        const FieldClass = getDefaultFieldClass();
-        expect(FieldClass.ctx).not.toBeNull();
+        const fieldClass = getDefaultfieldClass();
+        expect(fieldClass.ctx).not.toBeNull();
       });
       test('gameChipsFieldWidth не должен быть null', () => {
-        const FieldClass = getDefaultFieldClass();
-        expect(FieldClass.gameChipsFieldWidth).not.toBeNull();
+        const fieldClass = getDefaultfieldClass();
+        expect(fieldClass.gameChipsFieldWidth).not.toBeNull();
       });
       test('gameChipsFieldWidth должен высчитыватся по формуле', () => {
-        const FieldClass = getDefaultFieldClass();
+        const fieldClass = getDefaultfieldClass();
         const { chipSize, colorsInRowCount } = getDefaultProps();
         const checkChipsFieldWidthips = chipSize * (Math.ceil(colorsInRowCount / 2) + 1);
         const chipSlotsFieldWidth = 1.5 * chipSize * (colorsInRowCount + 1);
         const defaultGameChipsFieldWidth = checkChipsFieldWidthips + chipSlotsFieldWidth;
-        expect(FieldClass.gameChipsFieldWidth).toEqual(defaultGameChipsFieldWidth);
+        expect(fieldClass.gameChipsFieldWidth).toEqual(defaultGameChipsFieldWidth);
       });
     });
 
     test('Метод draw должен отрисовывать поле', () => {
-      const FieldClass = getDefaultFieldClass();
+      const fieldClass = getDefaultfieldClass();
 
-      expect(FieldClass.ctx.__getPath()).toMatchSnapshot();
+      expect(fieldClass.ctx.__getPath()).toMatchSnapshot();
     });
   });
 });

@@ -2,7 +2,7 @@ import { CHIP_COLORS, lightX, lightY } from '../../consts';
 import GameChip from '../GameChip';
 import type { BaseFigureProps } from '../types';
 
-describe('Тестирование ф-сти игры: класс GameChip', () => {
+describe('GameChip', () => {
   const getCanvas = () => document.createElement('canvas');
 
   const getCtx = (canvas: HTMLCanvasElement) => {
@@ -29,18 +29,18 @@ describe('Тестирование ф-сти игры: класс GameChip', () 
   };
 
   test('Должен имплементировать метод draw', () => {
-    const TestClass = getComponent();
-    expect(TestClass.draw).toBeDefined();
+    const testClass = getComponent();
+    expect(testClass.draw).toBeDefined();
   });
 
   test('isMoving должен быть определен', () => {
-    const TestClass = getComponent();
-    expect(TestClass.isMoving).toBeDefined();
+    const testClass = getComponent();
+    expect(testClass.isMoving).toBeDefined();
   });
 
   test('isMoving должен сопоставлять baseColor и color', () => {
-    const TestClass = getComponent();
-    TestClass.fill(CHIP_COLORS.red);
-    expect(TestClass.isMoving).toBeTruthy();
+    const testClass = getComponent();
+    testClass.fill(CHIP_COLORS.red);
+    expect(testClass.isMoving).toBeTruthy();
   });
 });

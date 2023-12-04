@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Тестирование ф-сти игры: класс Field Создание класса Метод draw должен отрисовывать поле 1`] = `
+exports[`Field Создание класса Метод draw должен отрисовывать поле 1`] = `
 Array [
   Object {
     "props": Object {},

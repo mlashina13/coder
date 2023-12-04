@@ -36,3 +36,18 @@ export interface CheckStepResult {
 export type OnEndGameCallback =
   | Dispatch<SetStateAction<Statistics | null>>
   | ((result: Statistics) => void);
+
+export type GameProps = {
+  canvas: HTMLCanvasElement;
+
+  ctx: CanvasRenderingContext2D;
+
+  containerHeight: number;
+
+  onGameEnd: OnEndGameCallback | void;
+
+  colorsCount: number;
+
+  stepsCount: number;
+  isColorsMayBeRepeated: boolean;
+};

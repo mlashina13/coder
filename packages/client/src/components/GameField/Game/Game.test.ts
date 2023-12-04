@@ -1,11 +1,11 @@
 /* eslint-disable dot-notation */
 import { Reference } from 'yup';
 import * as GameModule from './Game';
-import type { OnEndGameCallback } from './types';
+import type { GameProps } from './types';
 
 const Game = GameModule.default;
 
-describe('Проверка ф-ти игры: класс Game', () => {
+describe('Game', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -29,20 +29,7 @@ describe('Проверка ф-ти игры: класс Game', () => {
       isColorsMayBeRepeated: false,
       stepsCount: 10,
       onGameEnd: getCallback(),
-    } as {
-      canvas: HTMLCanvasElement;
-
-      ctx: CanvasRenderingContext2D;
-
-      containerHeight: number;
-
-      onGameEnd: OnEndGameCallback | void;
-
-      colorsCount: number;
-
-      stepsCount: number;
-      isColorsMayBeRepeated: boolean;
-    };
+    } as GameProps;
   };
 
   const getComponent = () => {

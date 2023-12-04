@@ -2,7 +2,7 @@ import { CHIP_COLORS, backgroundColor, lightX, lightY } from '../../consts';
 import Figure from '../Figure';
 import type { BaseFigureProps, FigureTypes } from '../types';
 
-describe('Тестирование ф-сти игры: класс Figure', () => {
+describe('Figure', () => {
   const getCanvas = () => document.createElement('canvas');
 
   const getCtx = (canvas: HTMLCanvasElement) => {
@@ -25,7 +25,7 @@ describe('Тестирование ф-сти игры: класс Figure', () =>
     };
   };
 
-  const getTestClass = (props: BaseFigureProps) => {
+  const gettestClass = (props: BaseFigureProps) => {
     class TestClass extends Figure {
       public draw(ctx: CanvasRenderingContext2D): void {
         this.drawFigure(ctx, FIGURE_TYPE);
@@ -37,68 +37,68 @@ describe('Тестирование ф-сти игры: класс Figure', () =>
 
   test('Реализация должна имплементировать draw', () => {
     const defaultProps = getDefaultProps();
-    const TestClass = getTestClass(defaultProps);
-    expect(TestClass.draw).toBeDefined();
+    const testClass = gettestClass(defaultProps);
+    expect(testClass.draw).toBeDefined();
   });
 
   test('Метод draw должен вызываться', () => {
     const defaultProps = getDefaultProps();
-    const TestClass = getTestClass(defaultProps);
-    const spy = jest.spyOn(TestClass, 'draw');
-    TestClass.draw(defaultProps.ctx);
+    const testClass = gettestClass(defaultProps);
+    const spy = jest.spyOn(testClass, 'draw');
+    testClass.draw(defaultProps.ctx);
     expect(spy).toHaveBeenCalled();
   });
 
   test('Метод fill должен менять значение color', () => {
     const defaultProps = getDefaultProps();
-    const TestClass = getTestClass(defaultProps);
-    TestClass.fill(CHIP_COLORS.red);
-    expect(TestClass.color).toBe(CHIP_COLORS.red);
+    const testClass = gettestClass(defaultProps);
+    testClass.fill(CHIP_COLORS.red);
+    expect(testClass.color).toBe(CHIP_COLORS.red);
   });
 
   test('Метод fill должен менять значение color на baseColor при пустых параметрах', () => {
     const defaultProps = getDefaultProps();
-    const TestClass = getTestClass(defaultProps);
+    const testClass = gettestClass(defaultProps);
 
-    TestClass.fill();
-    expect(TestClass.color).toBe(defaultProps.color);
+    testClass.fill();
+    expect(testClass.color).toBe(defaultProps.color);
   });
 
   test('Метод clear должен менять значение color на backgroundColor', () => {
     const defaultProps = getDefaultProps();
-    const TestClass = getTestClass(defaultProps);
+    const testClass = gettestClass(defaultProps);
 
-    TestClass.clear();
-    expect(TestClass.color).toBe(backgroundColor);
+    testClass.clear();
+    expect(testClass.color).toBe(backgroundColor);
   });
 
   describe('Метод isCoordinatesInFigure должен верно определять принадлежность координат', () => {
     const defaultProps = getDefaultProps();
-    const TestClass = getTestClass(defaultProps);
+    const testClass = gettestClass(defaultProps);
     test('Должен вернуть false', () => {
       const testX = 2;
       const testY = 200;
 
-      expect(TestClass.isCoordinatesInFigure(testX, testY)).toBeFalsy();
+      expect(testClass.isCoordinatesInFigure(testX, testY)).toBeFalsy();
     });
     test('Должен вернуть true', () => {
       const testX = 2;
       const testY = 2;
 
-      expect(TestClass.isCoordinatesInFigure(testX, testY)).toBeTruthy();
+      expect(testClass.isCoordinatesInFigure(testX, testY)).toBeTruthy();
     });
   });
 
   test('Метод setCoordinates должен менять значение координат фигуры', () => {
     const defaultProps = getDefaultProps();
-    const TestClass = getTestClass(defaultProps);
+    const testClass = gettestClass(defaultProps);
 
     const newCoords = {
       x: 50,
       y: 66,
     };
 
-    TestClass.setCoordinates(newCoords.x, newCoords.y);
-    expect({ x: TestClass.x, y: TestClass.y }).toEqual(newCoords);
+    testClass.setCoordinates(newCoords.x, newCoords.y);
+    expect({ x: testClass.x, y: testClass.y }).toEqual(newCoords);
   });
 });

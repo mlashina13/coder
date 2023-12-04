@@ -49,8 +49,6 @@ export const GameField: FC = () => {
 
     const ctx = canvasRef.current?.getContext('2d');
 
-    console.log(window.innerHeight - 48 - 40 - 4 - 40 - 24 - 24);
-
     if (!canvasRef.current || !ctx) {
       console.warn('Не найден элемент canvas или его контекст');
     } else {
