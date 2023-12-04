@@ -1,14 +1,36 @@
+import type { LossStatistics, WinStatistics } from '../../../../components/GameField/Game/types';
+
 /**
- * Интерфейс результата игры"
- */
+ * Описанние параметров завершения игры
+ * */
 export interface EndGameDialogProps {
   /**
-   * Врема прохождение игра
-   */
-  time: string;
+   * Параметры статистики игры
+   * */
+  statistic?: WinStatistics | LossStatistics;
 
   /**
-   * Место в турнироной таблице
-   */
-  place: string;
+   * Открытие диалогового окна
+   * */
+  openDialog: boolean;
+
+  /**
+   * Функция перезапуска текущей игры
+   * */
+  onRestart?: () => void;
+
+  /**
+   * Функци запуска новой игры
+   * */
+  onStartNewGame?: () => void;
+
+  /**
+   * Переход на главную страницу
+   * */
+  onGoToMainPage: () => void;
+
+  /**
+   * Переход на страницу Информации
+   * */
+  onGoToInfoPage: () => void;
 }

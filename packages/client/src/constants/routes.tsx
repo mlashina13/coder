@@ -32,6 +32,14 @@ export const ROUTER_URLS = {
    */
   Game: '/game',
   /**
+   * Страница списка интересных фактов
+   */
+  Informations: '/info',
+  /**
+   * Страница списка интересных фактов
+   */
+  InformationFact: '/info/:infoId',
+  /**
    * Страница форума
    */
   Forum: '/forum',
@@ -98,5 +106,10 @@ export const SUBMENU_ROUTES: Array<RouteInfo> = [
     path: ROUTER_URLS.Leaderboard,
     displayName: 'Результаты',
     renderIconFunction: (className) => <ProfileIcon className={className} />,
+  },
+  {
+    key: 'info',
+    path: ROUTER_URLS.Informations,
+    displayName: 'Интересные факты',
   },
 ];

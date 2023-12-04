@@ -7,13 +7,12 @@ import { Button, Input } from '../../../../components';
 import { StartIcon } from '../../../../assets/icons/StartIcon';
 import { DialogLayout } from '../../../../components/DialogLayout/DialogLayout';
 import { Title } from '../../../../components/common/Title/Title';
-import { SettingGame } from '../SettingsProvider';
-import { SettingsGameFormProps } from './SettingsGameFormProps';
+import { useSettingGame } from '../SettingsProvider';
+import { SettingsGameProviderState } from '../SettingsGameProviderTypes';
 
 /**
  * Форма настроек игры*
  * */
-
 const MESSAGE = 'Поле обязательно для заполнения';
 
 const validationSchema = yup.object().shape({
@@ -22,22 +21,15 @@ const validationSchema = yup.object().shape({
 });
 
 export const SettingsGameForm = () => {
-  const { show } = SettingGame();
+  /** Параметры переданные из контекста c данными  для настройки игры */
+  const { settings, startGame } = useSettingGame();
 
   const formik = useFormik({
-    initialValues: {
-      colorsCount: '4',
-      stepsCount: '10',
-      type: '1',
-      time: '',
-    },
+    initialValues: settings,
     validationSchema,
-    onSubmit: (values: SettingsGameFormProps) => {
-      /**
-            Передаем параметры настроект при старте игры
-             */
-
-      show(values);
+    onSubmit: (values: SettingsGameProviderState) => {
+      /** Передаем параметры настроект при старте игры * */
+      startGame(values as SettingsGameProviderState);
     },
   });
   return (
@@ -49,16 +41,18 @@ export const SettingsGameForm = () => {
       <form onSubmit={formik.handleSubmit} className='settings-game__form'>
         <FormControl className='settings-game-form__radio-group'>
           <FormLabel>Выберите уровень сложности: </FormLabel>
-          <RadioGroup defaultValue='1' name='type'>
+          <RadioGroup defaultValue='1' name='isColorsMayBeRepeated'>
             <FormControlLabel
+              disabled={settings.visible}
               onChange={formik.handleChange}
-              value='1'
+              value='0'
               control={<Radio size='small' />}
               label='фишки с уникальными цветами'
             />
             <FormControlLabel
+              disabled={settings.visible}
               onChange={formik.handleChange}
-              value='2'
+              value='1'
               control={<Radio size='small' />}
               label='фишки с повторяющимися цветами'
             />
@@ -66,6 +60,7 @@ export const SettingsGameForm = () => {
         </FormControl>
         <Input
           variant='filled'
+          disabled={settings.visible}
           className='requiredField'
           label='Количестов цветов'
           size='small'
@@ -77,6 +72,7 @@ export const SettingsGameForm = () => {
         <Input
           variant='filled'
           label='Размер поля'
+          disabled={settings.visible}
           size='small'
           name='stepsCount'
           className='requiredField'
@@ -86,13 +82,14 @@ export const SettingsGameForm = () => {
         />
         <Input
           variant='filled'
+          disabled={settings.visible}
           label='Время выполнения (мин)'
           size='small'
           name='time'
           onChange={formik.handleChange}
           value={formik.values.time}
         />
-        <Button label='Старт' type='submit' />
+        <Button label='Старт' type='submit' disabled={settings.visible} />
       </form>
     </DialogLayout>
   );

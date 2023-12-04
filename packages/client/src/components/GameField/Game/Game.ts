@@ -1,18 +1,21 @@
-import { chipSize, leftMouseButton, backgroundColor } from './consts';
+import { backgroundColor, leftMouseButton, lightX, lightY } from './consts';
 import {
-  generateRandomColorSequence,
   calcNewCoordinate,
   convertMillisecondsToMinutesAndSeconds,
-  createGameChips,
-  createChipSlots,
   createCheckChips,
+  createChipSlots,
+  createGameChips,
+  createLockImages,
+  generateRandomColorSequence,
 } from './helpers';
 import GameChip from './Figure/GameChip';
 import ChipSlot from './Figure/ChipSlot';
 import CheckChip from './Figure/CheckChip';
-import Mouse from './Mouse/Mouse';
+import MovingGameChip from './Figure/MovingGameChip';
 import Field from './Field/Field';
-import type { CheckStepResult, Reference, Statistics, OnEndGameCallback } from './types';
+import Mouse from './Mouse/Mouse';
+import GameImage from './GameImage/GameImage';
+import type { CheckStepResult, OnEndGameCallback, Reference } from './types';
 
 export default class Game {
   /** Инстанс игры */
@@ -20,7 +23,7 @@ export default class Game {
   private static _instance: Game | void;
 
   /** Фишка для визуализации перемещения */
-  private _movingFigure!: GameChip;
+  private readonly _movingFigure!: MovingGameChip;
 
   /** Игровые фишки */
   private readonly _gameChips: GameChip[] = [];
@@ -31,13 +34,14 @@ export default class Game {
   /** Фишки с результатами проверки */
   private readonly _checkChips: CheckChip[][] = [];
 
+  /** Игровое поле */
   private readonly _field!: Field;
 
   /** Коллбэк для выполнения после окончания игры */
   private readonly _onGameEnd: OnEndGameCallback | void;
 
   /** Время запуска игры */
-  private readonly _startTime!: Date;
+  private _startTime!: Date;
 
   /** Максимальное количество шагов игры */
   private readonly _maxStepsCount!: number;
@@ -61,57 +65,106 @@ export default class Game {
   private _currentChipSlotsRowIndex = 0;
 
   /** Эталонная последовательность цветов */
-  private _reference: Reference = [];
+  private readonly _reference: Reference = [];
+
+  /** Флаг остановки перерисовки canvas */
+  private _isAnimationStopped = false;
+
+  /** Объекты изображений замка */
+  private readonly _locksImages: GameImage[] = [];
+
+  /** Размер игровой фишки */
+  private readonly _chipSize!: number;
+
+  /** Результат игры */
+  private _isWin: boolean | null = null;
 
   constructor(
+    /** Объект canvas */
     canvas: HTMLCanvasElement,
+    /** Контекст canvas */
     ctx: CanvasRenderingContext2D,
-    onGameEnd?: OnEndGameCallback,
-    colorsCount = 4,
+    /** Доступная высота родительского контейнера */
+    containerHeight: number,
+    /** Коллбэк для выполнения после окончания игры */
+    onGameEnd: OnEndGameCallback | void,
+    /** Количество цветов, выбранное пользователем в настройках */
+    colorsCount = 5,
+    /** Количество ходов, выбранное пользователем в настройках */
     stepsCount = 10,
-    isColorsMayBeRepeated = true
+    /** Флаг, могут ли цвета в эталонной последовательности повторяться, выбранные пользователем в настройках */
+    isColorsMayBeRepeated = false
   ) {
     if (Game._instance) {
-      /* eslint-disable */
       return Game._instance;
     }
 
-    this._reference = generateRandomColorSequence(colorsCount, isColorsMayBeRepeated);
-    // eslint-disable-next-line no-nested-ternary
-    this._colorsInRowCount = colorsCount < 4 ? 4 : colorsCount > 10 ? 10 : colorsCount;
+    /** Заполнение количества ячеек в строке от 4 до 10 */
+    this._colorsInRowCount = colorsCount < 5 ? 4 : colorsCount > 11 ? 10 : colorsCount - 1;
+    /**
+     * Генерация эталонной последовательности на основании количества ячеек в строке и флага,
+     * могут ли повторяться цвета
+     */
+    this._reference = generateRandomColorSequence(this._colorsInRowCount, isColorsMayBeRepeated);
+    /** Заполнение количества доступных цветов, на 1 превышает количество ячеек в строке */
     this._allAvailableColorsCount = this._colorsInRowCount + 1;
-    // eslint-disable-next-line no-nested-ternary
+    /** Заполнение максимального количества ходов от 1 до 20 */
     this._maxStepsCount = stepsCount < 1 ? 1 : stepsCount > 20 ? 20 : stepsCount;
+    /**
+     * Расчет размера игровой фишки на основании доступной высоты контейнера для игрового поля и
+     * максимального количества ходов
+     */
+    this._chipSize = containerHeight / (6.5 + 1.5 * this._maxStepsCount);
+    /** Создание игрового поля */
     this._field = new Field(
       canvas,
       ctx,
-      colorsCount,
-      stepsCount,
-      this._allAvailableColorsCount,
+      this._chipSize,
       this._colorsInRowCount,
-      this._maxStepsCount
+      this._maxStepsCount,
+      lightX,
+      lightY
     );
+    /** Заполнение флага, могут ли повторяться цвета в последовательности */
     this._isColorsMayBeRepeated = isColorsMayBeRepeated;
+    /** Установка первой строки ячеек активной */
     this._currentChipSlotsRowIndex = 0;
+    /** Сохранение коллбэка для выполнения после окончания игры */
     this._onGameEnd = onGameEnd;
+    /** Сохранение времени начала игры */
     this._startTime = new Date();
+    /** Создание игровых фишек */
     this._gameChips = createGameChips(
-      colorsCount + 1,
-      this._field.gameChipsFieldWidth - 2 * chipSize
+      ctx,
+      this._chipSize,
+      this._allAvailableColorsCount,
+      this._field.gameChipsFieldWidth - 2 * this._chipSize
     );
-    this._chipSlots = createChipSlots(stepsCount, colorsCount);
-    this._checkChips = createCheckChips(stepsCount, colorsCount);
-    this._movingFigure = new GameChip({
+    /** Создание игровых ячеек */
+    this._chipSlots = createChipSlots(ctx, this._chipSize, stepsCount, this._colorsInRowCount);
+    /** Создание проверочных фишек */
+    this._checkChips = createCheckChips(ctx, this._chipSize, stepsCount, this._colorsInRowCount);
+    /** Создание объектов изображений замка */
+    this._locksImages = createLockImages(
+      this._checkChips,
+      this._chipSize,
+      this._allAvailableColorsCount
+    );
+    /** Создание передвигаемой игровой фишки */
+    this._movingFigure = new MovingGameChip({
       x: 0,
       y: 0,
-      width: chipSize,
-      height: chipSize,
+      radius: this._chipSize / 2,
       color: backgroundColor,
-      withoutSlot: true,
+      lightX,
+      lightY,
+      ctx,
     });
 
+    /** Сохранение инстанса для резализации синглтона */
     Game._instance = this;
 
+    /** Запуск инициализации игры */
     this.init();
   }
 
@@ -152,12 +205,28 @@ export default class Game {
 
   /** Отрисовка результатов проверки */
   private drawCheckChips = () => {
-    this._checkChips.forEach((row) => row.forEach((check) => check.draw(this._field.ctx)));
+    this._checkChips.forEach((row, index) => {
+      if (index < this._currentChipSlotsRowIndex) {
+        row.forEach((check) => check.draw(this._field.ctx));
+      } else {
+        if (
+          index === this._currentChipSlotsRowIndex &&
+          this.isRowFilled &&
+          !this._locksImages[index].isActive
+        ) {
+          this._locksImages[index].activate();
+        }
+
+        this._locksImages[index].draw(this._field.ctx);
+      }
+    });
   };
 
   /** Запуск анимации */
   private startAnimation() {
-    requestAnimationFrame(this.tick);
+    if (!this._isAnimationStopped) {
+      requestAnimationFrame(this.tick);
+    }
   }
 
   /** Обновление {@link _canvas} */
@@ -202,6 +271,15 @@ export default class Game {
 
   /** Обработчик двойного клика мыши */
   private mouseDblClickHandler = () => {
+    if (this.checkSlotClear()) {
+      return;
+    }
+
+    this.checkRowUnlock();
+  };
+
+  /** Проверка, была ли очищена ячейка */
+  private checkSlotClear = () => {
     const currentSlot = this._chipSlots[this._currentChipSlotsRowIndex].find((slot) =>
       slot.isCoordinatesInFigure(this._mouse.x, this._mouse.y)
     );
@@ -209,6 +287,25 @@ export default class Game {
     if (currentSlot) {
       this.checkSlotFilling(currentSlot);
       currentSlot.fill();
+
+      return true;
+    }
+
+    return false;
+  };
+
+  /** Проверка, была ли нажата иконка для разблокировки результата */
+  private checkRowUnlock = () => {
+    const isCurrentRowUnlock = this._locksImages[
+      this._currentChipSlotsRowIndex
+    ].isCoordinatesInImage(this._mouse.x, this._mouse.y);
+
+    if (this._isWin !== null) {
+      this._isWin ? this.setWinnings() : this.setLoss();
+    }
+
+    if (isCurrentRowUnlock) {
+      this.openNewChipSlotsRow();
     }
   };
 
@@ -295,7 +392,6 @@ export default class Game {
 
     this.checkGameResult();
     this.fillBaseGameChips();
-    this.openNewChipSlotsRow();
   };
 
   /** Проверка результата игры */
@@ -303,13 +399,13 @@ export default class Game {
     const { allMatchCount, colorMatchCount } = this.compareRowWithReference();
 
     if (allMatchCount === this._colorsInRowCount) {
-      this.setWinnings();
+      this._isWin = true;
 
       return;
     }
 
     if (this._currentChipSlotsRowIndex === this._maxStepsCount - 1) {
-      this.setLoss();
+      this._isWin = false;
 
       return;
     }
@@ -323,7 +419,6 @@ export default class Game {
       new Date().getTime() - this._startTime.getTime()
     );
 
-    // eslint-disable-next-line no-unused-expressions
     this._onGameEnd &&
       this._onGameEnd({
         isWin: true,
@@ -332,15 +427,14 @@ export default class Game {
         time: `${minutes}:${seconds}`,
       });
 
-    this.destructor();
+    this._isAnimationStopped = true;
   };
 
   /** Завершение игры проигрышем */
   private setLoss = () => {
-    // eslint-disable-next-line no-unused-expressions
     this._onGameEnd && this._onGameEnd({ isWin: false });
 
-    this.destructor();
+    this._isAnimationStopped = true;
   };
 
   /**
@@ -450,7 +544,7 @@ export default class Game {
     }
   };
 
-  /** Очищение {@link _canvas} */
+  /** Очищение canvas */
   private clear = () => {
     this._field.clear();
     this._field.draw();
@@ -476,6 +570,76 @@ export default class Game {
     Field.destructor();
     Mouse.destructor();
 
-    Game._instance = undefined;
+    Game._instance = void 0;
+  };
+
+  /** Перерисовка фишек */
+  private redrawChips = () => {
+    this._gameChips.forEach((chip) => chip.fill());
+    this._chipSlots.forEach((row) => row.forEach((slot) => slot.fill()));
+    this._checkChips.forEach((row) => row.forEach((chip) => chip.fill()));
+  };
+
+  /** Перезапуск анимации */
+  private restartAnimation = () => {
+    if (!this._isAnimationStopped) {
+      return;
+    }
+
+    this._isAnimationStopped = false;
+    this.startAnimation();
+  };
+
+  /**
+   * Старт новой игры
+   * @param _colorsCount Количество цветов в последовательности
+   * @param _stepsCount Максимальное количество ходов
+   * @param _isColorsMayBeRepeated Флаг, показывающий, могут ли повторяться цвета в последовательности
+   */
+  public static start = (
+    _colorsCount?: number,
+    _stepsCount?: number,
+    _isColorsMayBeRepeated?: boolean
+  ) => {
+    if (!Game._instance) {
+      console.warn('Инстанс Game не существует. Необходимо запустить игру с начала');
+
+      return;
+    }
+
+    const canvas = Game._instance._field.canvas;
+    const ctx = Game._instance._field.ctx;
+    const containerHeight = Game._instance._field.canvas.height;
+    const onGameEnd = Game._instance._onGameEnd;
+    const colorsCount = _colorsCount ?? Game._instance._colorsInRowCount;
+    const stepsCount = _stepsCount ?? Game._instance._maxStepsCount;
+    const isColorsMayBeRepeated = _isColorsMayBeRepeated ?? Game._instance._isColorsMayBeRepeated;
+
+    Game._instance.destructor();
+
+    Game._instance = new Game(
+      canvas,
+      ctx,
+      containerHeight,
+      onGameEnd,
+      colorsCount,
+      stepsCount,
+      isColorsMayBeRepeated
+    );
+  };
+
+  /** Рестарт текущей игры */
+  public static restart = () => {
+    if (!Game._instance) {
+      console.warn('Инстанс Game не существует. Необходимо запустить игру с начала');
+
+      return;
+    }
+
+    Game._instance._movingFigureIndex = null;
+    Game._instance._currentChipSlotsRowIndex = 0;
+
+    Game._instance.redrawChips();
+    Game._instance.restartAnimation();
   };
 }

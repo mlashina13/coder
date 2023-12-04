@@ -1,0 +1,1 @@
+export { InformationFactPage } from './InformationFactPage';

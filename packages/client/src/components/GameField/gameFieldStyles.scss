@@ -1,5 +1,21 @@
-.game-field {
+@import '../../styles/color';
+@import '../../styles/common';
+
+.game-page {
   height: 100vh;
   justify-content: center;
   align-items: center;
+
+  &__block {
+    margin-bottom: $spacing-ml;
+    padding: 0px !important;
+
+    &__timer-danger {
+      color: $red;
+    }
+
+    &__button {
+      margin-left: $spacing-ml !important;
+    }
+  }
 }

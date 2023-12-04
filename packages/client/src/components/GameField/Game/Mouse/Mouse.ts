@@ -103,12 +103,12 @@ export default class Mouse {
 
   /** Очищение стартовых координат мыши */
   public clearStartCoordinates() {
-    this._startX = undefined;
-    this._startY = undefined;
+    this._startX = void 0;
+    this._startY = void 0;
   }
 
   /** Деинициализация мыши */
   public static destructor = () => {
-    Mouse._instance = undefined;
+    Mouse._instance = void 0;
   };
 }
