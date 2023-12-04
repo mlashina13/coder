@@ -1,0 +1,42 @@
+@import '../../../styles/color';
+@import '../../../styles/common';
+
+.leader-bord-item {
+  color: $main-blue;
+  background: $grey-light;
+  border-radius: 3px;
+  margin-bottom: $spacing-ms;
+  padding: 0 10px !important;
+
+  &:nth-child(3), &:nth-child(4), &:nth-child(5) {
+    color: white;
+    background: $main-blue;
+
+    .leader-bord-item__point {
+      color: $grey;
+    }
+    .leader-bord-item__place div {
+      color: white;
+      background: $red-cherry;
+      border-radius: 15px;
+      width: 25px;
+      text-align: center;
+    }
+  }
+
+  &__place {
+    text-align: left;
+    div {
+      width: 25px;
+      text-align: center;
+    }
+  }
+
+  &__name {
+    text-align: left;
+  }
+
+  &__point {
+    text-align: right;
+  }
+}
