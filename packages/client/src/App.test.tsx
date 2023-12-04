@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { render, screen } from '@testing-library/react';
 import React from 'react';
+import { TextEncoder, TextDecoder } from 'util';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import 'jest-canvas-mock';
 
@@ -13,6 +14,8 @@ global.fetch = jest.fn(() =>
     json: () => Promise.resolve('hey'),
   })
 );
+
+Object.assign(global, { TextDecoder, TextEncoder });
 
 test('Example test', async () => {
   render(<div>{appContent}</div>);
