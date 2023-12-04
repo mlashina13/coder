@@ -192,3 +192,28 @@ export interface UserEditProfileData {
   second_name?: string;
   first_name?: string;
 }
+
+export interface LeaderBordInfoData {
+  id: string;
+
+  /** Место в рейтинге */
+  place: number;
+
+  /** Имя пользователя */
+  name: string;
+
+  /** Количество очков */
+  point: number;
+
+  /** Время прохождения игры */
+  time?: number;
+
+  /** Уровень сложности */
+  level?: number;
+
+  /** Количество цветов */
+  colorCount?: number;
+
+  /** Размер поля */
+  stepsCount?: number;
+}

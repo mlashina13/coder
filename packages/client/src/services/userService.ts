@@ -1,6 +1,10 @@
+/* eslint-disable no-param-reassign */
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { LoginData, PasswordData, RegistrationData, UserData } from '../types/common';
 import { Auth, User } from '../api';
+import { errorToString } from '../utils';
+import { AsyncThunkOptions } from '../types/reduxToolkit';
+import { setError } from '../store/slices/errorSlice';
 
 /**
  * Пространство имен
@@ -16,7 +20,7 @@ export const checkAuth = createAsyncThunk<UserData | undefined>(
     try {
       const user = await Auth.getAuthUser();
       return user;
-    } catch (error) {
+    } catch {
       return undefined;
     }
   }
@@ -25,64 +29,97 @@ export const checkAuth = createAsyncThunk<UserData | undefined>(
 /**
  * Вход в систему
  */
-export const login = createAsyncThunk<UserData, LoginData>(
+export const login = createAsyncThunk<UserData, LoginData, AsyncThunkOptions>(
   `${NAMESPACE}/login`,
-  async (loginData) => {
-    await Auth.signIn(loginData);
-    const user = await Auth.getAuthUser();
-    return user;
+  async (loginData, { dispatch, rejectWithValue }) => {
+    try {
+      await Auth.signIn(loginData);
+      const user = await Auth.getAuthUser();
+      return user;
+    } catch (error) {
+      dispatch(setError(errorToString(error as Error)));
+      return rejectWithValue(errorToString(error as Error));
+    }
   }
 );
 
 /**
  * Выход из системы
  */
-export const logout = createAsyncThunk<boolean>(`${NAMESPACE}/logout`, async () => {
-  await Auth.logOut();
-  return true;
-});
+export const logout = createAsyncThunk<boolean, undefined, AsyncThunkOptions>(
+  `${NAMESPACE}/logout`,
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      await Auth.logOut();
+      return true;
+    } catch (error) {
+      dispatch(setError(errorToString(error as Error)));
+      return rejectWithValue(errorToString(error as Error));
+    }
+  }
+);
 
 /**
  * Регистрация
  */
-export const registration = createAsyncThunk<UserData, RegistrationData>(
+export const registration = createAsyncThunk<UserData | undefined, RegistrationData>(
   `${NAMESPACE}/registration`,
-  async (registrationData) => {
-    await Auth.registration(registrationData);
-    const user = await Auth.getAuthUser();
-    return user;
+  async (registrationData, { dispatch, rejectWithValue }) => {
+    try {
+      await Auth.registration(registrationData);
+      const user = await Auth.getAuthUser();
+      return user;
+    } catch (error) {
+      dispatch(setError(errorToString(error as Error)));
+      return rejectWithValue(errorToString(error as Error));
+    }
   }
 );
 
 /**
  * Смена аватара
  */
-export const updateAvatar = createAsyncThunk<UserData, FormData>(
+export const updateAvatar = createAsyncThunk<UserData | undefined, FormData, AsyncThunkOptions>(
   `${NAMESPACE}/updateAvatar`,
-  async (formData) => {
-    const user = await User.updateUserAvatar(formData);
-    return user;
+  async (formData, { dispatch, rejectWithValue }) => {
+    try {
+      const user = await User.updateUserAvatar(formData);
+      return user;
+    } catch (error) {
+      dispatch(setError(errorToString(error as Error)));
+      return rejectWithValue(errorToString(error as Error));
+    }
   }
 );
 
 /**
  * Обновление данных пользователя
  */
-export const updatePersonalData = createAsyncThunk<UserData, UserData>(
+export const updatePersonalData = createAsyncThunk<UserData, UserData, AsyncThunkOptions>(
   `${NAMESPACE}/updatePersonalData`,
-  async (userData) => {
-    const user = await User.updateUserData(userData);
-    return user;
+  async (userData, { dispatch, rejectWithValue }) => {
+    try {
+      const user = await User.updateUserData(userData);
+      return user;
+    } catch (error) {
+      dispatch(setError(errorToString(error as Error)));
+      return rejectWithValue(errorToString(error as Error));
+    }
   }
 );
 
 /**
  * Обновление пароля
  */
-export const updatePassword = createAsyncThunk<boolean, PasswordData>(
+export const updatePassword = createAsyncThunk<boolean, PasswordData, AsyncThunkOptions>(
   `${NAMESPACE}/updatePassword`,
-  async (passwordData) => {
-    await User.updatePassword(passwordData);
-    return true;
+  async (passwordData, { dispatch, rejectWithValue }) => {
+    try {
+      await User.updatePassword(passwordData);
+      return true;
+    } catch (error) {
+      dispatch(setError(errorToString(error as Error)));
+      return rejectWithValue(errorToString(error as Error));
+    }
   }
 );
