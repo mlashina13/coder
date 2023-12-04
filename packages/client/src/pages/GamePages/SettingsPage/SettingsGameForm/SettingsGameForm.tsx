@@ -9,6 +9,7 @@ import { DialogLayout } from '../../../../components/DialogLayout/DialogLayout';
 import { Title } from '../../../../components/common/Title/Title';
 import { useSettingGame } from '../SettingsProvider';
 import { SettingsGameProviderState } from '../SettingsGameProviderTypes';
+import { GAME_TYPES } from '../../../../components/GameField/Game/consts/index';
 
 /**
  * Форма настроек игры*
@@ -45,14 +46,14 @@ export const SettingsGameForm = () => {
             <FormControlLabel
               disabled={settings.visible}
               onChange={formik.handleChange}
-              value='0'
+              value={GAME_TYPES.withoutColorsRepeated}
               control={<Radio size='small' />}
               label='фишки с уникальными цветами'
             />
             <FormControlLabel
               disabled={settings.visible}
               onChange={formik.handleChange}
-              value='1'
+              value={GAME_TYPES.withColorsRepeated}
               control={<Radio size='small' />}
               label='фишки с повторяющимися цветами'
             />
