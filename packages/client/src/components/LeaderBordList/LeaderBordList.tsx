@@ -18,8 +18,8 @@ export const LeaderBordList: FC<LeaderBordListProps> = ({ leaderBordList = [] })
       <ListItemText className='leader-bord-list-title__name' primary='Имя игрока' />
       <ListItemText className='leader-bord-list-title__point' primary='Количество очков' />
     </ListItem>
-    {leaderBordList.map((item, index) => (
-      <LeaderBordItem key={index} item={item} />
+    {leaderBordList.map((item) => (
+      <LeaderBordItem key={item.id} item={item} />
     ))}
   </Container>
 );
