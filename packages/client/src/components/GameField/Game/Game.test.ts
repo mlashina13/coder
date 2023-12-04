@@ -1,17 +1,9 @@
 /* eslint-disable dot-notation */
+import { Reference } from 'yup';
 import * as GameModule from './Game';
 import type { OnEndGameCallback } from './types';
 
 const Game = GameModule.default;
-
-// jest.mock('./Game', () => {
-//   const originalModule = jest.requireActual<typeof import('./Game')>('./Game');
-
-//   return {
-//     __esModule: true, // Use it when dealing with esModules
-//     ...originalModule,
-//   };
-// });
 
 describe('Проверка ф-ти игры: класс Game', () => {
   afterEach(() => {
@@ -104,50 +96,39 @@ describe('Проверка ф-ти игры: класс Game', () => {
       expect(spy).toHaveBeenCalledTimes(1);
     });
 
-    // jest.mock('./Game', () => {
-    //   const original = jest.requireActual('./Game');
-    //   return {
-    //     __esModule: true,
-    //     // eslint-disable-next-line new-cap
-    //     default: jest.fn().mockImplementation(jest.fn()),
-    //   };
-    // });
-    // // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
-    // const TestGame = require('./Game').default;
+    test('Game start при пустом instance должен делать пердупреждение', () => {
+      const game = getComponent();
+      const spy = jest.spyOn(console, 'warn');
+      game.destructor();
+      Game.start();
 
-    // test('Game start должен пересоздавать instance', () => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    // const actual = jest.requireActual('./Game');
-    // const spy = jest.spyOn(actual, 'default');
-    // console.log(TestGame);
-    // const {
-    //   canvas,
-    //   colorsCount,
-    //   containerHeight,
-    //   ctx,
-    //   isColorsMayBeRepeated,
-    //   onGameEnd,
-    //   stepsCount,
-    // } = getDefaultProps();
-    // // eslint-disable-next-line new-cap
-    // const t = new TestGame(
-    //   canvas,
-    //   ctx,
-    //   containerHeight,
-    //   onGameEnd,
-    //   colorsCount,
-    //   stepsCount,
-    //   isColorsMayBeRepeated
-    // );
+      expect(spy).toHaveBeenCalled();
+    });
 
-    //   jest.mock('./Game');
-    //   const spy = jest.spyOn(GameModule, 'default').mockImplementation(jest.fn());
+    test('Game start должен пересоздавать instance', () => {
+      const {
+        canvas,
+        colorsCount,
+        containerHeight,
+        ctx,
+        isColorsMayBeRepeated,
+        onGameEnd,
+        stepsCount,
+      } = getDefaultProps();
+      const firstGame = new Game(
+        canvas,
+        ctx,
+        containerHeight,
+        onGameEnd,
+        colorsCount,
+        stepsCount,
+        isColorsMayBeRepeated
+      );
 
-    //   getComponent();
-    //   Game.start();
+      Game.start();
 
-    //   expect(spy).toHaveBeenCalledTimes(1);
-    // });
+      expect(Game['_instance']).not.toEqual(firstGame);
+    });
   });
 
   describe('Окончание игры', () => {
