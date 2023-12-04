@@ -2,7 +2,7 @@
   "extends": ["stylelint-config-recommended-scss"],
   "plugins": ["stylelint-scss"],
   "rules": {
-    "no-descending-specificity": false,
+    "no-descending-specificity": null,
     "at-rule-empty-line-before": [
       "always",
       {
