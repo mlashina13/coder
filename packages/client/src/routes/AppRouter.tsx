@@ -9,6 +9,8 @@ import {
   ProfilePage,
   TopicPage,
   RegistrationPage,
+  Error400Page,
+  Error500Page,
 } from '../pages';
 import { PrivateRoute } from './PrivateRoute';
 import { PublicRoute } from './PublicRoute';
@@ -19,6 +21,8 @@ import { ROUTER_URLS } from '../constants';
  */
 export const AppRouter: FC = () => (
   <Routes>
+    <Route element={<Error400Page />} path='*' />
+    <Route element={<Error500Page />} path={ROUTER_URLS.ServerError} />
     <Route element={<PublicRoute />}>
       <Route element={<LoginPage />} path={ROUTER_URLS.Login} />
       <Route element={<RegistrationPage />} path={ROUTER_URLS.Registration} />

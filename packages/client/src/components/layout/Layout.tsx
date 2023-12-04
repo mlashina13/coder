@@ -1,10 +1,11 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Box, Divider } from '@mui/material';
 import { Header } from './header';
 import { NavigationPanel } from './navigationPanel';
 import { LayoutProps } from './LayoutProps';
-import './layoutStyles.scss';
 import { AuthChecker } from '../AuthChecker';
+import { ErrorMessage } from '../ErrorMessage';
+import './layoutStyles.scss';
 
 /**
  * Компонент шаблона страницы
@@ -14,6 +15,7 @@ export const Layout: FC<LayoutProps> = (props) => {
 
   return (
     <AuthChecker>
+      <ErrorMessage />
       <Box className='layout'>
         <Header title={title} />
         <NavigationPanel />
