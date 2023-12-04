@@ -1,14 +1,15 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Container } from '@mui/material';
+import { Box } from '@mui/material';
 import Game from './Game/Game';
 import './gameFieldStyles.scss';
 import { EndGameFailDialog } from '../../pages/GamePages/SettingsPage/EndGameForm/EndGameFailDialog';
 import { EndGameDialog } from '../../pages/GamePages/SettingsPage/EndGameForm/EndGameDialog';
 import { useSettingGame } from '../../pages/GamePages/SettingsPage/SettingsProvider';
-import type { Statistics } from './Game/types';
 import { ROUTER_URLS } from '../../constants/routes';
 import { Button } from '../common/Button/Button';
+import { GAME_TYPES } from './Game/consts/index';
+import type { Statistics } from './Game/types';
 
 export const GameField: FC = () => {
   // Параметры для настройки игры
@@ -72,7 +73,7 @@ export const GameField: FC = () => {
           onEndGame,
           settings.colorsCount,
           settings.stepsCount,
-          Boolean(settings.isColorsMayBeRepeated)
+          settings.isColorsMayBeRepeated === GAME_TYPES.withColorsRepeated
         )
       );
     }

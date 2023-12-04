@@ -1,0 +1,12 @@
+@import '../../styles/color';
+@import '../../styles/common';
+
+.leader-bord-title {
+    text-align: center;
+    margin-bottom: $spacing-lm !important;
+}
+.leader-bord-list-title {
+    &__point {
+        text-align: right;
+    }
+}

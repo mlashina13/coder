@@ -21,7 +21,8 @@
     "@typescript-eslint/no-shadow": "error",
     "no-unused-vars": "off",
     "no-nested-ternary": "off",
-  "no-unused-expressions": "off",
+    "no-descending-specificity": "off",
+    "no-unused-expressions": "off",
     "@typescript-eslint/no-unused-vars": "off",
     "import/prefer-default-export": "off",
     "jsx-a11y/click-events-have-key-events": "off",
@@ -32,6 +33,7 @@
     "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
     "react/jsx-props-no-spreading": "off",
     "react/require-default-props": "off",
+    "react/no-array-index-key": "off",
     "import/extensions": [
       "error",
       "never",
