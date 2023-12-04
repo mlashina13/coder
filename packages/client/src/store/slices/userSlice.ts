@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { createSlice, AnyAction } from '@reduxjs/toolkit';
+import { createSlice, AnyAction, PayloadAction } from '@reduxjs/toolkit';
 import {
   checkAuth,
   login,
@@ -44,6 +44,7 @@ const NAME = 'user';
 interface UserState {
   currentUser?: UserData;
   loading: boolean;
+  userError?: string;
 }
 
 /**
@@ -52,6 +53,7 @@ interface UserState {
 const initialState: UserState = {
   currentUser: getUserFromLocalStorage(),
   loading: false,
+  userError: undefined,
 };
 
 /**
@@ -108,9 +110,11 @@ const userSlice = createSlice({
       })
       .addMatcher(isLoading, (state) => {
         state.loading = true;
+        state.userError = undefined;
       })
-      .addMatcher(isError, (state) => {
+      .addMatcher(isError, (state, action: PayloadAction<string>) => {
         state.loading = false;
+        state.userError = action.payload;
       });
   },
 });

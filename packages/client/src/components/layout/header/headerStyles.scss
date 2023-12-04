@@ -2,8 +2,8 @@
 @import '../../../styles/common';
 
 .page-header {
-  min-height: 48px;
-  max-height: 48px;
+  min-height: $header-height;
+  max-height: $header-height;
   padding: $spacing-none $spacing-xl;
   display: flex;
   align-items: center;

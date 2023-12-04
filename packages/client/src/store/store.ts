@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { userReducer } from './slices';
+import { errorReducer, userReducer } from './slices';
 
 /**
  * Хранилище приложения
  */
 export const store = configureStore({
   reducer: {
+    error: errorReducer,
     user: userReducer,
   },
 });
