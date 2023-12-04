@@ -12,7 +12,7 @@ import { store } from '../../../store';
 import { RegistrationForm } from './RegistrationForm';
 
 configure({ adapter: new Adapter() });
-describe('Login Form', () => {
+describe('Registration Form', () => {
   test('Должен верно отрисовываться', () => {
     const WrappedForm = () => (
       <Provider store={store}>
@@ -35,7 +35,7 @@ describe('Login Form', () => {
       </Provider>
     );
 
-    test('should update email field on change', () => {
+    test('Должен обновлять поле с паролем', () => {
       const passwordInput = mount<React.FC>(<WrappedForm />)
         .find(RegistrationForm)
         .find('input[name="password"]');
@@ -52,7 +52,7 @@ describe('Login Form', () => {
       expect(passwordInput.html()).toMatch('12345678');
     });
 
-    test('should update username field on change', () => {
+    test('Должен обновлять поле с логином', () => {
       const loginInput = mount<React.FC>(<WrappedForm />)
         .find(RegistrationForm)
         .find("input[name='login']");
@@ -70,7 +70,7 @@ describe('Login Form', () => {
       expect(loginInput.html()).toMatch('newName');
     });
 
-    test('should update email field on change', () => {
+    test('Должен обновлять поле с почтой', () => {
       const passwordInput = mount<React.FC>(<WrappedForm />)
         .find(RegistrationForm)
         .find('input[name="email"]');
@@ -87,7 +87,7 @@ describe('Login Form', () => {
       expect(passwordInput.html()).toMatch('email@email.ru');
     });
 
-    test('should update email field on change', () => {
+    test('Должен обновлять поле "повторить пароль"', () => {
       const passwordInput = mount<React.FC>(<WrappedForm />)
         .find(RegistrationForm)
         .find('input[name="passwordRepeat"]');
@@ -104,7 +104,7 @@ describe('Login Form', () => {
       expect(passwordInput.html()).toMatch('87654321');
     });
 
-    test('should update email field on change', () => {
+    test('Должен обновлять поле с телефоном', () => {
       const passwordInput = mount<React.FC>(<WrappedForm />)
         .find(RegistrationForm)
         .find('input[name="phone"]');
@@ -121,7 +121,7 @@ describe('Login Form', () => {
       expect(passwordInput.html()).toMatch('8888888888');
     });
 
-    test('should update email field on change', () => {
+    test('Должен обновлять поле с фамилией', () => {
       const passwordInput = mount<React.FC>(<WrappedForm />)
         .find(RegistrationForm)
         .find('input[name="second_name"]');
@@ -138,7 +138,7 @@ describe('Login Form', () => {
       expect(passwordInput.html()).toMatch('Ivanovich');
     });
 
-    test('should update email field on change', () => {
+    test('Должен обновлять поле с именем', () => {
       const passwordInput = mount<React.FC>(<WrappedForm />)
         .find(RegistrationForm)
         .find('input[name="first_name"]');

@@ -27,7 +27,7 @@ describe('Login Form', () => {
   });
 
   describe('Проверка ф-ти', () => {
-    test('should update email field on change', () => {
+    test('Должен обновлять поле с паролем', () => {
       const WrappedForm = () => (
         <Provider store={store}>
           <BrowserRouter>
@@ -52,7 +52,7 @@ describe('Login Form', () => {
       expect(passwordInput.html()).toMatch('12345678');
     });
 
-    test('should update username field on change', () => {
+    test('Должен обновлять поле с логином', () => {
       const WrappedForm = () => (
         <Provider store={store}>
           <BrowserRouter>

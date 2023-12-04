@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Login Form Должен верно отрисовываться 1`] = `
+exports[`Registration Form Должен верно отрисовываться 1`] = `
 LoadedCheerio {
   "0": <form
     class="regstration-form"
