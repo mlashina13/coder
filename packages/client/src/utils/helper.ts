@@ -8,8 +8,8 @@ export const getRandomInt = (max: number): number => Math.floor(Math.random() * 
 /**
  *  Функция вычисления элемента в масстеве базы знаний для отображения "Интересных фактов"
  *  */
-export const getImage = (list: ImageInterface[]): string => {
+export const getImage = (list: ImageInterface[]): ImageInterface | null => {
   // TODO реализовать механизм вычисления отображения новой информации "Интересных фактов"
   const random = getRandomInt(3);
-  return list.length >= random ? list[random].src : '';
+  return list.length >= random ? list[random] : null;
 };

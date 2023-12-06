@@ -1,18 +1,25 @@
 import './SettingsGameInfo.scss';
 import { Container } from '@mui/material';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Image } from '../../../../components/common/Image/Image';
 import { LockIcon } from '../../../../assets/icons/LockIcon';
 import { FakeInfoList } from './FakeInfoList';
 import { useSettingGame } from '../SettingsProvider';
 import { GameField } from '../../../../components/GameField/GameField';
 import { getImage } from '../../../../utils';
+
 /**
  *  Компонент отображения "Интересных фактов" при выйгрыше в игре
  */
 export const SettingsGameInfo: FC = () => {
-  const [image, setImage] = useState(() => getImage(FakeInfoList));
+  const [image, setImage] = useState<string>();
   const { settings } = useSettingGame();
+
+  useEffect(() => {
+    const infoItem = getImage(FakeInfoList);
+    setImage(infoItem?.src ?? '');
+    settings.infoId = infoItem?.id;
+  }, []);
   /**
    * Условие отображения компонента, после старта, вместо "Интересных фактов отображается игра"
    */
