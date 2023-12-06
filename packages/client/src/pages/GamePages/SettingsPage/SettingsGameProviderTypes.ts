@@ -1,5 +1,3 @@
-import { SettingsGameFormProps } from './SettingsGameForm/SettingsGameFormProps';
-
 /**
  * Интерфейс настроек для игры"
  */
@@ -28,6 +26,11 @@ export type SettingsGameProviderState = {
    * Переключатель между игрой  и информацией
    * */
   visible: boolean;
+
+  /**
+   * Идентификатор для инетерсной информации
+   * */
+  infoId?: number;
 };
 
 export type ActionType = {

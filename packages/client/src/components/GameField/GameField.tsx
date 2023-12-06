@@ -10,10 +10,14 @@ import { ROUTER_URLS } from '../../constants/routes';
 import { Button } from '../common/Button/Button';
 import { GAME_TYPES } from './Game/consts/index';
 import type { Statistics } from './Game/types';
+import { useFullscreen } from '../../hooks/useFullscreen';
 
 export const GameField: FC = () => {
   // Параметры для настройки игры
   const { settings, endGame } = useSettingGame();
+
+  // Параметры отображение fullscreen экрана
+  const [handleFullScreen, textFullscreen] = useFullscreen();
 
   // Для отображение времени на экране
   const time = settings.time || 1;
@@ -116,11 +120,13 @@ export const GameField: FC = () => {
 
   /** Навигация на страницу Интересной информации */
   const handleGoToInfo = () => {
-    navigate(ROUTER_URLS.Informations);
+    navigate(`${ROUTER_URLS.Informations}/${settings.infoId}`);
   };
 
-  const handleFullScreen = () => {
-    // TODO реализация игры на весь экран
+  /** Завершение игры */
+  const handleEndGame = () => {
+    setIsTimerRunner(false);
+    onEndGame({ isWin: false });
   };
 
   const contentRenderer = () => {
@@ -137,7 +143,12 @@ export const GameField: FC = () => {
             </span>
             <Button
               onClick={handleFullScreen}
-              label='На полный экран'
+              label={textFullscreen}
+              className='game-page__block__button'
+            />
+            <Button
+              onClick={handleEndGame}
+              label='Завершить игру'
               className='game-page__block__button'
             />
           </Box>

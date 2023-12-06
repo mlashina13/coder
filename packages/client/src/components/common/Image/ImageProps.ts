@@ -22,7 +22,7 @@ export interface ImageProps {
   /**
    * Пусть к изображению
    */
-  src: string;
+  src: string | undefined;
 
   /**
    * Текст вместо картинки

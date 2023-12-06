@@ -6,7 +6,6 @@ import React, {
   useMemo,
   useReducer,
 } from 'react';
-import { SettingsGameFormProps } from './SettingsGameForm/SettingsGameFormProps';
 import { ActionType, SettingsGameProviderState } from './SettingsGameProviderTypes';
 import { SETTINGS } from '../../../constants/settings';
 
@@ -14,6 +13,7 @@ import { SETTINGS } from '../../../constants/settings';
 export const initialState: SettingsGameProviderState = {
   ...SETTINGS,
   visible: false,
+  infoId: 0,
 };
 
 const SettingGameContext = createContext({
