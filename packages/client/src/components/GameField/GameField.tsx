@@ -17,7 +17,7 @@ export const GameField: FC = () => {
   const { settings, endGame } = useSettingGame();
 
   // Параметры отображение fullscreen экрана
-  const [handleFullScreen, textFullscreen] = useFullscreen();
+  const [handleFullScreen, fullScreenModeLabel] = useFullscreen();
 
   // Для отображение времени на экране
   const time = settings.time || 1;
@@ -143,7 +143,7 @@ export const GameField: FC = () => {
             </span>
             <Button
               onClick={handleFullScreen}
-              label={textFullscreen}
+              label={fullScreenModeLabel}
               className='game-page__block__button'
             />
             <Button

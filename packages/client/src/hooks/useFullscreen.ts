@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { string } from 'yup';
 import { TEXT_FULLSCREEN } from '../constants/fullscreen';
 import { DocumentElementFullscreen, DocumentFullscreen } from './fullScreenInterfase';
 
 /**
- * Проверка отображается fullscreen или нет
+ * Проверка отображается на fullscreen
  * */
 const checkFullscreen = (): boolean => {
   const doc = document as DocumentFullscreen;
@@ -18,7 +17,7 @@ const checkFullscreen = (): boolean => {
 };
 
 /**
- * Активая режима fullscreen
+ * Активный режим fullscreen
  * */
 function activateFullscreen(element: DocumentElementFullscreen) {
   if (element.requestFullscreen) {
@@ -49,8 +48,11 @@ function deactivateFullscreen(document: DocumentFullscreen) {
  * Компонент Разворачивание/сворачивание экрана
  */
 
-export const useFullscreen = (): [handleFullScreen: () => void, textFullscreen: string] => {
-  const [textContent, setTextContent] = useState<string>(TEXT_FULLSCREEN.fullscreen);
+export const useFullscreen = (): [
+  handleFullScreen: () => void,
+  fullScreenModeLabel: TEXT_FULLSCREEN
+] => {
+  const [textContent, setTextContent] = useState(TEXT_FULLSCREEN.fullscreen);
 
   const changeFullScreen = () => {
     const isFull = checkFullscreen();
