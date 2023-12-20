@@ -11,6 +11,7 @@
     "prettier"
   ],
   "rules": {
+    "no-undef": "off",
     "consistent-return": "off",
     "no-use-before-define": "warn",
     "no-constructor-return": "warn",
