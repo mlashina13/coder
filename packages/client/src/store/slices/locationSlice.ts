@@ -29,7 +29,7 @@ const initialState: LocationState = {
 };
 
 /**
- * Срез глобальной ошибки
+ * Срез местоположения пользователя
  */
 const locationSlice = createSlice({
   name: NAME,
@@ -45,7 +45,7 @@ const locationSlice = createSlice({
 });
 
 /**
- * Редьюсер для глобальной ошибки
+ * Редьюсер для местоположения пользователя
  */
 export const locationReducer = locationSlice.reducer;
 
