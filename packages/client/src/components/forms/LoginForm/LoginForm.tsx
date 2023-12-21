@@ -5,7 +5,7 @@ import { Button, Input } from '../../common';
 import { LoginData } from '../../../types/common';
 import { validationSchema } from './validationSchema';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { login } from '../../../services';
+import { findLocation, login } from '../../../services';
 import { ROUTER_URLS } from '../../../constants';
 import './loginFormStyles.scss';
 
@@ -31,6 +31,7 @@ export const LoginForm = () => {
     validationSchema,
     onSubmit: (values) => {
       dispatch(login(values));
+      dispatch(findLocation());
     },
     validateOnBlur: false,
   });

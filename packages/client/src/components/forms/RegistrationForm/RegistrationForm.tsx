@@ -5,7 +5,7 @@ import { Button, Input } from '../../common';
 import { RegistrationData } from '../../../types/common';
 import { validationSchema } from './validationSchema';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { registration } from '../../../services';
+import { findLocation, registration } from '../../../services';
 import { ROUTER_URLS } from '../../../constants';
 import './registrationFormStyles.scss';
 
@@ -46,6 +46,7 @@ export const RegistrationForm: FC = () => {
         formik.setFieldError('passwordRepeat', 'Пароль и повторенный пароль не совпадают!');
       } else {
         dispatch(registration({ ...rest, password }));
+        dispatch(findLocation());
       }
     },
   });

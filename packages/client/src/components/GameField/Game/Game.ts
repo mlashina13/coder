@@ -1,4 +1,4 @@
-import { backgroundColor, leftMouseButton, lightX, lightY } from './consts';
+import { backgroundColor, leftMouseButton, lightX, lightY, maxChipSize } from './consts';
 import {
   calcNewCoordinate,
   convertMillisecondsToMinutesAndSeconds,
@@ -110,11 +110,12 @@ export default class Game {
     this._allAvailableColorsCount = this._colorsInRowCount + 1;
     /** Заполнение максимального количества ходов от 1 до 20 */
     this._maxStepsCount = stepsCount < 1 ? 1 : stepsCount > 20 ? 20 : stepsCount;
+    const chipSize = containerHeight / (6.5 + 1.5 * this._maxStepsCount);
     /**
      * Расчет размера игровой фишки на основании доступной высоты контейнера для игрового поля и
      * максимального количества ходов
      */
-    this._chipSize = containerHeight / (6.5 + 1.5 * this._maxStepsCount);
+    this._chipSize = chipSize > maxChipSize ? maxChipSize : chipSize;
     /** Создание игрового поля */
     this._field = new Field(
       canvas,
