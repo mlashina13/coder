@@ -9,10 +9,20 @@ import { useSettingGame } from '../../pages/GamePages/SettingsPage/SettingsProvi
 import { ROUTER_URLS } from '../../constants/routes';
 import { Button } from '../common/Button/Button';
 import { GAME_TYPES } from './Game/consts/index';
-import type { Statistics } from './Game/types';
 import { useFullscreen } from '../../hooks/useFullscreen';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxToolkitHooks';
+import { calculationPoints } from '../../utils/helper';
+import { addLeaderboard } from '../../services/leaderboardService';
+import { UserLeaderboardData } from '../../services/leaderboardService/leaderboardInterfaces';
+import { RATING_FIELD_NAME, TEAM_NAME } from '../../constants/common';
+import type { Statistics } from './Game/types';
 
 export const GameField: FC = () => {
+  const dispatch = useAppDispatch();
+
+  // Данные пользователя
+  const { currentUser } = useAppSelector((state) => state.user);
+
   // Параметры для настройки игры
   const { settings, endGame } = useSettingGame();
 
@@ -20,7 +30,7 @@ export const GameField: FC = () => {
   const [handleFullScreen, fullScreenModeLabel] = useFullscreen();
 
   // Для отображение времени на экране
-  const time = settings.time || 1;
+  const time = settings.time || 10;
   const [seconds, setSeconds] = useState<number>(time * 60);
 
   // Запуск таймера
@@ -37,9 +47,15 @@ export const GameField: FC = () => {
   const navigate = useNavigate();
 
   const onEndGame = (gameResult: Statistics) => {
-    // TODO: временная заглушка с результатами игры
     if (gameResult.isWin) {
-      console.table([result]);
+      const leaderboard = calculationPoints(settings);
+      leaderboard.name = `${currentUser?.first_name} ${currentUser?.second_name}`;
+      const data: UserLeaderboardData = {
+        data: leaderboard,
+        ratingFieldName: RATING_FIELD_NAME,
+        teamName: TEAM_NAME,
+      };
+      dispatch(addLeaderboard(data));
     }
     setResult(gameResult);
     setIsTimerRunner(false);

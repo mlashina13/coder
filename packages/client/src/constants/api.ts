@@ -1,5 +1,6 @@
 const AUTH_SERVICE_NAME = 'auth';
 const USER_SERVICE_NAME = 'user';
+const LEADERBOARD_SERVICE_NAME = 'leaderboard';
 
 /** auth api */
 export const SIGN_IN_API = `/${AUTH_SERVICE_NAME}/signin`;
@@ -16,3 +17,8 @@ export const UPDATE_AVATAR_API = `/${USER_SERVICE_NAME}/profile/avatar`;
 export const UDPATE_USER_DATA_API = `/${USER_SERVICE_NAME}/profile`;
 
 export const UPDATE_PASSWORD_API = `/${USER_SERVICE_NAME}/password`;
+
+/** leaderboard */
+export const LEADERBOARD_API = `/${LEADERBOARD_SERVICE_NAME}`;
+
+export const GET_LEADERBOARD_API = `/${LEADERBOARD_SERVICE_NAME}/all`;
