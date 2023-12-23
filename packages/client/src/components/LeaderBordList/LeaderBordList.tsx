@@ -1,9 +1,7 @@
 import React, { FC } from 'react';
 import './LeaderBordIListStyles.scss';
 import { Container, ListItem, ListItemText } from '@mui/material';
-import { useSelector } from 'react-redux';
 import { LeaderBordItem } from './LeaderBordItem/LeaderBordItem';
-import { LeaderBordListProps } from './LeaderBordListProps';
 import { Title } from '../common/Title/Title';
 import { useAppSelector } from '../../hooks/reduxToolkitHooks';
 
