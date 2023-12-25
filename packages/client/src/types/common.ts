@@ -205,4 +205,7 @@ export interface LeaderboardInfoData {
 
   /** Размер поля */
   stepsCount: number;
+
+  /** Почта пользователя* */
+  email?: string;
 }

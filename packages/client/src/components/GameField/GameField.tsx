@@ -50,6 +50,7 @@ export const GameField: FC = () => {
     if (gameResult.isWin) {
       const leaderboard = calculationPoints(settings);
       leaderboard.name = `${currentUser?.first_name} ${currentUser?.second_name}`;
+      leaderboard.email = currentUser?.email;
       const data: UserLeaderboardData = {
         data: leaderboard,
         ratingFieldName: RATING_FIELD_NAME,

@@ -23,7 +23,7 @@ export const LeaderBordList: FC = () => {
         <ListItemText className='leader-bord-list-title__point' primary='Количество очков' />
       </ListItem>
       {leaderboard?.map((item, index) => (
-        <LeaderBordItem index={index + 1} key={index} item={item?.data} />
+        <LeaderBordItem index={index + 1} key={item?.data?.email} item={item?.data} />
       ))}
     </Container>
   );

@@ -26,6 +26,7 @@ export const Header: FC<HeaderProps> = (props) => {
       <Box className='page-header__logo'>
         <LogoIcon />
         CODER
+        <img src='/src/assets/img/santy.png' alt='С Новым годом!' className='page-header__santa' />
       </Box>
       <Box>
         <Typography variant='h6' className='page-header__title'>
