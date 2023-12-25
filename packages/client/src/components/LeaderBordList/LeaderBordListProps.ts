@@ -1,8 +1,8 @@
 /**
  * Свойство компонента списка результатов
  */
-import { LeaderBordInfoData } from '../../types/common';
+import { LeaderboardInfoData } from '../../types/common';
 
 export interface LeaderBordListProps {
-  leaderBordList: LeaderBordInfoData[];
+  leaderBordList: LeaderboardInfoData[];
 }

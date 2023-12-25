@@ -6,7 +6,23 @@
     margin-bottom: $spacing-lm !important;
 }
 .leader-bord-list-title {
+    font-size: $font-xxs !important;
+    .leader-bord-item__place {
+        text-align: left;
+        width: 10%;
+    }
+    &__name {
+        text-align: center;
+        width: 30%;
+    }
+
     &__point {
         text-align: right;
+        width: 20%;
+    }
+
+    &__param {
+        text-align: center;
+        width: 20%;
     }
 }
