@@ -2,38 +2,36 @@
 @import '../../../../styles/color';
 
 .settings-game-content {
-    padding: $spacing-xxl;
-    position: relative;
-    width: 400px;
+  padding: $spacing-xxl;
+  position: relative;
+  width: 400px;
 
-    .settings-game-content__title {
-        margin-bottom: $spacing-xxl;
+  .settings-game-content__title {
+    margin-bottom: $spacing-xxl;
+  }
+
+  .settings-game-content__icon {
+    position: absolute;
+    top: 0px;
+    right: $spacing-xxl;
+  }
+
+  .settings-game__form {
+    display: flex;
+    flex-direction: column;
+
+    .settings-game-form__radio-group {
+      margin-bottom: $spacing-ml;
     }
 
-    .settings-game-content__icon {
-        position: absolute;
-        top: 0px;
-        right: $spacing-xxl;
+    button {
+      margin-top: $spacing-ml;
     }
 
-    .settings-game__form {
-        display: flex;
-        flex-direction: column;
-
-        .settings-game-form__radio-group {
-            margin-bottom: $spacing-ml;
-        }
-
-        button {
-            margin-top: $spacing-ml;
-        }
-
-        .MuiTypography-root {
-            color: $grey-dark;
-            font-weight: $font-weight;
-            font-size: $font-ml;
-        }
+    .MuiTypography-root {
+      color: $grey-dark;
+      font-weight: $font-weight;
+      font-size: $font-ml;
     }
+  }
 }
-
-

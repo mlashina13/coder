@@ -1,5 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { errorReducer, userReducer, locationReducer, leadboardReducer } from './slices';
+import {
+  errorReducer,
+  userReducer,
+  locationReducer,
+  leadboardReducer,
+  oauthReducer,
+} from './slices';
 
 /**
  * Хранилище приложения
@@ -10,6 +16,7 @@ export const store = configureStore({
     user: userReducer,
     location: locationReducer,
     leaderboard: leadboardReducer,
+    oauth: oauthReducer,
   },
 });
 

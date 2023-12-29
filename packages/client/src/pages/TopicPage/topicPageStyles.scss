@@ -1,16 +1,16 @@
 @import '../../styles/common';
 
 .topic-page-content {
-    height: 100%;
+  height: 100%;
 
-    &__list {
-        height: calc(100% - 177px);
-        overflow: auto;
-    }
+  &__list {
+    height: calc(100% - 177px);
+    overflow: auto;
+  }
 
-    &__actions {
-        margin-top: $spacing-m !important;
-        display: flex;
-        gap: $spacing-xl;
-    }
+  &__actions {
+    margin-top: $spacing-m !important;
+    display: flex;
+    gap: $spacing-xl;
+  }
 }

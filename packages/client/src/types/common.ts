@@ -209,3 +209,14 @@ export interface LeaderboardInfoData {
   /** Почта пользователя* */
   email?: string;
 }
+
+/** service_id */
+export interface ServiceId {
+  service_id: string;
+}
+
+/** авторизация через яндекс */
+export interface YandexLoginData {
+  redirect_uri: string;
+  code: string;
+}
