@@ -17,7 +17,7 @@ LoadedCheerio {
         Логин
       </label>
       <div
-        class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall css-1ff8729-MuiInputBase-root-MuiFilledInput-root"
+        class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall css-batk84-MuiInputBase-root-MuiFilledInput-root"
       >
         <input
           aria-invalid="false"
@@ -42,7 +42,7 @@ LoadedCheerio {
         Пароль
       </label>
       <div
-        class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall css-1ff8729-MuiInputBase-root-MuiFilledInput-root"
+        class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall css-batk84-MuiInputBase-root-MuiFilledInput-root"
       >
         <input
           aria-invalid="false"
