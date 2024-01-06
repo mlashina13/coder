@@ -17,12 +17,15 @@ import { createProxyMiddleware } from 'http-proxy-middleware';
 import cookieParser from 'cookie-parser';
 import 'localstorage-polyfill';
 import { Image } from 'canvas';
+import { TextEncoder, TextDecoder } from 'util';
 
 dotenv.config();
 
 // Лечим канвас
 Object.assign(global, {
   Image,
+  TextEncoder,
+  TextDecoder,
 });
 
 const isDev = () => process.env.NODE_ENV === 'development';
@@ -87,15 +90,15 @@ async function startServer() {
         template = await vite!.transformIndexHtml(url, template);
       }
 
-      let mod: SSRModule;
+      let ssrModule: SSRModule;
 
       if (isDev()) {
-        mod = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx'))) as SSRModule;
+        ssrModule = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx'))) as SSRModule;
       } else {
-        mod = await import(ssrClientPath);
+        ssrModule = await import(ssrClientPath);
       }
 
-      const { render } = mod;
+      const { render } = ssrModule;
       const html = template.replace(`<!--ssr-outlet-->`, render());
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
