@@ -19,7 +19,7 @@ export const AboutGamePage: React.FC = () => (
         <ListItemText>
           <span className='select'>Легкий уровень: </span>
           <span>
-            необходимо отгадать комбинацию, сформированную из фишек с <strong>уникальными</strong>
+            необходимо отгадать комбинацию, сформированную из фишек с <strong>уникальными</strong>{' '}
             цветами.
           </span>
         </ListItemText>

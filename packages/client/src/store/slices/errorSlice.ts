@@ -16,7 +16,7 @@ interface ErrorState {
 /**
  * Начальные значения стейта
  */
-const initialState: ErrorState = {
+export const initialState: ErrorState = {
   error: undefined,
 };
 
