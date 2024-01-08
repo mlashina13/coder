@@ -18,6 +18,8 @@ import cookieParser from 'cookie-parser';
 import 'localstorage-polyfill';
 import { Image } from 'canvas';
 import { TextEncoder, TextDecoder } from 'util';
+import type { StoreType } from './store';
+// import { store as serverStore } from './store';
 
 dotenv.config();
 
@@ -34,7 +36,9 @@ const isDev = () => process.env.NODE_ENV === 'development';
  * Описание модуля с SSR
  */
 interface SSRModule {
-  render: () => string;
+  render: (store: any) => string;
+  storeFunction: (store: any) => string;
+  getPageHtml: (bundleHtml: string, store: any) => string;
 }
 
 /**
@@ -81,25 +85,41 @@ async function startServer() {
   app.use('*', cookieParser(), async (req, res, next) => {
     const url = req.originalUrl;
 
+    let ssrModule: SSRModule;
+
+    if (isDev()) {
+      ssrModule = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx'))) as SSRModule;
+    } else {
+      ssrModule = await import(ssrClientPath);
+    }
+
+    // let serverStore: StoreType;
+
+    // if (isDev()) {
+    const serverStore = (
+      await vite!.ssrLoadModule(path.resolve(`${srcPath}/src/store`, 'store.ts'))
+    ).store as StoreType;
+    // } else {
+    //   serverStore = await import(ssrClientPath);
+    // }
+
+    const { render } = ssrModule;
+
     try {
       let template: string;
       if (!isDev()) {
         template = fs.readFileSync(path.resolve(distPath, 'index.html'), 'utf-8');
       } else {
         template = fs.readFileSync(path.resolve(srcPath, 'index.html'), 'utf-8');
-        template = await vite!.transformIndexHtml(url, template);
+        // TODO: Обсудить с Кириллом ssrModule.getPageHtml
+        template = await vite!.transformIndexHtml(
+          url,
+          ssrModule.getPageHtml(render(serverStore), serverStore)
+        ); // template);
       }
 
-      let ssrModule: SSRModule;
-
-      if (isDev()) {
-        ssrModule = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx'))) as SSRModule;
-      } else {
-        ssrModule = await import(ssrClientPath);
-      }
-
-      const { render } = ssrModule;
-      const html = template.replace(`<!--ssr-outlet-->`, render());
+      // TODO: Использовать template.replace если возможно и убрать dangerouslySetInnerHTML
+      const html = template.replace(`<!--ssr-outlet-->`, render(serverStore));
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
     } catch (e) {
