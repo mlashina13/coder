@@ -6,7 +6,8 @@ import { store } from './store';
 import { App } from './App';
 import './styles/globalStyles.scss';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.hydrateRoot(
+  document.getElementById('root') as HTMLElement,
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>

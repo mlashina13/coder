@@ -51,7 +51,7 @@ interface UserState {
 /**
  * Начальные значения стейта
  */
-const initialState: UserState = {
+export const initialState: UserState = {
   currentUser: getUserFromLocalStorage(),
   loading: false,
   userError: undefined,
