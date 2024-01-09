@@ -9,6 +9,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import { createServer as createViteServer } from 'vite';
 import type { ViteDevServer } from 'vite';
+import serialize from 'serialize-javascript';
 
 import express from 'express';
 import * as fs from 'fs';
@@ -18,8 +19,6 @@ import cookieParser from 'cookie-parser';
 import 'localstorage-polyfill';
 import { Image } from 'canvas';
 import { TextEncoder, TextDecoder } from 'util';
-import type { StoreType } from './store';
-// import { store as serverStore } from './store';
 
 dotenv.config();
 
@@ -31,6 +30,7 @@ Object.assign(global, {
 });
 
 const isDev = () => process.env.NODE_ENV === 'development';
+const renderObject = (data: unknown) => serialize(data).replace(/</g, '\\\u003c');
 
 /**
  * Описание модуля с SSR
@@ -93,33 +93,17 @@ async function startServer() {
       ssrModule = await import(ssrClientPath);
     }
 
-    // let serverStore: StoreType;
-
-    // if (isDev()) {
     const serverStore = (
       await vite!.ssrLoadModule(path.resolve(`${srcPath}/src/store`, 'store.ts'))
-    ).store as StoreType;
-    // } else {
-    //   serverStore = await import(ssrClientPath);
-    // }
+    ).store;
 
-    const { render } = ssrModule;
+    const { render, getPageHtml } = ssrModule;
 
     try {
-      let template: string;
-      if (!isDev()) {
-        template = fs.readFileSync(path.resolve(distPath, 'index.html'), 'utf-8');
-      } else {
-        template = fs.readFileSync(path.resolve(srcPath, 'index.html'), 'utf-8');
-        // TODO: Обсудить с Кириллом ssrModule.getPageHtml
-        template = await vite!.transformIndexHtml(
-          url,
-          ssrModule.getPageHtml(render(serverStore), serverStore)
-        ); // template);
-      }
-
-      // TODO: Использовать template.replace если возможно и убрать dangerouslySetInnerHTML
-      const html = template.replace(`<!--ssr-outlet-->`, render(serverStore));
+      const preloadedState = serverStore.getState();
+      const bundleHtml = render(serverStore);
+      const template = getPageHtml(bundleHtml, renderObject(preloadedState));
+      const html = await vite!.transformIndexHtml(url, template);
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
     } catch (e) {

@@ -38,6 +38,8 @@ export const createStore = () => {
       error: errorReducer,
       user: userReducer,
       location: locationReducer,
+      leaderboard: leadboardReducer,
+      oauth: oauthReducer,
     },
     preloadedState: serverState,
   });
