@@ -8,6 +8,7 @@ import {
   updateAvatar,
   updatePassword,
   updatePersonalData,
+  yandexLogin,
 } from '../../services';
 import { UserData } from '../../types/common';
 
@@ -107,6 +108,11 @@ const userSlice = createSlice({
       })
       .addCase(updatePassword.fulfilled, (state) => {
         state.loading = false;
+      })
+      .addCase(yandexLogin.fulfilled, (state, action) => {
+        state.loading = false;
+        state.currentUser = action.payload;
+        setUserToLocalStorage(action.payload);
       })
       .addMatcher(isLoading, (state) => {
         state.loading = true;

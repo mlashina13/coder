@@ -2,24 +2,24 @@
 @import '../../../../styles/common';
 
 .settings-game-info {
-    display: flex;
-    position: relative;
-    flex-direction: column;
+  display: flex;
+  position: relative;
+  flex-direction: column;
 
-    .settings-game-info__icon {
-        position: absolute;
-        text-align: center;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%)
-    }
-    .settings-game-info__image {
-        width: 100%;
-        border: 1px solid $grey-dark;
-        height: calc(100vh - 200px);
-        object-fit: cover;
-        opacity: 0.2;
-        border-radius: 3px;
-        box-shadow: 0px 8px 8px  $text-shadow-color;
-    }
+  .settings-game-info__icon {
+    position: absolute;
+    text-align: center;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .settings-game-info__image {
+    width: 100%;
+    border: 1px solid $grey-dark;
+    height: calc(100vh - 200px);
+    object-fit: cover;
+    opacity: 0.2;
+    border-radius: 3px;
+    box-shadow: 0px 8px 8px $text-shadow-color;
+  }
 }

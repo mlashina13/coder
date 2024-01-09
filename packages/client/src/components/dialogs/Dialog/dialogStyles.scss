@@ -2,30 +2,30 @@
 @import '../../../styles/common';
 
 .coder-dialog {
-    &__paper {
-        border-radius: 0 !important;
-        padding: $spacing-xl;
+  &__paper {
+    border-radius: 0 !important;
+    padding: $spacing-xl;
 
-        &::before {
-            content: '';
-            height: $spacing-m;
-            background-color: $red-cherry;
-            margin: $spacing-xl * -1 $spacing-xl * -1 $spacing-m;
-        }
+    &::before {
+      content: '';
+      height: $spacing-m;
+      background-color: $red-cherry;
+      margin: $spacing-xl * -1 $spacing-xl * -1 $spacing-m;
     }
+  }
 
-    &__title {
-        color: $main-blue;
-        text-transform: uppercase;
-        font-weight: $font-weight-medium-bold !important;
-        text-align: center;
-    }
+  &__title {
+    color: $main-blue;
+    text-transform: uppercase;
+    font-weight: $font-weight-medium-bold !important;
+    text-align: center;
+  }
 
-    &__body {
-        padding: $spacing-ml $spacing-s !important;
-    }
+  &__body {
+    padding: $spacing-ml $spacing-s !important;
+  }
 
-    &__actions {
-        gap: $spacing-xl;
-    }
+  &__actions {
+    gap: $spacing-xl;
+  }
 }

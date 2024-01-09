@@ -1,7 +1,10 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+
 import { checkAuth } from '../services';
 import { ROUTER_URLS } from '../constants';
+import { checkAccessKey } from '../utils';
+
 import { useAppDispatch, useAppSelector } from './reduxToolkitHooks';
 
 /**
@@ -27,11 +30,18 @@ export const useAuthChecker = () => {
    * Эффект, отвечающий за редирект пользователя
    */
   useEffect(() => {
-    if (!currentUser && !AUTH_ROUTES.includes(location.pathname)) {
-      navigate(ROUTER_URLS.Login);
-    }
-    if (currentUser && AUTH_ROUTES.includes(location.pathname)) {
-      navigate(ROUTER_URLS.Main);
+    const keys = checkAccessKey(location.search);
+    if (keys) {
+      if (!currentUser && !AUTH_ROUTES.includes(location.pathname)) {
+        navigate(ROUTER_URLS.Login, { state: { ...keys } });
+      }
+    } else {
+      if (!currentUser && !AUTH_ROUTES.includes(location.pathname)) {
+        navigate(ROUTER_URLS.Login);
+      }
+      if (currentUser && AUTH_ROUTES.includes(location.pathname)) {
+        navigate(ROUTER_URLS.Main);
+      }
     }
   }, [currentUser, location]);
 };

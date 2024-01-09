@@ -2,35 +2,35 @@
 @import '../../../styles/common';
 
 .topic-msgs-list-item {
+  & .MuiListItemText-primary {
+    font-size: $font-ls;
+  }
+
+  & .MuiListItemText-secondary {
+    font-size: $font-ml;
+  }
+
+  &__message {
+    margin-right: $topic-message-r-space;
+    min-width: $topic-message-min-width !important;
+
     & .MuiListItemText-primary {
-        font-size: $font-ls;
+      color: $main-blue;
+      font-weight: $font-weight-bold;
     }
-    
+
     & .MuiListItemText-secondary {
-        font-size: $font-ml;
+      color: $grey-dark;
+      font-weight: $font-weight-bold;
     }
+  }
 
-    &__message {
-        margin-right: $topic-message-r-space;
-        min-width: $topic-message-min-width !important;
+  &__actions-container {
+    min-width: $topic-actions-width;
+  }
 
-        & .MuiListItemText-primary {
-            color: $main-blue;
-            font-weight: $font-weight-bold;
-        }
-        
-        & .MuiListItemText-secondary {
-            color: $grey-dark;
-            font-weight: $font-weight-bold;
-        }
-    }
-
-    &__actions-container {
-        min-width: $topic-actions-width;
-    }
-
-    &__actions-wrapper {
-        display: flex;
-        justify-content: space-between;
-    }
+  &__actions-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
 }

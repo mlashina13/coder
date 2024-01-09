@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { VitePWA } from 'vite-plugin-pwa';
 import dotenv from 'dotenv';
 import { fileURLToPath, URL } from 'node:url';
 
@@ -13,7 +14,13 @@ export default defineConfig({
   define: {
     __SERVER_PORT__: process.env.SERVER_PORT || 3001,
   },
-  plugins: [react()],
+  plugins: [
+    react(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      injectRegister: 'script',
+    }),
+  ],
   resolve: {
     alias: {
       src: fileURLToPath(new URL('./src', import.meta.url)),

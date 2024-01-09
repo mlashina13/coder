@@ -65,6 +65,7 @@ export const SettingsGameForm = () => {
           className='requiredField'
           label='Количестов цветов'
           size='small'
+          type='number'
           name='colorsCount'
           helperText={formik.touched.colorsCount && formik.errors.colorsCount}
           onChange={formik.handleChange}
@@ -76,6 +77,7 @@ export const SettingsGameForm = () => {
           disabled={settings.visible}
           size='small'
           name='stepsCount'
+          type='number'
           className='requiredField'
           helperText={formik.touched.stepsCount && formik.errors.stepsCount}
           onChange={formik.handleChange}
@@ -87,6 +89,7 @@ export const SettingsGameForm = () => {
           label='Время выполнения (мин)'
           size='small'
           name='time'
+          type='number'
           onChange={formik.handleChange}
           value={formik.values.time}
         />
