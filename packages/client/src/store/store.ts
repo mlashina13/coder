@@ -1,5 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { errorReducer, userReducer, locationReducer } from './slices';
+import {
+  errorReducer,
+  userReducer,
+  locationReducer,
+  leadboardReducer,
+  oauthReducer,
+} from './slices';
 
 declare global {
   interface Window {
@@ -19,6 +25,8 @@ export const store = configureStore({
     error: errorReducer,
     user: userReducer,
     location: locationReducer,
+    leaderboard: leadboardReducer,
+    oauth: oauthReducer,
   },
 });
 

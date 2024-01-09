@@ -193,27 +193,30 @@ export interface UserEditProfileData {
   first_name?: string;
 }
 
-export interface LeaderBordInfoData {
-  id: string;
-
-  /** Место в рейтинге */
-  place: number;
-
+export interface LeaderboardInfoData {
   /** Имя пользователя */
-  name: string;
+  name?: string;
 
   /** Количество очков */
-  point: number;
-
-  /** Время прохождения игры */
-  time?: number;
-
-  /** Уровень сложности */
-  level?: number;
+  coderPoint?: number;
 
   /** Количество цветов */
-  colorCount?: number;
+  colorsCount: number;
 
   /** Размер поля */
-  stepsCount?: number;
+  stepsCount: number;
+
+  /** Почта пользователя* */
+  email?: string;
+}
+
+/** service_id */
+export interface ServiceId {
+  service_id: string;
+}
+
+/** авторизация через яндекс */
+export interface YandexLoginData {
+  redirect_uri: string;
+  code: string;
 }

@@ -1,7 +1,14 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { LoginData, PasswordData, RegistrationData, UserData } from '../types/common';
-import { Auth, User } from '../api';
+import {
+  LoginData,
+  PasswordData,
+  RegistrationData,
+  ServiceId,
+  UserData,
+  YandexLoginData,
+} from '../types/common';
+import { Auth, User, YandexAuth } from '../api';
 import { errorToString } from '../utils';
 import { AsyncThunkOptions } from '../types/reduxToolkit';
 import { setError } from '../store/slices/errorSlice';
@@ -117,6 +124,36 @@ export const updatePassword = createAsyncThunk<boolean, PasswordData, AsyncThunk
     try {
       await User.updatePassword(passwordData);
       return true;
+    } catch (error) {
+      dispatch(setError(errorToString(error as Error)));
+      return rejectWithValue(errorToString(error as Error));
+    }
+  }
+);
+
+/** получение  service_id-приложения */
+export const getServiceId = createAsyncThunk<ServiceId | undefined>(
+  `${NAMESPACE}/serviceId`,
+  async () => {
+    try {
+      const serviceData = await YandexAuth.getServiceId();
+      return serviceData;
+    } catch {
+      return undefined;
+    }
+  }
+);
+
+/**
+ * Вход в систему через яндекс
+ */
+export const yandexLogin = createAsyncThunk<UserData, YandexLoginData, AsyncThunkOptions>(
+  `${NAMESPACE}/yandexLogin`,
+  async (loginData, { dispatch, rejectWithValue }) => {
+    try {
+      await YandexAuth.signIn(loginData);
+      const user = await Auth.getAuthUser();
+      return user;
     } catch (error) {
       dispatch(setError(errorToString(error as Error)));
       return rejectWithValue(errorToString(error as Error));
