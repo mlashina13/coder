@@ -18,6 +18,8 @@ import cookieParser from 'cookie-parser';
 import 'localstorage-polyfill';
 import { Image } from 'canvas';
 import { TextEncoder, TextDecoder } from 'util';
+import { dbConnect } from './db';
+import { Topic, Comment } from './api/models';
 
 dotenv.config();
 
@@ -70,9 +72,9 @@ async function startServer() {
     })
   );
 
-  app.get('/api', (_, res) => {
-    res.json('👋 Howdy from the server :)');
-  });
+  // app.get('/api', (_, res) => {
+  //   res.json('👋 Howdy from the server :)');
+  // });
 
   if (!isDev()) {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')));
@@ -109,6 +111,27 @@ async function startServer() {
       next(e);
     }
   });
+
+  await dbConnect();
+  // TODO: тестовое наполнение, потом убрать
+  await Topic.create({
+    authorId: 0,
+    messagesCount: 0,
+    title: 'test topic',
+    viewsCount: 0,
+  });
+  await Comment.bulkCreate([
+    {
+      authorId: 1,
+      text: 'Комментарий 1',
+      topicId: 1,
+    },
+    {
+      authorId: 2,
+      text: 'Комментарий 2',
+      topicId: 1,
+    },
+  ]);
 
   app.listen(port, () => {
     console.log(`  ➜ 🎸 Server is listening on port: ${port}`);
