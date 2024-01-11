@@ -123,3 +123,20 @@ yarn test
 - Для запуска проекта в режиме разработки выполнить на сервере скрипт: dev 
 - Для запуска проекта в режиме продакшена выполнить на сервере скрипт: preview
 
+### Серверная инфраструктура для форума
+Для запуска серверной инфраструктуры необходимо:
+- установить docker
+- выполнить команды docker-compose pull
+                    docker-compose up -d
+- для остановки контейнера команда docker-compose down
+- Для локальной разработки, необходимо в .env установить переменные со своими портами, например
+    CLIENT_PORT=3000
+    SERVER_PORT=3001
+    POSTGRES_USER=postgres
+    POSTGRES_PASSWORD=postgres
+    POSTGRES_DB=coder
+    POSTGRES_PORT=5432
+    PGADMIN_EMAIL=admin@admin.ru
+    PGADMIN_PASSWORD=admin
+    PGADMIN_PORT=5050
+                   

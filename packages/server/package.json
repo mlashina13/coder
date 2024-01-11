@@ -30,7 +30,9 @@
     "localstorage-polyfill": "^1.0.1",
     "node-localstorage": "^3.0.5",
     "pg": "^8.8.0",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "vite": "^3.0.7",
+    "vite-plugin-pwa": "^0.17.4"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
@@ -49,6 +51,7 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "jest": "^28",
+    "lerna": "5.4.3",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1",
     "rimraf": "^5.0.5",
