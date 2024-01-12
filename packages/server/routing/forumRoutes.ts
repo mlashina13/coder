@@ -10,7 +10,15 @@ export const forumRoutes = (router: Router) => {
     .post('/topic/', ForumController.createTopic)
     .patch('/topic/', ForumController.updateTopic)
     .delete('/topic/', ForumController.deleteTopic)
-    .patch('/viewTopic/', ForumController.viewTopic);
+    .patch('/viewTopic/', ForumController.viewTopic)
+    .post('/comment/', ForumController.addComment)
+    .patch('/comment/', ForumController.updateComment)
+    .delete('/comment/', ForumController.deleteComment)
+    .get('/comments/:topicId', ForumController.getTopicComments)
+    .post('/reply/', ForumController.addReply)
+    .patch('/reply/', ForumController.updateReply)
+    .delete('/reply/', ForumController.deleteReply)
+    .get('/replies/:commentId', ForumController.getCommentReplies);
 
   router.use('/forum', forumRouter);
 };

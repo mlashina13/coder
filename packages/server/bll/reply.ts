@@ -16,4 +16,19 @@ export interface Reply {
    * Текст ответа
    */
   text: string;
+
+  /**
+   * Идентификатор
+   */
+  id?: number;
+
+  /**
+   * Время изменения
+   */
+  updatedAt?: string;
+
+  /**
+   * Время создания
+   */
+  createdAt?: string;
 }

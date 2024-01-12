@@ -73,38 +73,37 @@ async function startServer() {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')));
   }
 
-  // TODO: Вернуть после отладки
-  // app.use('*', cookieParser(), async (req, res, next) => {
-  //   const url = req.originalUrl;
+  app.use('*', cookieParser(), async (req, res, next) => {
+    const url = req.originalUrl;
 
-  //   try {
-  //     let template: string;
-  //     if (!isDev()) {
-  //       template = fs.readFileSync(path.resolve(distPath, 'index.html'), 'utf-8');
-  //     } else {
-  //       template = fs.readFileSync(path.resolve(srcPath, 'index.html'), 'utf-8');
-  //       template = await vite!.transformIndexHtml(url, template);
-  //     }
+    try {
+      let template: string;
+      if (!isDev()) {
+        template = fs.readFileSync(path.resolve(distPath, 'index.html'), 'utf-8');
+      } else {
+        template = fs.readFileSync(path.resolve(srcPath, 'index.html'), 'utf-8');
+        template = await vite!.transformIndexHtml(url, template);
+      }
 
-  //     let ssrModule: SSRModule;
+      let ssrModule: SSRModule;
 
-  //     if (isDev()) {
-  //       ssrModule = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx'))) as SSRModule;
-  //     } else {
-  //       ssrModule = await import(ssrClientPath);
-  //     }
+      if (isDev()) {
+        ssrModule = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx'))) as SSRModule;
+      } else {
+        ssrModule = await import(ssrClientPath);
+      }
 
-  //     const { render } = ssrModule;
-  //     const html = template.replace(`<!--ssr-outlet-->`, render());
+      const { render } = ssrModule;
+      const html = template.replace(`<!--ssr-outlet-->`, render());
 
-  //     res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
-  //   } catch (e) {
-  //     if (isDev()) {
-  //       vite!.ssrFixStacktrace(e as Error);
-  //     }
-  //     next(e);
-  //   }
-  // });
+      res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
+    } catch (e) {
+      if (isDev()) {
+        vite!.ssrFixStacktrace(e as Error);
+      }
+      next(e);
+    }
+  });
 
   await dbConnect();
   if (isDev()) {

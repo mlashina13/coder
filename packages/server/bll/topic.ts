@@ -3,11 +3,6 @@
  */
 export interface Topic {
   /**
-   * Идентификатор
-   */
-  id?: number;
-
-  /**
    * Идентификатор автора
    */
   authorId: number;
@@ -15,7 +10,7 @@ export interface Topic {
   /**
    * Кол-во сообщений
    */
-  messagesCount: number;
+  messagesCount?: number;
 
   /**
    * Название
@@ -25,5 +20,20 @@ export interface Topic {
   /**
    * Кол-во просмотров
    */
-  viewsCount: number;
+  viewsCount?: number;
+
+  /**
+   * Идентификатор
+   */
+  id?: number;
+
+  /**
+   * Время изменения
+   */
+  updatedAt?: string;
+
+  /**
+   * Время создания
+   */
+  createdAt?: string;
 }
