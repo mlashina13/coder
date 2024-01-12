@@ -1,5 +1,8 @@
 import { CommentModel, ReplyModel, TopicModel } from '../models';
 
+/**
+ * Предзаполнение данных форума
+ */
 export const presetForumData = async () => {
   try {
     const topicsCount = await TopicModel.count();

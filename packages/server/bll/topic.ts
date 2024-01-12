@@ -3,6 +3,11 @@
  */
 export interface Topic {
   /**
+   * Идентификатор
+   */
+  id?: number;
+
+  /**
    * Идентификатор автора
    */
   authorId: number;

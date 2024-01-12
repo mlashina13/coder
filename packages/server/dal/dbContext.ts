@@ -4,6 +4,9 @@ import { CommentModel, ReplyModel, TopicModel } from './models';
 // TODO: Вернуть переменные окружения
 // const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } = process.env;
 
+/**
+ * Настройки подключения
+ */
 const sequelizeOptions: SequelizeOptions = {
   host: 'localhost',
   port: 5432, // Number(POSTGRES_PORT),
@@ -16,8 +19,15 @@ const sequelizeOptions: SequelizeOptions = {
 // Создаем инстанс Sequelize
 const sequelize = new Sequelize(sequelizeOptions);
 sequelize.addModels([CommentModel, ReplyModel, TopicModel]);
+
+/**
+ * Инстанс Sequelize
+ */
 export default sequelize;
 
+/**
+ * Подключение к БД
+ */
 export async function dbConnect() {
   try {
     await sequelize.authenticate(); // Проверка аутентификации в БД
