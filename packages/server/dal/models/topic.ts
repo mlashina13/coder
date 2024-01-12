@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 import { Column, DataType, Model, Table } from 'sequelize-typescript';
-import type { Topic } from '../contracts';
+import type { Topic } from '../../bll';
 
 /**
  * Модель данных топика

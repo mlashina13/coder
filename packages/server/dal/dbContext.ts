@@ -1,5 +1,5 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
-import { CommentModel, ReplyModel, TopicModel } from './api/models';
+import { CommentModel, ReplyModel, TopicModel } from './models';
 
 // TODO: Вернуть переменные окружения
 // const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } = process.env;

@@ -1,10 +1,3 @@
-// TODO: линтер сходит с ума, поэтому позднее, если останется время,
-// поправим это, пока что все дизейблы ниже нужны
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable no-console */
 import dotenv from 'dotenv';
 import cors from 'cors';
 import { createServer as createViteServer } from 'vite';
@@ -18,8 +11,7 @@ import cookieParser from 'cookie-parser';
 import 'localstorage-polyfill';
 import { Image } from 'canvas';
 import { TextEncoder, TextDecoder } from 'util';
-import { dbConnect } from './db';
-import { Topic, Comment } from './api/models';
+import { dbConnect, presetForumData } from './dal';
 
 dotenv.config();
 
@@ -72,10 +64,6 @@ async function startServer() {
     })
   );
 
-  // app.get('/api', (_, res) => {
-  //   res.json('👋 Howdy from the server :)');
-  // });
-
   if (!isDev()) {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')));
   }
@@ -113,25 +101,9 @@ async function startServer() {
   });
 
   await dbConnect();
-  // TODO: тестовое наполнение, потом убрать
-  await Topic.create({
-    authorId: 0,
-    messagesCount: 0,
-    title: 'test topic',
-    viewsCount: 0,
-  });
-  await Comment.bulkCreate([
-    {
-      authorId: 1,
-      text: 'Комментарий 1',
-      topicId: 1,
-    },
-    {
-      authorId: 2,
-      text: 'Комментарий 2',
-      topicId: 1,
-    },
-  ]);
+  if (isDev()) {
+    await presetForumData();
+  }
 
   app.listen(port, () => {
     console.log(`  ➜ 🎸 Server is listening on port: ${port}`);

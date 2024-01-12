@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
 import { Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
-import type { Comment } from '../contracts';
-import { Topic } from './topic';
+import type { Comment } from '../../bll';
+import { TopicModel } from './topic';
 
 /**
  * Модель данных комментария
@@ -19,7 +19,7 @@ export class CommentModel extends Model<Comment> {
   })
   override id!: number;
 
-  @ForeignKey(() => Topic)
+  @ForeignKey(() => TopicModel)
   @Column({
     type: DataType.INTEGER,
     field: 'topic_id',

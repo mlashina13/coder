@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 import { Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
-import type { Reply } from '../contracts';
+import type { Reply } from '../../bll';
 import { CommentModel } from './comment';
 
 /**
