@@ -60,7 +60,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"Новый топик\",\r\n    \"authorId\": 12345\r\n}",
+					"raw": "{\r\n    \"title\": \"Новый топик\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -182,13 +182,36 @@
 			"response": []
 		},
 		{
+			"name": "getTopicMessagesCount",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/v1/forum/getTopicMessagesCount/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"forum",
+						"getTopicMessagesCount",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "addComment",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"topicId\": 1,\r\n    \"authorId\": 1349879,\r\n    \"text\": \"Тестовый коммент\"\r\n}",
+					"raw": "{\r\n    \"topicId\": 1,\r\n    \"text\": \"Тестовый коммент\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -330,7 +353,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"commentId\": 1,\r\n    \"authorId\": 1349829,\r\n    \"text\": \"Тест ответа на комментарий\" \r\n}",
+					"raw": "{\r\n    \"commentId\": 1,\r\n    \"text\": \"Тест ответа на комментарий\" \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
