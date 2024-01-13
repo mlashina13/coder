@@ -2,7 +2,6 @@ import type {
   CreateCommentDto,
   CreateReplyDto,
   CreateTopicDto,
-  MessagesCountDto,
   UpdateCommentDto,
   UpdateReplyDto,
   UpdateTopicDto,
@@ -45,18 +44,19 @@ export class ForumService {
   public viewTopic = (id: number) => TopicModel.increment('viewsCount', { by: 1, where: { id } });
 
   /**
-   * Изменить кол-во сообщений
-   */
-  public changeTopicMessagesCount = (messagesCountData: MessagesCountDto) =>
-    TopicModel.increment('messagesCount', {
-      by: messagesCountData.incrementCount,
-      where: { id: messagesCountData.id },
-    });
-
-  /**
    * Удалить топик
    */
   public deleteTopic = (id: number) => TopicModel.destroy({ where: { id } });
+
+  /**
+   * Получить кол-во комментариев в топике
+   */
+  public getCommentsCount = (topicId: number) =>
+    CommentModel.count({
+      where: {
+        topicId,
+      },
+    });
 
   /**
    * Получить комментарий по идентификатору топика

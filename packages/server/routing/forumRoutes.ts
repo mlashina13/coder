@@ -11,6 +11,7 @@ export const forumRoutes = (router: Router) => {
     .patch('/topic/', ForumController.updateTopic)
     .delete('/topic/', ForumController.deleteTopic)
     .patch('/viewTopic/', ForumController.viewTopic)
+    .get('/getTopicMessagesCount/:topicId/', ForumController.getTopicMessagesCount)
     .post('/comment/', ForumController.addComment)
     .patch('/comment/', ForumController.updateComment)
     .delete('/comment/', ForumController.deleteComment)

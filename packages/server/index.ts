@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import dotenv from 'dotenv';
 import cors from 'cors';
 import { createServer as createViteServer } from 'vite';
@@ -14,6 +15,7 @@ import { TextEncoder, TextDecoder } from 'util';
 import { json } from 'body-parser';
 import { dbConnect, presetForumData } from './dal';
 import router from './routing/router';
+import { YandexService } from './api/services';
 
 dotenv.config();
 
@@ -70,11 +72,13 @@ async function startServer() {
   app.use(
     '/api/v1',
     cookieParser(),
-    (req, res, next) => {
-      const { authCookie } = req.cookies;
-      if (!authCookie) {
-        res.status(403).send('Unauthorized');
+    async(req, res, next) => {
+      const yandexService = new YandexService(req.headers.cookie);
+      const currentUser = await yandexService.getCurrentUser();
+      if (!currentUser) {
+        res.status(403).send('You are have no permissions for this App section');
       }
+      (req as any).currentUser = currentUser;
       next();
     },
     router

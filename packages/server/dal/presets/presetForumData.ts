@@ -9,7 +9,6 @@ export const presetForumData = async () => {
     if (topicsCount === 0) {
       const topic = await TopicModel.create({
         authorId: 1349879,
-        messagesCount: 4,
         title: 'Тестовый топик для проверки функционала форума',
         viewsCount: 10,
       });

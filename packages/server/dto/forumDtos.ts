@@ -29,21 +29,6 @@ export interface UpdateTopicDto {
 }
 
 /**
- * DTO кол-ва сообщений в топике
- */
-export interface MessagesCountDto {
-  /**
-   * Идентификатор топика
-   */
-  id: number;
-
-  /**
-   * Добавлено сообщений
-   */
-  incrementCount: number;
-}
-
-/**
  * DTO создания комментария
  */
 export interface CreateCommentDto {

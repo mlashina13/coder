@@ -8,11 +8,6 @@ export interface Topic {
   authorId: number;
 
   /**
-   * Кол-во сообщений
-   */
-  messagesCount?: number;
-
-  /**
    * Название
    */
   title: string;

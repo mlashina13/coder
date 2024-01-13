@@ -21,7 +21,6 @@ export class TopicModel extends Model<Topic> {
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
-    field: 'author_id',
   })
   authorId!: number;
 
@@ -30,13 +29,6 @@ export class TopicModel extends Model<Topic> {
     allowNull: false,
   })
   title!: string;
-
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-    defaultValue: 0,
-  })
-  messagesCount!: number;
 
   @Column({
     type: DataType.INTEGER,
