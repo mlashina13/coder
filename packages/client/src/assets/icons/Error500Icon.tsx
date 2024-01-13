@@ -6,7 +6,7 @@ export const Error500Icon: FC<IconProps> = ({
   onClick,
   height = '300px',
   width = '300px',
-  color = '#525252',
+  color = 'var(--icons-color)',
 }) => (
   <svg
     className={className}

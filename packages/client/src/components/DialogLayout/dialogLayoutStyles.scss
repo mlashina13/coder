@@ -5,12 +5,12 @@
   box-shadow: 0px 8px 8px $text-shadow-color;
 
   &__header {
-    background: $red-cherry;
+    background: var(--header-divide-color);
     height: 15px;
   }
 
   &__content {
-    background: $white;
+    background: #76767612;
     padding: 20px 40px;
   }
 }

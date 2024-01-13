@@ -21,6 +21,9 @@
     &__description {
       width: 50%;
       padding: $spacing-lm;
+
+      background-color: var(--background-color-secondary) !important;
+      color: $grey-dark !important;
     }
   }
 }

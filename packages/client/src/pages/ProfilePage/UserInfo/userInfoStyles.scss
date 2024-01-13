@@ -21,7 +21,7 @@
 
     &__user-name {
       &.MuiTypography-root {
-        color: $red-cherry;
+        color: var(--title-font-color);
         text-transform: none;
         font-weight: 700;
       }

@@ -9,8 +9,8 @@
 .info-text-block__label {
   &.MuiFormLabel-root {
     font-weight: $font-weight;
-    color: $grey;
-    font-size: $font-m;
+    color: $grey-dark;
+    font-size: $font-ml;
   }
 }
 
@@ -18,7 +18,7 @@
   &.MuiFormLabel-root {
     font-style: normal;
     font-weight: $font-weight;
-    color: $main-black;
+    color: $main-blue;
     font-size: $font-ml;
   }
 }
