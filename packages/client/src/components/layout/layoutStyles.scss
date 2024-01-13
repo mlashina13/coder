@@ -7,7 +7,7 @@
 
   &__divider {
     height: 4px;
-    background: $red-cherry;
+    background: var(--header-divide-color);
   }
 
   &__content {

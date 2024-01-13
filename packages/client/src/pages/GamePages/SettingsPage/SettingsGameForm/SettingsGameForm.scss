@@ -22,6 +22,10 @@
 
     .settings-game-form__radio-group {
       margin-bottom: $spacing-ml;
+
+      .MuiFormLabel-root {
+        color: $grey-dark !important;
+      }
     }
 
     button {
@@ -29,7 +33,7 @@
     }
 
     .MuiTypography-root {
-      color: $grey-dark;
+      color: var(--font-color);
       font-weight: $font-weight;
       font-size: $font-ml;
     }

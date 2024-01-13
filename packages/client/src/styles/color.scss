@@ -1,11 +1,11 @@
 $red: #ff2f2f;
 $red-cherry: #ef4444;
-$grey-dark: #525252;
+$grey-dark: var(--font-color);
 $grey-dark-deep: #555555;
 $grey: #9e9c9c;
 $grey-light: #e5e5e5;
 $grey-mid: #d3d3d3;
-$main-blue: #0e4980;
+$main-blue: var(--font-color-secondary);
 $main-black: #1e1e1e;
 $white: #ffffff;
 $dirty-white: #f5f5f5;

@@ -1,9 +1,13 @@
 import { FC } from 'react';
 import { AppRouter } from './routes/AppRouter';
-import { ErrorBoundary } from './components';
+import { ErrorBoundary, ThemeProvider } from './components';
+
+document.documentElement.dataset.theme = 'light';
 
 export const App: FC = () => (
   <ErrorBoundary>
-    <AppRouter />
+    <ThemeProvider>
+      <AppRouter />
+    </ThemeProvider>
   </ErrorBoundary>
 );

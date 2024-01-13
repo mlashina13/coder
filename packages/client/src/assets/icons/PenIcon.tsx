@@ -5,7 +5,7 @@ import { IconProps } from '../../types/common';
  * Компонент иконки "Карандаш"
  */
 export const PenIcon: FC<IconProps> = (props) => {
-  const { className, onClick, color = '#525252', height = 24, width = 24 } = props;
+  const { className, onClick, color = 'var(--icons-color)', height = 24, width = 24 } = props;
 
   return (
     <svg

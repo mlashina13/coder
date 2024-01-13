@@ -5,7 +5,7 @@ import { IconProps } from '../../types/common';
  * Компонент иконки "Непредвиденная ошибка"
  */
 export const UnexpectedErrorIcon: FC<IconProps> = (props) => {
-  const { className, onClick, color = '#525252', height = 300, width = 300 } = props;
+  const { className, onClick, color = 'var(--icons-color)', height = 300, width = 300 } = props;
 
   return (
     <svg

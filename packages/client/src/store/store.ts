@@ -5,6 +5,7 @@ import {
   locationReducer,
   leadboardReducer,
   oauthReducer,
+  themeReducer,
 } from './slices';
 
 /**
@@ -17,6 +18,7 @@ export const store = configureStore({
     location: locationReducer,
     leaderboard: leadboardReducer,
     oauth: oauthReducer,
+    themes: themeReducer,
   },
 });
 

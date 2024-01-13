@@ -5,7 +5,7 @@ import { IconProps } from '../../types/common';
  * Компонент иконки "Глаз"
  */
 export const EyeIcon: FC<IconProps> = (props) => {
-  const { className, onClick, color = '#9e9c9c', height = 24, width = 24 } = props;
+  const { className, onClick, color = 'var(--icons-color)', height = 24, width = 24 } = props;
 
   return (
     <svg

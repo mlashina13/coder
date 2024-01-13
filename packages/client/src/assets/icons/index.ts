@@ -13,4 +13,6 @@ export { ProfileIcon } from './ProfileIcon';
 export { TrashIcon } from './TrashIcon';
 export { StartIcon } from './StartIcon';
 export { LockIcon } from './LockIcon';
+export { MoonIcon } from './MoonIcon';
+export { SunIcon } from './SunIcon';
 export { UnexpectedErrorIcon } from './UnexpectedErrorIcon';
