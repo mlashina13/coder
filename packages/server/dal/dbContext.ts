@@ -1,18 +1,17 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import { CommentModel, ReplyModel, TopicModel } from './models';
 
-// TODO: Вернуть переменные окружения
-// const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } = process.env;
+const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } = process.env;
 
 /**
  * Настройки подключения
  */
 const sequelizeOptions: SequelizeOptions = {
   host: 'localhost',
-  port: 5432, // Number(POSTGRES_PORT),
-  username: 'postgres', // POSTGRES_USER,
-  password: '1qaz!QAZ', // POSTGRES_PASSWORD,
-  database: 'coder', // POSTGRES_DB,
+  port: Number(POSTGRES_PORT),
+  username: POSTGRES_USER,
+  password: POSTGRES_PASSWORD,
+  database: POSTGRES_DB,
   dialect: 'postgres',
 };
 

@@ -55,9 +55,6 @@ async function startServer() {
     app.use(vite.middlewares);
   }
 
-  app.use(json());
-  app.use('/api/v1', router);
-
   app.use(
     '/api/v2',
     createProxyMiddleware({
@@ -67,6 +64,20 @@ async function startServer() {
       },
       target: 'https://ya-praktikum.tech',
     })
+  );
+
+  app.use(json());
+  app.use(
+    '/api/v1',
+    cookieParser(),
+    (req, res, next) => {
+      const { authCookie } = req.cookies;
+      if (!authCookie) {
+        res.status(403).send('Unauthorized');
+      }
+      next();
+    },
+    router
   );
 
   if (!isDev()) {
