@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import { Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
+import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
 import type { Reply } from '../../bll';
 import { CommentModel } from './comment';
 
@@ -25,6 +25,9 @@ export class ReplyModel extends Model<Reply> {
     field: 'comment_id',
   })
   commentId!: number;
+
+  @BelongsTo(() => CommentModel, { onDelete: 'CASCADE' })
+  comment!: CommentModel;
 
   @Column({
     type: DataType.INTEGER,
