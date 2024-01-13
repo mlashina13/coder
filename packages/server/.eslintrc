@@ -11,6 +11,8 @@
     "prettier"
   ],
   "rules": {
+    "no-path-concat": "off",
+    "prefer-template": "off",
     "import/extensions": [
       "error",
       "never",
