@@ -13,7 +13,7 @@ import 'localstorage-polyfill';
 import { Image } from 'canvas';
 import { TextEncoder, TextDecoder } from 'util';
 import { json } from 'body-parser';
-import { dbConnect, presetForumData } from './dal';
+import { dbConnect, presetForumData, presetEmoji } from './dal';
 import router from './routing/router';
 import { YandexService } from './api/services';
 
@@ -72,7 +72,7 @@ async function startServer() {
   app.use(
     '/api/v1',
     cookieParser(),
-    async(req, res, next) => {
+    async (req, res, next) => {
       const yandexService = new YandexService(req.headers.cookie);
       const currentUser = await yandexService.getCurrentUser();
       if (!currentUser) {
@@ -121,6 +121,7 @@ async function startServer() {
   });
 
   await dbConnect();
+  await presetEmoji();
   if (isDev()) {
     await presetForumData();
   }

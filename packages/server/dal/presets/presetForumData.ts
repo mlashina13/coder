@@ -1,4 +1,5 @@
-import { CommentModel, ReplyModel, TopicModel } from '../models';
+import { CommentModel, ReplyModel, TopicModel, EmojiModel } from '../models';
+import { emoji } from './emojiList';
 
 /**
  * Предзаполнение данных форума
@@ -37,5 +38,22 @@ export const presetForumData = async () => {
     }
   } catch (error) {
     console.error('Unable to preset forum data: ', error);
+  }
+};
+
+/**
+ * Предзаполнение списка эмодзи
+ */
+export const presetEmoji = async () => {
+  try {
+    const emojiCount = await EmojiModel.count();
+    if (emojiCount === 0) {
+      const allEmoji = await EmojiModel.bulkCreate(emoji);
+      console.log('Emoji successfull preseted');
+    } else {
+      console.log('Emoji does not require presetting');
+    }
+  } catch (error) {
+    console.error('Unable to preset emoji: ', error);
   }
 };

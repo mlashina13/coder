@@ -19,7 +19,11 @@ export const forumRoutes = (router: Router) => {
     .post('/reply/', ForumController.addReply)
     .patch('/reply/', ForumController.updateReply)
     .delete('/reply/', ForumController.deleteReply)
-    .get('/replies/:commentId', ForumController.getCommentReplies);
+    .get('/replies/:commentId', ForumController.getCommentReplies)
+    .get('/emoji/', ForumController.getAllEmoji)
+    .get('/reactions/:topicId', ForumController.getAllTopicReactions)
+    .post('/reaction/:topicId', ForumController.addReactionToTopic)
+    .delete('/reaction/:id', ForumController.deleteReactionFromTopic);
 
   router.use('/forum', forumRouter);
 };

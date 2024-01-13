@@ -1,1 +1,1 @@
-export { presetForumData } from './presetForumData';
+export { presetForumData, presetEmoji } from './presetForumData';

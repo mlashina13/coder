@@ -1,12 +1,4 @@
-import { 
-  BelongsTo, 
-  Column, 
-  DataType, 
-  ForeignKey, 
-  Index, 
-  Model, 
-  Table 
-} from 'sequelize-typescript';
+import { BelongsTo, Column, DataType, ForeignKey, Index, Model, Table } from 'sequelize-typescript';
 import type { Reply } from '../../bll';
 import { CommentModel } from './comment';
 

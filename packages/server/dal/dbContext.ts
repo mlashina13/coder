@@ -1,5 +1,5 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
-import { CommentModel, ReplyModel, TopicModel } from './models';
+import { CommentModel, ReplyModel, TopicModel, EmojiModel, ReactionModel } from './models';
 
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } = process.env;
 
@@ -17,7 +17,7 @@ const sequelizeOptions: SequelizeOptions = {
 
 // Создаем инстанс Sequelize
 const sequelize = new Sequelize(sequelizeOptions);
-sequelize.addModels([CommentModel, ReplyModel, TopicModel]);
+sequelize.addModels([CommentModel, ReplyModel, TopicModel, EmojiModel, ReactionModel]);
 
 /**
  * Инстанс Sequelize
