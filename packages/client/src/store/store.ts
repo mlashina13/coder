@@ -1,4 +1,7 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { configureStore } from '@reduxjs/toolkit';
+import { createBrowserHistory, createMemoryHistory } from 'history';
+import { isServer } from '../utils';
 import {
   errorReducer,
   userReducer,
@@ -11,7 +14,10 @@ declare global {
   interface Window {
     // В d.ts нам неважно, что это за тип,
     // так как он сразу попадает в redux store на клиенте
-    __PRELOADED_STATE__?: object;
+    __PRELOADED_STATE__?: {
+      store: object;
+      history: unknown;
+    };
   }
 }
 
@@ -30,19 +36,21 @@ export const store = configureStore({
   },
 });
 
-export const createStore = () => {
-  const serverState = window.__PRELOADED_STATE__ || {};
+export const createStore = (url = '/', initialState: object = {}) => {
+  const serverState = window.__PRELOADED_STATE__?.store || initialState;
 
-  return configureStore({
-    reducer: {
-      error: errorReducer,
-      user: userReducer,
-      location: locationReducer,
-      leaderboard: leadboardReducer,
-      oauth: oauthReducer,
-    },
-    preloadedState: serverState,
-  });
+  return {
+    store: configureStore({
+      reducer: {
+        error: errorReducer,
+        user: userReducer,
+        location: locationReducer,
+        leaderboard: leadboardReducer,
+        oauth: oauthReducer,
+      },
+      preloadedState: serverState,
+    }),
+  };
 };
 
 /**

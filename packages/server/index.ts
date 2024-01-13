@@ -12,13 +12,13 @@ import type { ViteDevServer } from 'vite';
 import serialize from 'serialize-javascript';
 
 import express from 'express';
-import * as fs from 'fs';
 import * as path from 'path';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import cookieParser from 'cookie-parser';
 import 'localstorage-polyfill';
 import { Image } from 'canvas';
 import { TextEncoder, TextDecoder } from 'util';
+import type { Action, Store } from '@reduxjs/toolkit';
 
 dotenv.config();
 
@@ -36,9 +36,8 @@ const renderObject = (data: unknown) => serialize(data).replace(/</g, '\\\u003c'
  * Описание модуля с SSR
  */
 interface SSRModule {
-  render: (store: any) => string;
-  storeFunction: (store: any) => string;
-  getPageHtml: (bundleHtml: string, store: any) => string;
+  render: (store: Store<unknown, Action>, location: string) => string;
+  getPageHtml: (bundleHtml: string, state: unknown) => string;
 }
 
 /**
@@ -100,8 +99,9 @@ async function startServer() {
     const { render, getPageHtml } = ssrModule;
 
     try {
+      const location = req.url;
       const preloadedState = serverStore.getState();
-      const bundleHtml = render(serverStore);
+      const bundleHtml = render(serverStore, location);
       const template = getPageHtml(bundleHtml, renderObject(preloadedState));
       const html = await vite!.transformIndexHtml(url, template);
 

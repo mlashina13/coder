@@ -4,20 +4,20 @@ import React from 'react';
 import { StaticRouter } from 'react-router-dom/server';
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
+import { Action, Store } from '@reduxjs/toolkit';
 import { App } from './src/App';
 
-export function render(store: any) {
+export function render(store: Store<unknown, Action>, location: string) {
   return renderToString(
     <Provider store={store}>
-      {/* TODO: router будет доработан в следующих задачах */}
-      <StaticRouter location='/'>
+      <StaticRouter location={location}>
         <App />
       </StaticRouter>
     </Provider>
   );
 }
 
-export function getPageHtml(bundleHtml: string, state: any) {
+export function getPageHtml(bundleHtml: string, state: unknown) {
   const html = renderToStaticMarkup(
     <html lang='ru'>
       <head>
