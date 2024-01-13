@@ -32,7 +32,7 @@
     }
 
     .MuiTypography-root {
-      color: var(--font-color);
+      color: $grey-dark;
       font-weight: $font-weight;
       font-size: $font-ml;
     }
@@ -40,7 +40,7 @@
 
   &.error {
     h2 {
-      color: var(--header-divide-color) !important;
+      color: $red-cherry !important;
     }
 
     .end-game-dialog__content-icon {

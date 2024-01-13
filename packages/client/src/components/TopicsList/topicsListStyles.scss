@@ -12,13 +12,12 @@
     align-items: center;
     position: unset !important;
     height: 50px;
-    background-color: var(--navmenu-background-color) !important;
   }
 
   &__list-title {
     display: flex;
     align-items: center;
-    color: $grey-dark;
+    color: $grey;
   }
 
   &__pagination {

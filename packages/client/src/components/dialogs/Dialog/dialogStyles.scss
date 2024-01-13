@@ -6,12 +6,10 @@
     border-radius: 0 !important;
     padding: $spacing-xl;
 
-    background-color: var(--background-color-secondary) !important;
-
     &::before {
       content: '';
       height: $spacing-m;
-      background-color: var(--header-divide-color);
+      background-color: $red-cherry;
       margin: $spacing-xl * -1 $spacing-xl * -1 $spacing-m;
     }
   }

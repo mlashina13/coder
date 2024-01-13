@@ -10,4 +10,3 @@ export * from './layout';
 export * from './TopicsList';
 export * from './TopicMessagesList';
 export { YandexOAuth } from './YandexOAuth';
-export { ThemeProvider } from './ThemeProvider';

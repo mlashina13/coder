@@ -22,19 +22,11 @@ export const EditUserDataDialog: FC<EditUserDataDialogProps> = (props) => {
   };
 
   return (
-    <Dialog onClose={onClose} open={open} className='edit-user-data-dialog'>
-      <DialogLayout contentClassName='edit-user-data-dialog__content'>
+    <Dialog onClose={onClose} open={open}>
+      <DialogLayout contentClassName='edit-user-data-dialog'>
         <Tabs value={activeTab} onChange={handleTabChange} centered>
-          <Tab
-            label='Редактировать профиль'
-            value={TABS_VALUE.userEditForm}
-            className='edit-user-data-dialog__tab'
-          />
-          <Tab
-            label='Редактировать пароль'
-            value={TABS_VALUE.passwordEditForm}
-            className='edit-user-data-dialog__tab'
-          />
+          <Tab label='Редатировать профиль' value={TABS_VALUE.userEditForm} />
+          <Tab label='Редатировать пароль' value={TABS_VALUE.passwordEditForm} />
         </Tabs>
         {activeTab === TABS_VALUE.userEditForm && <UserEditForm onClose={onClose} />}
         {activeTab === TABS_VALUE.passwordEditForm && <PasswordEditForm onClose={onClose} />}

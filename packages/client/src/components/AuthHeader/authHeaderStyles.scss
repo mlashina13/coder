@@ -12,19 +12,11 @@
     margin-top: -18px;
 
     &__title {
-      color: $grey-dark;
+      color: $main-black;
       text-transform: uppercase;
       text-shadow: 0px 4px 4px $text-shadow-color;
       font-size: $font-lm;
       font-weight: $font-weight-medium-bold;
     }
-  }
-
-  &__tab {
-    color: $grey-dark !important;
-  }
-
-  .Mui-selected {
-    color: var(--font-color-secondary) !important;
   }
 }

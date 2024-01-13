@@ -3,10 +3,8 @@
 
 .input {
   border-radius: 3px !important;
-  background: var(--background-color-secondary);
+  background: $white;
   margin-bottom: $spacing-m !important;
-  color: $grey-dark !important;
-
   .MuiFormHelperText-root {
     color: $red-cherry;
     line-height: $spacing-ms;
@@ -24,21 +22,14 @@
   }
 
   span {
-    color: var(--font-color) !important;
-    font-style: normal;
-    font-weight: $font-weight;
-    line-height: normal;
-  }
-  
-  textarea {
-    color: var(--font-color) !important;
+    color: $input-lbl-color;
     font-style: normal;
     font-weight: $font-weight;
     line-height: normal;
   }
 
   label {
-    color: $grey-dark !important;
+    color: $grey-dark;
     font-weight: $font-weight;
     line-height: normal;
   }
@@ -53,7 +44,7 @@
   }
 
   input {
-    color: $grey-dark !important;
+    color: $grey-dark;
     text-align: left;
     font-weight: $font-weight;
     font-size: $font-ml;

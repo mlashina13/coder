@@ -4,19 +4,19 @@
 .main-menu {
   & .MuiBottomNavigation-root {
     justify-content: flex-start;
-    background-color: var(--navmenu-background-color);
+    background-color: $grey-light;
     box-shadow: 0px 1px 2px -1px $divider-shadow-color;
     height: 40px;
   }
 
   & .MuiBottomNavigationAction-label {
-    color: $grey-dark;
+    color: $grey;
     font-size: $font-ls !important;
     font-weight: $font-weight-light;
   }
 
   & .Mui-selected {
-    color: var(--header-divide-color);
+    color: $main-black;
   }
 
   &__item {

@@ -3,7 +3,7 @@
 
 .title {
   &.MuiTypography-root {
-    color: var(--font-color);
+    color: $main-blue;
     font-style: normal;
     font-weight: $font-weight-bold;
     text-transform: uppercase;

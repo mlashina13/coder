@@ -40,16 +40,8 @@ export const AuthHeader = (props: AuthHeaderProps) => {
       </Box>
 
       <Tabs value={mockLocation} onChange={handleChange} centered>
-        <Tab
-          label={TABS_KEYS.Login.label}
-          value={TABS_KEYS.Login.key}
-          className='auth-header__tab'
-        />
-        <Tab
-          label={TABS_KEYS.Registration.label}
-          value={TABS_KEYS.Registration.key}
-          className='auth-header__tab'
-        />
+        <Tab label={TABS_KEYS.Login.label} value={TABS_KEYS.Login.key} />
+        <Tab label={TABS_KEYS.Registration.label} value={TABS_KEYS.Registration.key} />
       </Tabs>
     </Box>
   );

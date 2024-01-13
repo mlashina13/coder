@@ -5,7 +5,7 @@ import { IconProps } from '../../types/common';
  * Компонент иконки "Добавить диалог"
  */
 export const AddConversationIcon: FC<IconProps> = (props) => {
-  const { className, onClick, color = 'var(--icons-color)', height = 24, width = 24 } = props;
+  const { className, onClick, color = '#9E9A9A', height = 24, width = 24 } = props;
 
   return (
     <svg
