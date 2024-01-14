@@ -1,4 +1,4 @@
-import { CommentModel, ReplyModel, TopicModel } from '../models';
+import { CommentModel, TopicModel } from '../models';
 
 /**
  * Предзаполнение данных форума
@@ -24,10 +24,11 @@ export const presetForumData = async () => {
           topicId: topic.id,
         },
       ]);
-      await ReplyModel.bulkCreate(
+      await CommentModel.bulkCreate(
         comments.map((c) => ({
           authorId: 1349829,
-          commentId: c.id,
+          parentId: c.id,
+          topicId: topic.id,
           text: `Ответ на комментарий #${c.id}!`,
         }))
       );

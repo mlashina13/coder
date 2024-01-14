@@ -1,12 +1,12 @@
+import { Op } from 'sequelize';
 import type {
   CreateCommentDto,
   CreateReplyDto,
   CreateTopicDto,
   UpdateCommentDto,
-  UpdateReplyDto,
   UpdateTopicDto,
 } from '../../dto';
-import { CommentModel, ReplyModel, TopicModel } from '../../dal';
+import { CommentModel, TopicModel } from '../../dal';
 
 /**
  * Сервис для работы с форумом
@@ -65,6 +65,7 @@ export class ForumService {
     CommentModel.findAll({
       where: {
         topicId,
+        parentId: null,
       },
     });
 
@@ -92,51 +93,23 @@ export class ForumService {
   /**
    * Удалить комментарий
    */
-  public deleteComment = (id: number) => CommentModel.destroy({ where: { id } });
-
-  /**
-   * Получить кол-во ответов на комментарий
-   */
-  public getRepliesCount = (commentId: number) =>
-    ReplyModel.count({
-      where: {
-        commentId,
-      },
+  public deleteComment = (id: number) =>
+    CommentModel.destroy({
+      where: { [Op.or]: [{ id }, { parentId: id }] },
     });
-
-  /**
-   * Получить ответ по идентификатору
-   */
-  public getReplyById = (id: number) => ReplyModel.findByPk(id);
 
   /**
    * Получить ответы по идентификатору комментария
    */
   public getRepliesByCommentId = (commentId: number) =>
-    ReplyModel.findAll({
+    CommentModel.findAll({
       where: {
-        commentId,
+        parentId: commentId,
       },
     });
 
   /**
    * Добавить ответ
    */
-  public addReply = (creationData: CreateReplyDto) => ReplyModel.create(creationData);
-
-  /**
-   * Изменить комментарий
-   */
-  public updateReply = (updateData: UpdateReplyDto) =>
-    ReplyModel.update(
-      {
-        text: updateData.text,
-      },
-      { where: { id: updateData.id } }
-    );
-
-  /**
-   * Удалить ответ
-   */
-  public deleteReply = (id: number) => ReplyModel.destroy({ where: { id } });
+  public addReply = (creationData: CreateReplyDto) => CommentModel.create(creationData);
 }

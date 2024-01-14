@@ -48,12 +48,12 @@ export class ForumController {
    */
   public static createTopic = async (request: Request, response: Response) => {
     try {
-      const {currentUser} = (request as RequestWithUser);
+      const { currentUser } = request as RequestWithUser;
       const { body } = request;
       const service = new ForumService();
       const topic = await service.createTopic({
         ...body,
-        authorId: currentUser.id
+        authorId: currentUser.id,
       });
       response.status(200).send({
         data: topic,
@@ -68,18 +68,21 @@ export class ForumController {
    */
   public static updateTopic = async (request: Request, response: Response) => {
     try {
-      const {currentUser} = (request as RequestWithUser);
+      const { currentUser } = request as RequestWithUser;
       const { body } = request;
       const service = new ForumService();
       const topic = await service.getTopicById(body.id);
-      if(topic && topic.authorId === currentUser.id) {
+      if (topic && topic.authorId === currentUser.id) {
         await service.updateTopic(body);
         response.status(200).send('Successfully updated');
       } else {
-        response.status(400).send(!topic 
-          ? 'Topic not found' 
-          : 'You can\'t edit topic, because you are not an author of the topic'
-        );
+        response
+          .status(400)
+          .send(
+            !topic
+              ? 'Topic not found'
+              : "You can't edit topic, because you are not an author of the topic"
+          );
       }
     } catch (error) {
       response.status(500).send(error);
@@ -106,17 +109,20 @@ export class ForumController {
   public static deleteTopic = async (request: Request, response: Response) => {
     try {
       const { body } = request;
-      const {currentUser} = (request as RequestWithUser);
+      const { currentUser } = request as RequestWithUser;
       const service = new ForumService();
       const topic = await service.getTopicById(body.id);
-      if(topic && topic.authorId === currentUser.id) {
+      if (topic && topic.authorId === currentUser.id) {
         await service.deleteTopic(body.id);
         response.status(200).send('Successfully deleted');
       } else {
-        response.status(400).send(!topic 
-          ? 'Topic not found' 
-          : 'You can\'t delete topic, because you are not an author of the topic'
-        );
+        response
+          .status(400)
+          .send(
+            !topic
+              ? 'Topic not found'
+              : "You can't delete topic, because you are not an author of the topic"
+          );
       }
     } catch (error) {
       response.status(500).send(error);
@@ -134,15 +140,10 @@ export class ForumController {
       if (!topicId) {
         response.status(400).send("Parameter ':topicId' can not be empty");
       } else {
-        let count = 0;
         const service = new ForumService();
-        const comments = await service.getCommentsByTopicId(+topicId);
-        count = comments.length;
-        comments.forEach(async c => {
-          count += await service.getRepliesCount(c.id);
-        });
+        const count = await service.getCommentsCount(+topicId);
         response.status(200).send({
-          data: count
+          data: count,
         });
       }
     } catch (error) {
@@ -178,11 +179,11 @@ export class ForumController {
   public static addComment = async (request: Request, response: Response) => {
     try {
       const { body } = request;
-      const {currentUser} = (request as RequestWithUser);
+      const { currentUser } = request as RequestWithUser;
       const service = new ForumService();
       const comment = await service.addComment({
         ...body,
-        authorId: currentUser.id
+        authorId: currentUser.id,
       });
       response.status(200).send({
         data: comment,
@@ -198,17 +199,20 @@ export class ForumController {
   public static updateComment = async (request: Request, response: Response) => {
     try {
       const { body } = request;
-      const {currentUser} = (request as RequestWithUser);
+      const { currentUser } = request as RequestWithUser;
       const service = new ForumService();
       const comment = await service.getCommentById(body.id);
-      if(comment && comment.authorId === currentUser.id) {
+      if (comment && comment.authorId === currentUser.id) {
         await service.updateComment(body);
         response.status(200).send('Successfully updated');
       } else {
-        response.status(400).send(!comment 
-          ? 'Comment not found' 
-          : 'You can\'t update comment, because you are not an author of the comment'
-        );
+        response
+          .status(400)
+          .send(
+            !comment
+              ? 'Comment not found'
+              : "You can't update comment, because you are not an author of the comment"
+          );
       }
     } catch (error) {
       response.status(500).send(error);
@@ -221,17 +225,20 @@ export class ForumController {
   public static deleteComment = async (request: Request, response: Response) => {
     try {
       const { body } = request;
-      const {currentUser} = (request as RequestWithUser);
+      const { currentUser } = request as RequestWithUser;
       const service = new ForumService();
       const comment = await service.getCommentById(body.id);
       if (comment && comment.authorId === currentUser.id) {
         await service.deleteComment(body.id);
         response.status(200).send('Successfully deleted');
       } else {
-        response.status(400).send(!comment 
-          ? 'Comment not found' 
-          : 'You can\'t delete comment, because you are not an author of the comment'
-        );
+        response
+          .status(400)
+          .send(
+            !comment
+              ? 'Comment not found'
+              : "You can't delete comment, because you are not an author of the comment"
+          );
       }
     } catch (error) {
       response.status(500).send(error);
@@ -266,65 +273,21 @@ export class ForumController {
   public static addReply = async (request: Request, response: Response) => {
     try {
       const { body } = request;
-      const { currentUser } = (request as RequestWithUser);
+      const { currentUser } = request as RequestWithUser;
       const service = new ForumService();
       const comment = await service.getCommentById(body.commentId);
       if (comment) {
         const reply = await service.addReply({
-          ...body,
-          authorId: currentUser.id
+          authorId: currentUser.id,
+          parentId: comment.id,
+          topicId: comment.topicId,
+          text: body.text,
         });
         response.status(200).send({
           data: reply,
         });
       } else {
         response.status(400).send('You can not add reply without comment');
-      }
-    } catch (error) {
-      response.status(500).send(error);
-    }
-  };
-
-  /**
-   * Изменить ответ
-   */
-  public static updateReply = async (request: Request, response: Response) => {
-    try {
-      const { body } = request;
-      const { currentUser } = (request as RequestWithUser);
-      const service = new ForumService();
-      const reply = await service.getReplyById(body.id);
-      if(reply && reply.authorId === currentUser.id) {
-        await service.updateReply(body);
-        response.status(200).send('Successfully updated');
-      } else {
-        response.status(400).send(!reply 
-          ? 'Reply not found' 
-          : 'You can\'t edit reply, because you are not an author of the reply'
-        );
-      }
-    } catch (error) {
-      response.status(500).send(error);
-    }
-  };
-
-  /**
-   * Удалить ответ
-   */
-  public static deleteReply = async (request: Request, response: Response) => {
-    try {
-      const { body } = request;
-      const { currentUser } = (request as RequestWithUser);
-      const service = new ForumService();
-      const reply = await service.getReplyById(body.id);
-      if (reply && reply.authorId === currentUser.id) {
-        await service.deleteReply(body.id);
-        response.status(200).send('Successfully deleted');
-      } else {
-        response.status(400).send(!reply 
-          ? 'Reply not found' 
-          : 'You can\'t delete reply, because you are not an author of the reply'
-        );
       }
     } catch (error) {
       response.status(500).send(error);
