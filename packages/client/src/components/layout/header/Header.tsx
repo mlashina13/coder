@@ -3,9 +3,9 @@ import { FC, useMemo } from 'react';
 import { Box, IconButton, Tooltip, Typography } from '@mui/material';
 import { LogoIcon, LogoutIcon, MoonIcon, SunIcon } from '../../../assets';
 import { HeaderProps } from './HeaderProps';
-import { setTheme } from '../../../store/slices/themeSlice';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { logout } from '../../../services';
+import { updateTheme } from '../../../services/userThemeService';
 import { DARK_THEME, LIGHT_THEME } from '../../../constants';
 import './headerStyles.scss';
 
@@ -16,6 +16,7 @@ export const Header: FC<HeaderProps> = (props) => {
   const dispatch = useAppDispatch();
   const { title } = props;
   const theme = useAppSelector((state) => state.themes.actualTheme);
+  const user = useAppSelector((state) => state.user.currentUser);
 
   const isDarkTheme = useMemo(() => theme === DARK_THEME, [theme]);
 
@@ -27,8 +28,9 @@ export const Header: FC<HeaderProps> = (props) => {
   };
 
   const changeThemeHandler = () => {
+    if (!user?.id) return;
     const newTheme = isDarkTheme ? LIGHT_THEME : DARK_THEME;
-    dispatch(setTheme(newTheme));
+    dispatch(updateTheme({ theme: newTheme, userId: user.id }));
   };
 
   return (
