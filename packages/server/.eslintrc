@@ -20,6 +20,16 @@
         "scss": "always",
         "interface": "always"
       }
-    ]
+    ],
+    "import/no-extraneous-dependencies": "off",
+    "import/prefer-default-export": "off",
+    "no-console": "off",
+    "no-unused-vars": "off",
+    "class-methods-use-this": "off",
+    "no-useless-constructor": "off",
+    "no-underscore-dangle": "off",
+    "no-empty-function": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-unused-vars": "off"
   }
 }

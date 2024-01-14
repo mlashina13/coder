@@ -1,0 +1,1 @@
+export { ForumController } from './forumController';

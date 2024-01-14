@@ -1,10 +1,4 @@
-// TODO: линтер сходит с ума, поэтому позднее, если останется время,
-// поправим это, пока что все дизейблы ниже нужны
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable no-console */
 import dotenv from 'dotenv';
 import cors from 'cors';
 import { createServer as createViteServer } from 'vite';
@@ -19,6 +13,10 @@ import 'localstorage-polyfill';
 import { Image } from 'canvas';
 import { TextEncoder, TextDecoder } from 'util';
 import type { Action, Store } from '@reduxjs/toolkit';
+import { json } from 'body-parser';
+import { dbConnect, presetForumData } from './dal';
+import router from './routing/router';
+import { YandexService } from './api/services';
 
 dotenv.config();
 
@@ -73,9 +71,21 @@ async function startServer() {
     })
   );
 
-  app.get('/api', (_, res) => {
-    res.json('👋 Howdy from the server :)');
-  });
+  app.use(json());
+  app.use(
+    '/api/v1',
+    cookieParser(),
+    async (req, res, next) => {
+      const yandexService = new YandexService(req.headers.cookie);
+      const currentUser = await yandexService.getCurrentUser();
+      if (!currentUser) {
+        res.status(403).send('You are have no permissions for this App section');
+      }
+      (req as any).currentUser = currentUser;
+      next();
+    },
+    router
+  );
 
   if (!isDev()) {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')));
@@ -113,6 +123,11 @@ async function startServer() {
       next(e);
     }
   });
+
+  await dbConnect();
+  if (isDev()) {
+    await presetForumData();
+  }
 
   app.listen(port, () => {
     console.log(`  ➜ 🎸 Server is listening on port: ${port}`);
