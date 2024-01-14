@@ -77,6 +77,21 @@ export interface RouteInfo {
 }
 
 /**
+ * Описание элемента роутинга с компонентом
+ */
+export interface RouteComponent {
+  /**
+   * Путь (URL)
+   */
+  path: string;
+
+  /**
+   * Компонент
+   */
+  component: React.ReactNode;
+}
+
+/**
  * Модель сообщения топика
  */
 export interface TopicMessage {
