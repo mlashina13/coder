@@ -1,3 +1,3 @@
 export interface ThemeProviderProps {
-  children: React.ReactNode;
+  children: React.ReactElement;
 }
