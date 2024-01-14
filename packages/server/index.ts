@@ -9,15 +9,16 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import { createServer as createViteServer } from 'vite';
 import type { ViteDevServer } from 'vite';
+import serialize from 'serialize-javascript';
 
 import express from 'express';
-import * as fs from 'fs';
 import * as path from 'path';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import cookieParser from 'cookie-parser';
 import 'localstorage-polyfill';
 import { Image } from 'canvas';
 import { TextEncoder, TextDecoder } from 'util';
+import type { Action, Store } from '@reduxjs/toolkit';
 
 dotenv.config();
 
@@ -29,12 +30,14 @@ Object.assign(global, {
 });
 
 const isDev = () => process.env.NODE_ENV === 'development';
+const renderObject = (data: unknown) => serialize(data).replace(/</g, '\\\u003c');
 
 /**
  * Описание модуля с SSR
  */
 interface SSRModule {
-  render: () => string;
+  render: (store: Store<unknown, Action>, location: string) => string;
+  getPageHtml: (bundleHtml: string, state: unknown) => string;
 }
 
 /**
@@ -81,25 +84,26 @@ async function startServer() {
   app.use('*', cookieParser(), async (req, res, next) => {
     const url = req.originalUrl;
 
+    let ssrModule: SSRModule;
+
+    if (isDev()) {
+      ssrModule = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx'))) as SSRModule;
+    } else {
+      ssrModule = await import(ssrClientPath);
+    }
+
+    const serverStore = (
+      await vite!.ssrLoadModule(path.resolve(`${srcPath}/src/store`, 'store.ts'))
+    ).store;
+
+    const { render, getPageHtml } = ssrModule;
+
     try {
-      let template: string;
-      if (!isDev()) {
-        template = fs.readFileSync(path.resolve(distPath, 'index.html'), 'utf-8');
-      } else {
-        template = fs.readFileSync(path.resolve(srcPath, 'index.html'), 'utf-8');
-        template = await vite!.transformIndexHtml(url, template);
-      }
-
-      let ssrModule: SSRModule;
-
-      if (isDev()) {
-        ssrModule = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx'))) as SSRModule;
-      } else {
-        ssrModule = await import(ssrClientPath);
-      }
-
-      const { render } = ssrModule;
-      const html = template.replace(`<!--ssr-outlet-->`, render());
+      const location = req.url;
+      const preloadedState = serverStore.getState();
+      const bundleHtml = render(serverStore, location);
+      const template = getPageHtml(bundleHtml, renderObject(preloadedState));
+      const html = await vite!.transformIndexHtml(url, template);
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
     } catch (e) {

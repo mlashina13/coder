@@ -1,5 +1,5 @@
 import { HomeIcon, MessageIcon, ProfileIcon } from '../assets';
-import { RouteInfo } from '../types/common';
+import { RouteComponent, RouteInfo } from '../types/common';
 
 /** Верхнее Навигационное меню */
 export const ROUTER_URLS = {
