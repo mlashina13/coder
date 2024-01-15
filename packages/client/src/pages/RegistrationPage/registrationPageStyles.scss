@@ -3,7 +3,7 @@
 
 .registration-page {
   height: 100vh;
-  background-color: $grey;
+  background-color: var(--background-color-secondary);
   display: flex;
   align-items: center;
   overflow: auto;

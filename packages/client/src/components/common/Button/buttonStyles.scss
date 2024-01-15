@@ -1,3 +1,5 @@
+@import '../../../styles/color';
+
 .button {
   &.MuiButtonBase-root {
     border-radius: 3px;
@@ -6,16 +8,16 @@
   }
 
   &.MuiButton-contained {
-    background: #0e4980;
+    background: $main-blue;
   }
 
   &.MuiButton-outlined {
     border-radius: 3px;
-    border: 1px solid #e9e8e8;
-    background: #fff;
+    border: 1px solid var(--font-color-secondary);
+    background: var(--background-color-secondary);
 
     /** text */
-    color: #9e9c9c;
+    color: var(--font-color);
     text-align: center;
     font-style: normal;
     font-weight: normal;

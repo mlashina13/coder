@@ -1,10 +1,12 @@
 /* eslint-disable no-console */
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { Box, IconButton, Tooltip, Typography } from '@mui/material';
-import { LogoIcon, LogoutIcon } from '../../../assets';
+import { LogoIcon, LogoutIcon, MoonIcon, SunIcon } from '../../../assets';
 import { HeaderProps } from './HeaderProps';
-import { useAppDispatch } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { logout } from '../../../services';
+import { updateTheme } from '../../../services/userThemeService';
+import { DARK_THEME, LIGHT_THEME } from '../../../constants';
 import './headerStyles.scss';
 
 /**
@@ -13,12 +15,22 @@ import './headerStyles.scss';
 export const Header: FC<HeaderProps> = (props) => {
   const dispatch = useAppDispatch();
   const { title } = props;
+  const theme = useAppSelector((state) => state.themes.actualTheme);
+  const user = useAppSelector((state) => state.user.currentUser);
+
+  const isDarkTheme = useMemo(() => theme === DARK_THEME, [theme]);
 
   /**
    * Обработчик разлогина
    */
   const logoutHandler = () => {
     dispatch(logout());
+  };
+
+  const changeThemeHandler = () => {
+    if (!user?.id) return;
+    const newTheme = isDarkTheme ? LIGHT_THEME : DARK_THEME;
+    dispatch(updateTheme({ theme: newTheme, userId: user.id }));
   };
 
   return (
@@ -33,11 +45,16 @@ export const Header: FC<HeaderProps> = (props) => {
           {title}
         </Typography>
       </Box>
-      <Tooltip title='Выйти'>
-        <IconButton onClick={logoutHandler}>
-          <LogoutIcon className='page-header__logout' />
+      <Box>
+        <IconButton onClick={changeThemeHandler}>
+          {isDarkTheme ? <MoonIcon /> : <SunIcon />}
         </IconButton>
-      </Tooltip>
+        <Tooltip title='Выйти'>
+          <IconButton onClick={logoutHandler}>
+            <LogoutIcon className='page-header__logout' />
+          </IconButton>
+        </Tooltip>
+      </Box>
     </Box>
   );
 };

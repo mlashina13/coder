@@ -1,9 +1,12 @@
 import { useEffect, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import clsx from 'clsx';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getServiceId, yandexLogin } from '../../services';
 import { getCurrentUrl, getYandexAuthUrl } from '../../utils';
+
+import './yandexOAuthStyles.scss';
 
 export const YandexOAuth: React.FC = () => {
   const { serviceId } = useAppSelector((state) => state.oauth);
@@ -30,7 +33,7 @@ export const YandexOAuth: React.FC = () => {
   const yandexAuthUrl = useMemo(() => (serviceId ? getYandexAuthUrl(serviceId) : ''), [serviceId]);
 
   return serviceId ? (
-    <Link className='btn' to={yandexAuthUrl}>
+    <Link className={clsx('btn', 'yandex-OAuth')} to={yandexAuthUrl}>
       Войти с помощью Яндекса
     </Link>
   ) : null;

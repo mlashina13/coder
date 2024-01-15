@@ -2,8 +2,21 @@
 @import '../../../styles/common';
 
 .edit-user-data-dialog {
-  padding: $spacing-m;
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-xl;
+  .MuiPaper-root {
+    background-color: var(--background-color-secondary);
+  }
+  &__content {
+    padding: $spacing-m;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xl;
+  }
+
+  &__tab {
+    color: var(--font-color) !important;
+  }
+
+  .Mui-selected {
+    color: var(--font-color-secondary) !important;
+  }
 }

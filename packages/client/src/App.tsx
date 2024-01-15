@@ -1,9 +1,12 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { AppRouter } from './routes/AppRouter';
-import { ErrorBoundary } from './components';
+import { ErrorBoundary, ThemeProvider } from './components';
+import { LIGHT_THEME } from './constants';
 
 export const App: FC = () => (
   <ErrorBoundary>
-    <AppRouter />
+    <ThemeProvider>
+      <AppRouter />
+    </ThemeProvider>
   </ErrorBoundary>
 );

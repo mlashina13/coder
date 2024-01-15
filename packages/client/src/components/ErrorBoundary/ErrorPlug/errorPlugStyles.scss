@@ -14,13 +14,13 @@
     gap: $spacing-s;
     font-size: $font-lm;
     font-weight: $font-weight-medium-bold;
-    color: $main-black;
+    color: $grey-dark;
     text-shadow: 0px 4px 4px $text-shadow-color;
   }
 
   &__divider {
     height: 4px;
-    background: $red-cherry;
+    background: var(--header-divide-color);
   }
 
   &-error-wrapper {

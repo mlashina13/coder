@@ -5,7 +5,7 @@ import { IconProps } from '../../types/common';
  * Компонент иконки "Блокировка экрана"
  */
 export const LockIcon: FC<IconProps> = (props) => {
-  const { onClick, color, className, height = 32, width = 32 } = props;
+  const { onClick, color = 'var(--icons-color)', className, height = 32, width = 32 } = props;
 
   return (
     <svg

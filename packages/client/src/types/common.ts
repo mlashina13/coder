@@ -235,3 +235,11 @@ export interface YandexLoginData {
   redirect_uri: string;
   code: string;
 }
+
+/**
+ * Обновление темы пользователя
+ */
+export interface ThemeData {
+  userId: string;
+  theme: string;
+}
