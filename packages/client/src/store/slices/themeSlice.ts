@@ -48,11 +48,7 @@ const isError = (action: AnyAction) => action.type.endsWith('rejected');
 const themeSlice = createSlice({
   name: NAME,
   initialState,
-  reducers: {
-    // setTheme(state, action: PayloadAction<Theme>) {
-    //   state.actualTheme = action.payload;
-    // },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(updateTheme.fulfilled, (state, action) => {
