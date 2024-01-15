@@ -6,7 +6,9 @@ import type {
   UpdateCommentDto,
   UpdateTopicDto,
 } from '../../dto';
-import { CommentModel, TopicModel } from '../../dal';
+import { CommentModel, TopicModel, EmojiModel, ReactionModel } from '../../dal';
+/* eslint-disable class-methods-use-this */
+import type { Reaction } from '../../bll';
 
 /**
  * Сервис для работы с форумом
@@ -112,4 +114,29 @@ export class ForumService {
    * Добавить ответ
    */
   public addReply = (creationData: CreateReplyDto) => CommentModel.create(creationData);
+
+  /**
+   * Получить все эмодзи
+   */
+  public getAllEmoji = () => EmojiModel.findAll();
+
+  /**
+   * Получить реакцию по идентификатору
+   */
+  public getReaction = (id: number) => ReactionModel.findByPk(id);
+
+  /**
+   * Получить все реакции на топик по его идентификатору
+   */
+  public getAllTopicReactions = (topicId: number) => ReactionModel.findAll({ where: { topicId } });
+
+  /**
+   * Добавить реакцию на топик
+   */
+  public addReactionToTopic = (reaction: Reaction) => ReactionModel.create(reaction);
+
+  /**
+   * Удалить реакцию на топик
+   */
+  public deleteReactionFromTopic = (id: number) => ReactionModel.destroy({ where: { id } });
 }

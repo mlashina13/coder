@@ -293,4 +293,87 @@ export class ForumController {
       response.status(500).send(error);
     }
   };
+
+  /**
+   * Получить все эмодзи
+   */
+  public static getAllEmoji = async (_: Request, response: Response) => {
+    try {
+      const service = new ForumService();
+      const emoji = await service.getAllEmoji();
+      response.status(200).send({
+        data: emoji,
+      });
+    } catch (error) {
+      response.status(500).send(error);
+    }
+  };
+
+  /**
+   * Получить все реакции на топик
+   */
+  public static getAllTopicReactions = async (request: Request, response: Response) => {
+    try {
+      const {
+        params: { topicId },
+      } = request;
+      if (!topicId) {
+        response.status(400).send("Parameter ':topicId' can not be empty");
+      } else {
+        const service = new ForumService();
+        const reactions = await service.getAllTopicReactions(+topicId);
+        response.status(200).send({
+          data: reactions,
+        });
+      }
+    } catch (error) {
+      response.status(500).send(error);
+    }
+  };
+
+  /**
+   * Добавить реакцию на топик
+   */
+  public static addReactionToTopic = async (request: Request, response: Response) => {
+    try {
+      const { body } = request;
+      const { currentUser } = request as RequestWithUser;
+      const service = new ForumService();
+      body.userId = currentUser.id;
+      const reactions = await service.addReactionToTopic(body);
+      response.status(200).send({
+        data: reactions,
+      });
+    } catch (error) {
+      response.status(500).send(error);
+    }
+  };
+
+  /**
+   * Удалить реакцию на топик
+   */
+  public static deleteReactionFromTopic = async (request: Request, response: Response) => {
+    try {
+      const {
+        params: { id },
+      } = request;
+      const { currentUser } = request as RequestWithUser;
+      const service = new ForumService();
+      const reaction = await service.getReaction(+id);
+      if (reaction && reaction.userId === currentUser.id) {
+        await service.deleteReactionFromTopic(+id);
+        response.status(200).send('Successfully deleted');
+      } else {
+        response
+          .status(400)
+          .send(
+            !reaction
+              ? 'Reaction not found'
+              : "You can't delete reaction, because you are not an author of the reaction"
+          );
+      }
+    } catch (error) {
+      response.status(500).send(error);
+    }
+  };
 }

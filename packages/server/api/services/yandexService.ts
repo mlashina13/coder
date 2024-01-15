@@ -1,7 +1,7 @@
-import axios from 'axios'
+import axios from 'axios';
 import type { CurrentUser } from '../../bll';
 
-const API_ROOT = 'https://ya-praktikum.tech/api/v2/'
+const API_ROOT = 'https://ya-praktikum.tech/api/v2/';
 
 export class YandexService {
   constructor(private _cookieHeader: string | undefined) {}

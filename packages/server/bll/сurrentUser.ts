@@ -6,10 +6,10 @@ type NullableString = string | null | undefined;
 export interface CurrentUser {
   id: number;
   first_name: string;
-  second_name:  string;
-  login:  string;
+  second_name: string;
+  login: string;
   display_name?: NullableString;
   avatar: NullableString;
   email: NullableString;
   phone: NullableString;
-};
+}

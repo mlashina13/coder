@@ -377,6 +377,66 @@
 				}
 			},
 			"response": []
-		}
+		},
+    {
+      "name": "getAllEmoji",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/api/v1/forum/emoji/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "v1", "forum", "emoji", ""]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "addReactionToTopic",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/api/v1/forum/reaction/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "v1", "forum", "reaction", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getAllTopicReactions",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/api/v1/forum/reactions/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "v1", "forum", "reactions", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "deleteReactionFromTopic",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/api/v1/forum/reaction/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "v1", "forum", "reaction", "1"]
+        }
+      },
+      "response": []
+    }
 	]
 }

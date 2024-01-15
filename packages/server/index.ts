@@ -14,7 +14,7 @@ import { Image } from 'canvas';
 import { TextEncoder, TextDecoder } from 'util';
 import type { Action, Store } from '@reduxjs/toolkit';
 import { json } from 'body-parser';
-import { dbConnect, presetForumData } from './dal';
+import { dbConnect, presetForumData, presetEmoji } from './dal';
 import router from './routing/router';
 import { YandexService } from './api/services';
 
@@ -125,6 +125,7 @@ async function startServer() {
   });
 
   await dbConnect();
+  await presetEmoji();
   if (isDev()) {
     await presetForumData();
   }

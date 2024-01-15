@@ -4,7 +4,7 @@ import fs from 'fs';
 fs.readFile('ssr-dist/ssr.cjs', 'utf8', (readError, data) => {
   if (readError) {
     throw readError;
-  } 
+  }
   const regex = /new\s+\w+\.TextEncoder\(\)/g;
   const fixed = data.replace(regex, 'new global.TextEncoder()');
   fs.writeFile('ssr-dist/ssr.cjs', fixed, (writeError) => {
