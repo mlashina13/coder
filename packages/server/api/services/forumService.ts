@@ -1,12 +1,12 @@
+import { Op } from 'sequelize';
 import type {
   CreateCommentDto,
   CreateReplyDto,
   CreateTopicDto,
   UpdateCommentDto,
-  UpdateReplyDto,
   UpdateTopicDto,
 } from '../../dto';
-import { CommentModel, ReplyModel, TopicModel, EmojiModel, ReactionModel } from '../../dal';
+import { CommentModel, TopicModel, EmojiModel, ReactionModel } from '../../dal';
 /* eslint-disable class-methods-use-this */
 import type { Reaction } from '../../bll';
 
@@ -67,6 +67,7 @@ export class ForumService {
     CommentModel.findAll({
       where: {
         topicId,
+        parentId: null,
       },
     });
 
@@ -94,61 +95,48 @@ export class ForumService {
   /**
    * Удалить комментарий
    */
-  public deleteComment = (id: number) => CommentModel.destroy({ where: { id } });
-
-  /**
-   * Получить кол-во ответов на комментарий
-   */
-  public getRepliesCount = (commentId: number) =>
-    ReplyModel.count({
-      where: {
-        commentId,
-      },
+  public deleteComment = (id: number) =>
+    CommentModel.destroy({
+      where: { [Op.or]: [{ id }, { parentId: id }] },
     });
-
-  /**
-   * Получить ответ по идентификатору
-   */
-  public getReplyById = (id: number) => ReplyModel.findByPk(id);
 
   /**
    * Получить ответы по идентификатору комментария
    */
   public getRepliesByCommentId = (commentId: number) =>
-    ReplyModel.findAll({
+    CommentModel.findAll({
       where: {
-        commentId,
+        parentId: commentId,
       },
     });
 
   /**
    * Добавить ответ
    */
-  public addReply = (creationData: CreateReplyDto) => ReplyModel.create(creationData);
+  public addReply = (creationData: CreateReplyDto) => CommentModel.create(creationData);
 
   /**
-   * Изменить комментарий
+   * Получить все эмодзи
    */
-  public updateReply = (updateData: UpdateReplyDto) =>
-    ReplyModel.update(
-      {
-        text: updateData.text,
-      },
-      { where: { id: updateData.id } }
-    );
-
-  /**
-   * Удалить ответ
-   */
-  public deleteReply = (id: number) => ReplyModel.destroy({ where: { id } });
-
   public getAllEmoji = () => EmojiModel.findAll();
 
+  /**
+   * Получить реакцию по идентификатору
+   */
   public getReaction = (id: number) => ReactionModel.findByPk(id);
 
+  /**
+   * Получить все реакции на топик по его идентификатору
+   */
   public getAllTopicReactions = (topicId: number) => ReactionModel.findAll({ where: { topicId } });
 
+  /**
+   * Добавить реакцию на топик
+   */
   public addReactionToTopic = (reaction: Reaction) => ReactionModel.create(reaction);
 
+  /**
+   * Удалить реакцию на топик
+   */
   public deleteReactionFromTopic = (id: number) => ReactionModel.destroy({ where: { id } });
 }

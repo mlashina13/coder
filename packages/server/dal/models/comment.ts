@@ -19,14 +19,18 @@ export class CommentModel extends Model<Comment> {
   override id!: number;
 
   @ForeignKey(() => TopicModel)
-  @Column({
-    type: DataType.INTEGER,
-  })
+  @Column({ type: DataType.INTEGER })
   @Index
   topicId!: number;
 
   @BelongsTo(() => TopicModel, { onDelete: 'CASCADE' })
   topic!: TopicModel;
+
+  @Column({
+    type: DataType.INTEGER,
+  })
+  @Index
+  parentId!: number | null;
 
   @Column({
     type: DataType.INTEGER,

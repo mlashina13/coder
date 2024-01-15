@@ -1,38 +1,41 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable react/no-danger */
 import React from 'react';
 import { StaticRouter } from 'react-router-dom/server';
-import { renderToString } from 'react-dom/server';
+import { renderToStaticMarkup, renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
-import { configureStore, createSlice } from '@reduxjs/toolkit';
+import { Action, Store } from '@reduxjs/toolkit';
 import { App } from './src/App';
-import { initialState as userInitialState } from './src/store/slices/userSlice';
-import { initialState as errorInitialState } from './src/store/slices/errorSlice';
 
-export function render() {
-  // TODO: заглушки для стора. Будут доработаны
-  // в следующих задачах
-  const userSlicePlug = createSlice({
-    initialState: userInitialState,
-    name: 'user',
-    reducers: {},
-  });
-  const errorSlicePlug = createSlice({
-    initialState: errorInitialState,
-    name: 'error',
-    reducers: {},
-  });
-  const store = configureStore({
-    reducer: {
-      user: userSlicePlug.reducer,
-      error: errorSlicePlug.reducer,
-    },
-  });
-
+export function render(store: Store<unknown, Action>, location: string) {
   return renderToString(
     <Provider store={store}>
-      {/* TODO: router будет доработан в следующих задачах */}
-      <StaticRouter location='/'>
+      <StaticRouter location={location}>
         <App />
       </StaticRouter>
     </Provider>
   );
+}
+
+export function getPageHtml(bundleHtml: string, state: unknown) {
+  const html = renderToStaticMarkup(
+    <html lang='ru'>
+      <head>
+        <link rel='icon' type='image/svg+xml' href='/icon.svg' />
+        <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+        <title>Coder</title>
+      </head>
+      <body>
+        <div id='root' dangerouslySetInnerHTML={{ __html: bundleHtml }} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.__PRELOADED_STATE__ = ${state}`,
+          }}
+        />
+        <script type='module' src='/src/main.tsx' />
+      </body>
+    </html>
+  );
+
+  return `<!doctype html>${html}`;
 }

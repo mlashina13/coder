@@ -68,29 +68,20 @@ export interface UpdateCommentDto {
  */
 export interface CreateReplyDto {
   /**
-   * Идентификатор комментария
+   * Идентификатор топика
    */
-  commentId: number;
+  topicId: number;
+
+  /**
+   * Идентификатор родительского
+   * комментария
+   */
+  parentId: number;
 
   /**
    * Идентификатор автора
    */
   authorId: number;
-
-  /**
-   * Текст ответа
-   */
-  text: string;
-}
-
-/**
- * DTO изменения ответа
- */
-export interface UpdateReplyDto {
-  /**
-   * Идентификатор
-   */
-  id: number;
 
   /**
    * Текст ответа

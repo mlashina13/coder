@@ -23,6 +23,12 @@ export interface Comment {
   id?: number;
 
   /**
+   * Идентификатор родительского
+   * комментария
+   */
+  parentId?: number | null;
+
+  /**
    * Время изменения
    */
   updatedAt?: string;
