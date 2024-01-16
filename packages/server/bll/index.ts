@@ -3,3 +3,4 @@ export { CurrentUser } from './сurrentUser';
 export { Topic } from './topic';
 export { Emoji } from './emoji';
 export { Reaction } from './reaction';
+export { Theme } from './theme';
