@@ -1,4 +1,4 @@
-import { CommentModel, TopicModel, EmojiModel } from '../models';
+import { CommentModel, TopicModel, EmojiModel, ThemeModel } from '../models';
 import { emoji } from './emojiList';
 
 /**
@@ -56,5 +56,24 @@ export const presetEmoji = async () => {
     }
   } catch (error) {
     console.error('Unable to preset emoji: ', error);
+  }
+};
+
+/**
+ * Предзаполнение темы
+ */
+export const presetTheme = async () => {
+  try {
+    const themeCount = await ThemeModel.count();
+    if (themeCount === 0) {
+      const theme = await ThemeModel.create({
+        userId: 1349879,
+        theme: 'light',
+      });
+    } else {
+      console.log('Theme does not require presetting');
+    }
+  } catch (error) {
+    console.error('Unable to preset theme: ', error);
   }
 };

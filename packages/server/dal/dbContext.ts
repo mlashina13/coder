@@ -1,5 +1,5 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
-import { CommentModel, TopicModel, EmojiModel, ReactionModel } from './models';
+import { CommentModel, TopicModel, EmojiModel, ReactionModel, ThemeModel } from './models';
 
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } = process.env;
 
@@ -8,16 +8,16 @@ const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } = process
  */
 const sequelizeOptions: SequelizeOptions = {
   host: 'localhost',
-  port: Number(POSTGRES_PORT),
-  username: POSTGRES_USER,
-  password: POSTGRES_PASSWORD,
-  database: POSTGRES_DB,
+  port: 5432, // Number(POSTGRES_PORT),
+  username: 'postgres', // POSTGRES_USER,
+  password: 'postgres', // POSTGRES_PASSWORD,
+  database: 'coder', // POSTGRES_DB,
   dialect: 'postgres',
 };
 
 // Создаем инстанс Sequelize
 const sequelize = new Sequelize(sequelizeOptions);
-sequelize.addModels([CommentModel, TopicModel, EmojiModel, ReactionModel]);
+sequelize.addModels([CommentModel, TopicModel, EmojiModel, ReactionModel, ThemeModel]);
 
 /**
  * Инстанс Sequelize

@@ -14,7 +14,7 @@ import { Image } from 'canvas';
 import { TextEncoder, TextDecoder } from 'util';
 import type { Action, Store } from '@reduxjs/toolkit';
 import { json } from 'body-parser';
-import { dbConnect, presetForumData, presetEmoji } from './dal';
+import { dbConnect, presetForumData, presetEmoji, presetTheme } from './dal';
 import router from './routing/router';
 import { YandexService } from './api/services';
 
@@ -73,15 +73,15 @@ async function startServer() {
 
   app.use(json());
   app.use(
-    '/api/v1',
+    '/api/v2',
     cookieParser(),
     async (req, res, next) => {
       const yandexService = new YandexService(req.headers.cookie);
-      const currentUser = await yandexService.getCurrentUser();
+      /* const currentUser = await yandexService.getCurrentUser();
       if (!currentUser) {
         res.status(403).send('You are have no permissions for this App section');
-      }
-      (req as any).currentUser = currentUser;
+      } */
+      (req as any).currentUser = { i: 12345 };
       next();
     },
     router
@@ -128,6 +128,7 @@ async function startServer() {
   await presetEmoji();
   if (isDev()) {
     await presetForumData();
+    await presetTheme();
   }
 
   app.listen(port, () => {
