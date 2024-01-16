@@ -6,13 +6,14 @@ import type { RequestWithUser } from '../../types';
  * API контроллер форума
  */
 export class ForumController {
+  static service = new ForumService();
+
   /**
    * Получить список топиков
    */
   public static getAllTopics = async (_: Request, response: Response) => {
     try {
-      const service = new ForumService();
-      const topics = await service.getAllTopics();
+      const topics = await this.service.getAllTopics();
       response.status(200).send({
         data: topics,
       });
@@ -32,8 +33,7 @@ export class ForumController {
       if (!id) {
         response.status(400).send("Parameter ':Id' can not be empty");
       } else {
-        const service = new ForumService();
-        const topic = await service.getTopicById(+id);
+        const topic = await this.service.getTopicById(+id);
         response.status(200).send({
           data: topic,
         });
@@ -50,10 +50,9 @@ export class ForumController {
     try {
       const { currentUser } = request as RequestWithUser;
       const { body } = request;
-      const service = new ForumService();
-      const topic = await service.createTopic({
+      const topic = await this.service.createTopic({
         ...body,
-        authorId: currentUser.id,
+        authorId: currentUser?.id,
       });
       response.status(200).send({
         data: topic,
@@ -70,10 +69,10 @@ export class ForumController {
     try {
       const { currentUser } = request as RequestWithUser;
       const { body } = request;
-      const service = new ForumService();
-      const topic = await service.getTopicById(body.id);
-      if (topic && topic.authorId === currentUser.id) {
-        await service.updateTopic(body);
+
+      const topic = await this.service.getTopicById(body.id);
+      if (topic?.authorId === currentUser?.id) {
+        await this.service.updateTopic(body);
         response.status(200).send('Successfully updated');
       } else {
         response
@@ -95,8 +94,8 @@ export class ForumController {
   public static viewTopic = async (request: Request, response: Response) => {
     try {
       const { body } = request;
-      const service = new ForumService();
-      await service.viewTopic(body.id);
+
+      await this.service.viewTopic(body.id);
       response.status(200).send('Views count incremented');
     } catch (error) {
       response.status(500).send(error);
@@ -110,10 +109,10 @@ export class ForumController {
     try {
       const { body } = request;
       const { currentUser } = request as RequestWithUser;
-      const service = new ForumService();
-      const topic = await service.getTopicById(body.id);
-      if (topic && topic.authorId === currentUser.id) {
-        await service.deleteTopic(body.id);
+
+      const topic = await this.service.getTopicById(body.id);
+      if (topic?.authorId === currentUser?.id) {
+        await this.service.deleteTopic(body.id);
         response.status(200).send('Successfully deleted');
       } else {
         response
@@ -140,8 +139,7 @@ export class ForumController {
       if (!topicId) {
         response.status(400).send("Parameter ':topicId' can not be empty");
       } else {
-        const service = new ForumService();
-        const count = await service.getCommentsCount(+topicId);
+        const count = await this.service.getCommentsCount(+topicId);
         response.status(200).send({
           data: count,
         });
@@ -162,8 +160,7 @@ export class ForumController {
       if (!topicId) {
         response.status(400).send("Parameter ':topicId' can not be empty");
       } else {
-        const service = new ForumService();
-        const comments = await service.getCommentsByTopicId(+topicId);
+        const comments = await this.service.getCommentsByTopicId(+topicId);
         response.status(200).send({
           data: comments,
         });
@@ -180,10 +177,10 @@ export class ForumController {
     try {
       const { body } = request;
       const { currentUser } = request as RequestWithUser;
-      const service = new ForumService();
-      const comment = await service.addComment({
+
+      const comment = await this.service.addComment({
         ...body,
-        authorId: currentUser.id,
+        authorId: currentUser?.id,
       });
       response.status(200).send({
         data: comment,
@@ -200,10 +197,10 @@ export class ForumController {
     try {
       const { body } = request;
       const { currentUser } = request as RequestWithUser;
-      const service = new ForumService();
-      const comment = await service.getCommentById(body.id);
-      if (comment && comment.authorId === currentUser.id) {
-        await service.updateComment(body);
+
+      const comment = await this.service.getCommentById(body.id);
+      if (comment?.authorId === currentUser?.id) {
+        await this.service.updateComment(body);
         response.status(200).send('Successfully updated');
       } else {
         response
@@ -226,10 +223,10 @@ export class ForumController {
     try {
       const { body } = request;
       const { currentUser } = request as RequestWithUser;
-      const service = new ForumService();
-      const comment = await service.getCommentById(body.id);
-      if (comment && comment.authorId === currentUser.id) {
-        await service.deleteComment(body.id);
+
+      const comment = await this.service.getCommentById(body.id);
+      if (comment?.authorId === currentUser?.id) {
+        await this.service.deleteComment(body.id);
         response.status(200).send('Successfully deleted');
       } else {
         response
@@ -256,8 +253,7 @@ export class ForumController {
       if (!commentId) {
         response.status(400).send("Parameter ':commentId' can not be empty");
       } else {
-        const service = new ForumService();
-        const replies = await service.getRepliesByCommentId(+commentId);
+        const replies = await this.service.getRepliesByCommentId(+commentId);
         response.status(200).send({
           data: replies,
         });
@@ -274,11 +270,11 @@ export class ForumController {
     try {
       const { body } = request;
       const { currentUser } = request as RequestWithUser;
-      const service = new ForumService();
-      const comment = await service.getCommentById(body.commentId);
-      if (comment) {
-        const reply = await service.addReply({
-          authorId: currentUser.id,
+
+      const comment = await this.service.getCommentById(body.commentId);
+      if (comment && currentUser?.id) {
+        const reply = await this.service.addReply({
+          authorId: currentUser?.id,
           parentId: comment.id,
           topicId: comment.topicId,
           text: body.text,
@@ -299,8 +295,7 @@ export class ForumController {
    */
   public static getAllEmoji = async (_: Request, response: Response) => {
     try {
-      const service = new ForumService();
-      const emoji = await service.getAllEmoji();
+      const emoji = await this.service.getAllEmoji();
       response.status(200).send({
         data: emoji,
       });
@@ -320,8 +315,7 @@ export class ForumController {
       if (!topicId) {
         response.status(400).send("Parameter ':topicId' can not be empty");
       } else {
-        const service = new ForumService();
-        const reactions = await service.getAllTopicReactions(+topicId);
+        const reactions = await this.service.getAllTopicReactions(+topicId);
         response.status(200).send({
           data: reactions,
         });
@@ -338,9 +332,9 @@ export class ForumController {
     try {
       const { body } = request;
       const { currentUser } = request as RequestWithUser;
-      const service = new ForumService();
-      body.userId = currentUser.id;
-      const reactions = await service.addReactionToTopic(body);
+
+      body.userId = currentUser?.id;
+      const reactions = await this.service.addReactionToTopic(body);
       response.status(200).send({
         data: reactions,
       });
@@ -358,10 +352,10 @@ export class ForumController {
         params: { id },
       } = request;
       const { currentUser } = request as RequestWithUser;
-      const service = new ForumService();
-      const reaction = await service.getReaction(+id);
-      if (reaction && reaction.userId === currentUser.id) {
-        await service.deleteReactionFromTopic(+id);
+
+      const reaction = await this.service.getReaction(+id);
+      if (reaction && reaction.userId === currentUser?.id) {
+        await this.service.deleteReactionFromTopic(+id);
         response.status(200).send('Successfully deleted');
       } else {
         response

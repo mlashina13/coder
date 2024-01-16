@@ -9,6 +9,7 @@ import {
   leadboardReducer,
   oauthReducer,
   themeReducer,
+  topicsReducer,
 } from './slices';
 
 declare global {
@@ -35,6 +36,7 @@ export const store = configureStore({
     leaderboard: leadboardReducer,
     oauth: oauthReducer,
     themes: themeReducer,
+    topics: topicsReducer,
   },
 });
 
@@ -49,6 +51,7 @@ export const createStore = (url = '/', initialState: object = {}) => {
         location: locationReducer,
         leaderboard: leadboardReducer,
         oauth: oauthReducer,
+        topics: topicsReducer,
       },
       preloadedState: serverState,
     }),

@@ -1,4 +1,4 @@
-import { TopicMessage } from '../../types/common';
+import { Comment, TopicMessage } from '../../types/common';
 
 /**
  * Свойства компонента списка сообщений топика
@@ -17,7 +17,7 @@ export interface TopicMessagesListProps {
   /**
    * Список топиков
    */
-  messages: Array<TopicMessage>;
+  messages: Comment[];
 
   /**
    * Событие смены страницы
@@ -42,10 +42,10 @@ export interface TopicMessagesListProps {
   /**
    * Событие удаления сообщения
    */
-  onDeleteMessage?: (id: string) => void;
+  onDeleteMessage?: (id: number) => void;
 
   /**
    * Событие изменения сообщения
    */
-  onEditMessage?: (id: string) => void;
+  onEditMessage?: (id: number) => void;
 }

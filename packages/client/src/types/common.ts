@@ -128,12 +128,17 @@ export interface Topic {
   /**
    * Тема
    */
-  theme: string;
+  title: string;
 
   /**
    * Дата создания топика (date string)
    */
-  creationDate: string;
+  createdAt: string;
+
+  /**
+   * Дата обновления топика
+   */
+  updatedAt: string;
 
   /**
    * Автор
@@ -154,6 +159,9 @@ export interface Topic {
    * Список сообщений
    */
   messages?: Array<TopicMessage>;
+
+  /** id-шник автора */
+  authorId: number;
 }
 
 /**
@@ -242,4 +250,45 @@ export interface YandexLoginData {
 export interface ThemeData {
   userId: string;
   theme: string;
+}
+
+/**
+ * Интерфейс модели комментария
+ */
+export interface Comment {
+  /**
+   * Идентификатор топика
+   */
+  topicId: number;
+
+  /**
+   * Идентификатор автора
+   */
+  authorId: number;
+
+  /**
+   * Текст комментария
+   */
+  text: string;
+
+  /**
+   * Идентификатор
+   */
+  id?: number;
+
+  /**
+   * Идентификатор родительского
+   * комментария
+   */
+  parentId?: number | null;
+
+  /**
+   * Время изменения
+   */
+  updatedAt?: string;
+
+  /**
+   * Время создания
+   */
+  createdAt?: string;
 }

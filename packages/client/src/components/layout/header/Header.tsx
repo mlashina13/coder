@@ -15,7 +15,7 @@ import './headerStyles.scss';
 export const Header: FC<HeaderProps> = (props) => {
   const dispatch = useAppDispatch();
   const { title } = props;
-  const theme = useAppSelector((state) => state.themes.actualTheme);
+  const theme = useAppSelector((state) => state.themes?.actualTheme);
   const user = useAppSelector((state) => state.user.currentUser);
 
   const isDarkTheme = useMemo(() => theme === DARK_THEME, [theme]);

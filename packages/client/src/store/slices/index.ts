@@ -4,3 +4,4 @@ export { locationReducer } from './locationSlice';
 export { leadboardReducer } from './leaderboardSlice';
 export { oauthReducer } from './oauthSlice';
 export { themeReducer } from './themeSlice';
+export { topicsReducer } from './topicsSlice';
