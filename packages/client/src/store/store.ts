@@ -52,6 +52,7 @@ export const createStore = (url = '/', initialState: object = {}) => {
         leaderboard: leadboardReducer,
         oauth: oauthReducer,
         topics: topicsReducer,
+        themes: themeReducer,
       },
       preloadedState: serverState,
     }),
