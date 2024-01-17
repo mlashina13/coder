@@ -73,15 +73,15 @@ async function startServer() {
 
   app.use(json());
   app.use(
-    '/api/v2',
+    '/api/v1',
     cookieParser(),
     async (req, res, next) => {
       const yandexService = new YandexService(req.headers.cookie);
-      /* const currentUser = await yandexService.getCurrentUser();
+      const currentUser = await yandexService.getCurrentUser();
       if (!currentUser) {
         res.status(403).send('You are have no permissions for this App section');
-      } */
-      (req as any).currentUser = { i: 12345 };
+      }
+      (req as any).currentUser = currentUser;
       next();
     },
     router

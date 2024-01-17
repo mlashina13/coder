@@ -20,22 +20,26 @@ import './topicMessagesListItemStyles.scss';
  * Компонент элемента списка сообщений топика
  */
 export const TopicMessagesListItem: FC<TopicMessagesListItemProps> = (props) => {
-  const { creationDate, creator, id, message, onDelete, onEdit } = props;
+  const { createdAt, authorId, id, text, onDelete, onEdit } = props;
 
-  const creationDateFormatted = formatDate(creationDate, DATE_FORMAT);
+  const creationDateFormatted = formatDate(createdAt, DATE_FORMAT);
 
   /**
    * Обработчик редактирования сообщения
    */
   const editMessageHandler = useCallback(() => {
-    onEdit?.(id);
+    if (id) {
+      onEdit?.(id);
+    }
   }, [onEdit]);
 
   /**
    * Обработчик удаления сообщения
    */
   const deleteMessageHandler = useCallback(() => {
-    onDelete?.(id);
+    if (id) {
+      onDelete?.(id);
+    }
   }, [onDelete]);
 
   return (
@@ -48,8 +52,8 @@ export const TopicMessagesListItem: FC<TopicMessagesListItemProps> = (props) => 
         </ListItemAvatar>
         <ListItemText
           className='topic-msgs-list-item__message'
-          primary={`${creationDateFormatted} ${creator}`}
-          secondary={message}
+          primary={`${creationDateFormatted} ${authorId}`}
+          secondary={text}
         />
         <ListItemSecondaryAction className='topic-msgs-list-item__actions-container'>
           <Box className='topic-msgs-list-item__actions-wrapper'>

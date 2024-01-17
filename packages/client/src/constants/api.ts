@@ -1,8 +1,11 @@
-const AUTH_SERVICE_NAME = 'auth';
-const USER_SERVICE_NAME = 'user';
-const LEADERBOARD_SERVICE_NAME = 'leaderboard';
-const YANDEX_OAUTH = 'oauth/yandex';
-const USER_THEME_SERVICE_NAME = 'theme';
+const YANDEX_API_VERSION = 'v2';
+const EXPRESS_API_VERSION = 'v1';
+const AUTH_SERVICE_NAME = `${YANDEX_API_VERSION}/auth`;
+const USER_SERVICE_NAME = `${YANDEX_API_VERSION}/user`;
+const LEADERBOARD_SERVICE_NAME = `${YANDEX_API_VERSION}/leaderboard`;
+const YANDEX_OAUTH = `${YANDEX_API_VERSION}/oauth/yandex`;
+const USER_THEME_SERVICE_NAME = `${EXPRESS_API_VERSION}/theme`;
+const FORUM = `${EXPRESS_API_VERSION}/forum`;
 
 const byId = (uri: string) => (id?: string | number | null) => `${uri}/${id}`;
 
@@ -36,3 +39,14 @@ export const YANDEX_SIGNIN = `/${YANDEX_OAUTH}`;
 export const GET_USER_THEME = byId(`/${USER_THEME_SERVICE_NAME}`);
 
 export const UPDATE_USER_THEME = `/${USER_THEME_SERVICE_NAME}/save`;
+
+/** forum api */
+export const TOPICS = `/${FORUM}/topics/`;
+
+export const COMMENT = `/${FORUM}/comment/`;
+
+export const TOPIC = `${FORUM}/topic/`;
+
+export const MESSAGES_COUNT = `${FORUM}/getTopicMessagesCount/`;
+
+export const COMMENTS = `${FORUM}/comments/`;

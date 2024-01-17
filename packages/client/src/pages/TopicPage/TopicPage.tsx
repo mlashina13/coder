@@ -1,20 +1,24 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router';
 import { Box } from '@mui/material';
+import { Forum } from '../../api';
+import { addComment, deleteComment, getTopicById, updateComment } from '../../services';
 import { Button, Confirm, Input, Layout, TopicMessagesList } from '../../components';
-import { Topic } from '../../types/common';
 import { ITEMS_PER_PAGE_DEFAULT } from '../../constants/common';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+
 import './topicPageStyles.scss';
-import { TOPIC_MOKE_DATA } from './topicMokeData';
 
 /**
  * Страница топика
  */
 export const TopicPage: FC = () => {
-  const [topic, setTopic] = useState<Topic>(TOPIC_MOKE_DATA);
+  const { topic, topicMessagesCount, comments } = useAppSelector((state) => state.topics);
+  const dispatch = useAppDispatch();
+  const params = useParams();
   const [currentMessage, setCurrentMessage] = useState('');
-  const [messagesTotalCount, setMessagesTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedMessageId, setSelectedMessageId] = useState<string>();
+  const [selectedMessageId, setSelectedMessageId] = useState<number>();
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
 
   /**
@@ -22,14 +26,10 @@ export const TopicPage: FC = () => {
    * получение топика
    */
   useEffect(() => {
-    // TODO: в будущем сделать запрос к API
-    setTopic(TOPIC_MOKE_DATA);
-    setMessagesTotalCount(TOPIC_MOKE_DATA.messages?.length ?? 0);
-
-    return () => {
-      // TODO: в будущем предусмотреть прерывание запроса
-    };
-  }, [currentPage]);
+    if (params?.topicId) {
+      dispatch(getTopicById(parseInt(params?.topicId, 10)));
+    }
+  }, [params?.topicId]);
 
   /**
    * Обработчик смены страницы
@@ -48,7 +48,7 @@ export const TopicPage: FC = () => {
   /**
    * Обработчик открытия окна подтверждения удаления
    */
-  const openDeleteMessageConfirmHandler = (id: string) => {
+  const openDeleteMessageConfirmHandler = (id: number) => {
     setSelectedMessageId(id);
     setConfirmDeleteOpen(true);
   };
@@ -57,7 +57,9 @@ export const TopicPage: FC = () => {
    * Обработчик удаления
    */
   const confirmDeleteMessageHandler = () => {
-    // TODO: Здесь будет запрос на удаление
+    if (selectedMessageId && topic?.id) {
+      dispatch(deleteComment({ id: selectedMessageId, topicId: parseInt(topic.id, 10) }));
+    }
     setSelectedMessageId(undefined);
     setConfirmDeleteOpen(false);
   };
@@ -73,10 +75,10 @@ export const TopicPage: FC = () => {
   /**
    * Обработчик изменения сообщения
    */
-  const editMessageHandler = (id: string) => {
-    const message = topic?.messages?.find((m) => m.id === id);
+  const editMessageHandler = (id: number) => {
+    const message = comments?.find((m) => m.id === id);
     setSelectedMessageId(id);
-    setCurrentMessage(message?.message ?? '');
+    setCurrentMessage(message?.text ?? '');
   };
 
   /**
@@ -90,12 +92,18 @@ export const TopicPage: FC = () => {
   /**
    * Обработчик отправки сообщения
    */
-  const sendMessageHandler = () => {
-    if (selectedMessageId) {
-      // TODO:  Здесь будет запрос на изменение
+  const sendMessageHandler = async () => {
+    if (selectedMessageId && topic?.id) {
+      dispatch(
+        updateComment({
+          id: selectedMessageId,
+          text: currentMessage,
+          topicId: parseInt(topic.id, 10),
+        })
+      );
       setSelectedMessageId(undefined);
-    } else {
-      // TODO: Здесь будет запрос на отправку
+    } else if (topic?.id) {
+      dispatch(addComment({ text: currentMessage, topicId: parseInt(topic.id, 10) }));
     }
     setCurrentMessage('');
   };
@@ -111,12 +119,12 @@ export const TopicPage: FC = () => {
       />
       <Box className='topic-page-content'>
         <TopicMessagesList
-          messages={topic?.messages ?? []}
+          messages={comments ?? []}
           className='topic-page-content__list'
-          messagesCount={messagesTotalCount}
+          messagesCount={topicMessagesCount ?? 0}
           messagesPerPage={ITEMS_PER_PAGE_DEFAULT}
           onPageChange={changePageHandler}
-          theme={topic?.theme ?? ''}
+          theme={topic?.title ?? ''}
           themeViewsCount={topic?.viewsCount}
           onDeleteMessage={openDeleteMessageConfirmHandler}
           onEditMessage={editMessageHandler}

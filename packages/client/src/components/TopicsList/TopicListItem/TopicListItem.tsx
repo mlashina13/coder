@@ -20,10 +20,10 @@ import './topicListItemStyles.scss';
  * Элемент списка топиков форума
  */
 export const TopicListItem: FC<TopicListItemProps> = (props) => {
-  const { creationDate, creator, id, messagesCount, theme, viewsCount, onDelete, onEdit, onClick } =
+  const { createdAt, creator, id, messagesCount, title, viewsCount, onDelete, onEdit, onClick } =
     props;
 
-  const creationDateFormatted = formatDate(creationDate, DATE_FORMAT);
+  const creationDateFormatted = formatDate(createdAt, DATE_FORMAT);
 
   /**
    * Обработчик редактирования топика
@@ -51,12 +51,12 @@ export const TopicListItem: FC<TopicListItemProps> = (props) => {
       <ListItem className='topic-list-item' onClick={clickTopicHandler}>
         <ListItemText
           className='topic-list-item__theme'
-          primary={theme}
+          primary={title}
           secondary={`Создана: ${creationDateFormatted}`}
         />
         <ListItemText
           className='topic-list-item__counters'
-          primary={`Ответов: ${messagesCount}`}
+          primary={`Ответов: ${messagesCount ?? ''}`}
           secondary={`Просмотров: ${viewsCount}`}
         />
         <ListItemAvatar>

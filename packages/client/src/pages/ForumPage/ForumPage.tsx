@@ -1,9 +1,9 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { createTopic, deleteTopic, getAllTopics, updateTopic } from '../../services';
 import { Confirm, Dialog, Layout, TopicForm, TopicsList } from '../../components';
-import { Topic } from '../../types/common';
 import { ITEMS_PER_PAGE_DEFAULT } from '../../constants/common';
-import { FORUM_MOKE_DATA } from './forumMokeData';
 import { ROUTER_URLS } from '../../constants';
 
 /**
@@ -15,8 +15,9 @@ type TopicDialogMode = 'create' | 'edit';
  * Страница форума
  */
 export const ForumPage: FC = () => {
+  const { topics } = useAppSelector((state) => state.topics);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [topics, setTopics] = useState<Array<Topic>>([]);
   const [topicsTotalCount, setTopicsTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [topicDialogOpen, setTopicDialogOpen] = useState(false);
@@ -29,14 +30,14 @@ export const ForumPage: FC = () => {
    * получение топиков
    */
   useEffect(() => {
-    // TODO: в будущем сделать запрос к API
-    setTopics(FORUM_MOKE_DATA);
-    setTopicsTotalCount(FORUM_MOKE_DATA.length);
+    dispatch(getAllTopics());
+  }, []);
 
-    return () => {
-      // TODO: в будущем предусмотреть прерывание запроса
-    };
-  }, [currentPage]);
+  useEffect(() => {
+    if (Array.isArray(topics) && topics.length) {
+      setTopicsTotalCount(topics.length);
+    }
+  }, [topics]);
 
   /**
    * Обработчик смены страницы
@@ -68,11 +69,10 @@ export const ForumPage: FC = () => {
    * Обработчик события сохранения топика
    */
   const saveTopicHandler = (newTheme: string) => {
-    console.log(newTheme);
     if (topicDialogMode === 'edit' && selectedTopicId) {
-      // TODO: здесь будет запрос на обновление
+      dispatch(updateTopic({ id: parseInt(selectedTopicId, 10), title: newTheme }));
     } else if (topicDialogMode === 'create') {
-      // TODO: здесь будет запрос на создание
+      dispatch(createTopic({ title: newTheme }));
     }
     setTopicDialogOpen(false);
   };
@@ -98,7 +98,10 @@ export const ForumPage: FC = () => {
    */
   const confirmDeleteTopicHandler = () => {
     setDeleteTopicDialogOpen(false);
-    // TODO: здесь будет запрос на удаление топика
+    if (selectedTopicId) {
+      dispatch(deleteTopic(parseInt(selectedTopicId, 10)));
+      setSelectedTopicId(undefined);
+    }
   };
 
   /**
@@ -112,7 +115,7 @@ export const ForumPage: FC = () => {
   /**
    * Получить тему выбранного топика
    */
-  const getSelectedTopicTheme = () => topics.find((t) => t.id === selectedTopicId)?.theme ?? '';
+  const getSelectedTopicTheme = () => topics?.find((t) => t.id === selectedTopicId)?.title ?? '';
 
   return (
     <Layout>

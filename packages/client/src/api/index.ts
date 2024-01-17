@@ -3,3 +3,4 @@ export { User } from './user';
 export { Leaderboard } from './leaderboard';
 export { YandexAuth } from './yandexAuth';
 export { UserTheme } from './theme';
+export { Forum } from './forum';

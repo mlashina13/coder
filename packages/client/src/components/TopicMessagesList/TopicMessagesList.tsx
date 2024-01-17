@@ -44,7 +44,7 @@ export const TopicMessagesList: FC<TopicMessagesListProps> = (props) => {
    * Обработчик события удаления сообщения
    */
   const onDeleteMessageHandler = useCallback(
-    (id: string) => {
+    (id: number) => {
       onDeleteMessage?.(id);
     },
     [onDeleteMessage]
@@ -54,7 +54,7 @@ export const TopicMessagesList: FC<TopicMessagesListProps> = (props) => {
    * Обработчик события изменения сообщения
    */
   const onEditMessageHandler = useCallback(
-    (id: string) => {
+    (id: number) => {
       onEditMessage?.(id);
     },
     [onEditMessage]

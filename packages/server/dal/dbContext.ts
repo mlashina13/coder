@@ -8,10 +8,10 @@ const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } = process
  */
 const sequelizeOptions: SequelizeOptions = {
   host: 'localhost',
-  port: 5432, // Number(POSTGRES_PORT),
-  username: 'postgres', // POSTGRES_USER,
-  password: 'postgres', // POSTGRES_PASSWORD,
-  database: 'coder', // POSTGRES_DB,
+  port: Number(POSTGRES_PORT), // Number(POSTGRES_PORT),
+  username: POSTGRES_USER, // POSTGRES_USER,
+  password: POSTGRES_PASSWORD, // POSTGRES_PASSWORD,
+  database: POSTGRES_DB, // POSTGRES_DB,
   dialect: 'postgres',
 };
 

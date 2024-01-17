@@ -22,7 +22,7 @@ export interface TopicsListProps {
   /**
    * Список топиков
    */
-  topics: Array<Topic>;
+  topics?: Array<Topic>;
 
   /**
    * Событие создания топика

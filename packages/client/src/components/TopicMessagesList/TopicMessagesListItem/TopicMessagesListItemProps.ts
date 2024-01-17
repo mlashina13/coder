@@ -1,16 +1,16 @@
-import { TopicMessage } from '../../../types/common';
+import { Comment } from '../../../types/common';
 
 /**
  * Свойства компонента элемента списка сообщений топика
  */
-export interface TopicMessagesListItemProps extends TopicMessage {
+export interface TopicMessagesListItemProps extends Comment {
   /**
    * Событие изменения сообщения
    */
-  onEdit?: (id: string) => void;
+  onEdit?: (id: number) => void;
 
   /**
    * Событие удаления сообщения
    */
-  onDelete?: (id: string) => void;
+  onDelete?: (id: number) => void;
 }

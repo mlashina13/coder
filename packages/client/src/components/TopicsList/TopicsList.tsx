@@ -98,7 +98,7 @@ export const TopicsList: FC<TopicsListProps> = (props) => {
           </Tooltip>
         </ListSubheader>
         <Divider />
-        {topics.map((t) => (
+        {topics?.map((t) => (
           <TopicListItem
             {...t}
             key={t.id}
