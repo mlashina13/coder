@@ -36,26 +36,6 @@ services:
     networks:
       - awesome
 
-  client:
-    container_name: prakticum-client
-    image: prakticum-client
-    restart: unless-stopped
-    env_file:
-      - .env
-    build:
-      context: .
-      dockerfile: Dockerfile.client
-      args:
-        CLIENT_PORT: ${CLIENT_PORT}
-    depends_on:
-      - server
-    ports:
-      - '${CLIENT_PORT}:80'
-    environment:
-      - CLIENT_PORT=${CLIENT_PORT}
-      - SERVER_PORT=${SERVER_PORT}
-    networks:
-      - awesome
 
   server:
     container_name: prakticum-server
