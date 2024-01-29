@@ -28,6 +28,7 @@ Object.assign(global, {
 });
 
 const isDev = () => process.env.NODE_ENV === 'development';
+console.log('isDev', process.env.NODE_ENV, isDev());
 const renderObject = (data: unknown) => serialize(data).replace(/</g, '\\\u003c');
 
 /**
@@ -46,19 +47,24 @@ async function startServer() {
   app.use(cors());
   const port = Number(process.env.SERVER_PORT) || 3001;
 
-  let vite: ViteDevServer | undefined;
-  const srcPath = path.resolve(__dirname + '/../client');
+  // let vite: ViteDevServer | undefined;
+  const srcPath = path.resolve('./packages/client');
   const distPath = path.join(srcPath, 'dist');
-  const ssrClientPath = path.resolve(__dirname + '/../client/ssr-dist/client.cjs');
+  const ssrClientPath = path.resolve('./packages/client/ssr-dist/ssr.cjs');
 
-  if (isDev()) {
-    vite = await createViteServer({
-      server: { middlewareMode: true },
-      root: srcPath,
-      appType: 'custom',
-    });
-    app.use(vite.middlewares);
-  }
+  console.log('__dirname', __dirname);
+  console.log('srcPath', srcPath);
+  console.log('distPath', distPath);
+  console.log('ssrClientPath', ssrClientPath);
+
+  // if (isDev()) {
+  const vite = await createViteServer({
+    server: { middlewareMode: true },
+    root: srcPath,
+    appType: 'custom',
+  });
+  app.use(vite.middlewares);
+  // }
 
   app.use(
     '/api/v2',
@@ -102,6 +108,8 @@ async function startServer() {
       ssrModule = await import(ssrClientPath);
     }
 
+    console.log('vite', vite);
+    console.log('ssrModule', ssrModule);
     const serverStore = (
       await vite!.ssrLoadModule(path.resolve(`${srcPath}/src/store`, 'store.ts'))
     ).store;
@@ -125,11 +133,10 @@ async function startServer() {
   });
 
   await dbConnect();
+
+  await presetForumData();
+  await presetTheme();
   await presetEmoji();
-  if (isDev()) {
-    await presetForumData();
-    await presetTheme();
-  }
 
   app.listen(port, () => {
     console.log(`  ➜ 🎸 Server is listening on port: ${port}`);

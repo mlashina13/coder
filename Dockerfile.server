@@ -1,29 +1,50 @@
 ARG NODE_VERSION=18
 ARG SERVER_PORT=3001
-
+ 
 FROM node:$NODE_VERSION-buster as base
-
+ 
 WORKDIR /app
-
+ 
 FROM base as builder
+ 
 
-COPY packages/server/package.json ./
+
+COPY package.json ./
 COPY yarn.lock ./
 RUN yarn install --frozen-lockfile
-
+ 
 COPY . .
-
+ 
 RUN yarn lerna bootstrap
-RUN rm -rf /app/packages/server/dist/ && yarn build --scope=server
-
-FROM node:$NODE_VERSION-buster-slim as production
-
+ 
+ENV CLIENT_PORT=3000
+ENV SERVER_PORT=3001
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWORD=postgres
+ENV POSTGRES_DB=postgres
+ENV POSTGRES_PORT=5432
+ 
+WORKDIR /app/packages/client
+ 
+RUN yarn link
+ 
+WORKDIR /app/packages/server
+ 
+RUN yarn link client
+ 
+WORKDIR /app/packages/client
+ 
+RUN yarn build:ssr
+ 
+WORKDIR /app/packages/server
+ 
+RUN yarn build:win
+ 
+ 
 WORKDIR /app
 
-COPY --from=builder /app/packages/server/dist/ /app/
-COPY --from=builder /app/packages/server/package.json /app/package.json
-RUN yarn install --production=true
 
+ 
 EXPOSE $SERVER_PORT
-
-CMD ["node", "/app/index.js"]
+ 
+CMD ["node", "./packages/server/dist/index.js"]
