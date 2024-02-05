@@ -26,7 +26,7 @@ services:
       - .env
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD:  ${PGADMIN_PASSWORD}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
     ports:
       - '${PGADMIN_PORT}:80'
     volumes:
@@ -35,7 +35,6 @@ services:
       - postgres
     networks:
       - awesome
-
 
   server:
     container_name: prakticum-server
@@ -55,7 +54,23 @@ services:
     networks:
       - awesome
 
+  nginx:
+    container_name: prakticum-nginx
+    image: nginx
+    environment:
+      PUBLIC_HOST: coder-32.ya-praktikum.tech
+      SERVER_PORT: 3001
+    volumes:
+      # конфиг уже на сервере.
+      - /coder/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      # сертификаты уже на сервере.
+      - /certbot/www:/var/www/certbot/:ro
+      - /certbot/conf/:/etc/nginx/ssl/:ro
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - awesome
+
 networks:
   awesome:
-    driver: bridge
-
