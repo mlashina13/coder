@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - kirillmuz/fixes-release
 
 jobs:
   build-and-push:
