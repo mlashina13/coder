@@ -28,7 +28,7 @@ Object.assign(global, {
 });
 
 const isDev = () => process.env.NODE_ENV === 'development';
-console.log('isDev', process.env.NODE_ENV, isDev());
+// console.log('isDev', process.env.NODE_ENV, isDev());
 const renderObject = (data: unknown) => serialize(data).replace(/</g, '\\\u003c');
 
 /**
@@ -52,10 +52,10 @@ async function startServer() {
   const distPath = path.join(srcPath, 'dist');
   const ssrClientPath = path.resolve('./packages/client/ssr-dist/ssr.cjs');
 
-  console.log('__dirname', __dirname);
-  console.log('srcPath', srcPath);
-  console.log('distPath', distPath);
-  console.log('ssrClientPath', ssrClientPath);
+  // console.log('__dirname', __dirname);
+  // console.log('srcPath', srcPath);
+  // console.log('distPath', distPath);
+  // console.log('ssrClientPath', ssrClientPath);
 
   // if (isDev()) {
   const vite = await createViteServer({
@@ -82,11 +82,22 @@ async function startServer() {
     '/api/v1',
     cookieParser(),
     async (req, res, next) => {
-      const yandexService = new YandexService(req.headers.cookie);
-      const currentUser = await yandexService.getCurrentUser();
-      if (!currentUser) {
-        res.status(403).send('You are have no permissions for this App section');
-      }
+      // const yandexService = new YandexService(req.headers.cookie);
+      // let currentUser = await yandexService.getCurrentUser();
+      // if (!currentUser) {
+      //  res.status(403).send('You are have no permissions for this App section');
+      const currentUser = {
+        id: 1349902,
+        first_name: 'Coder',
+        second_name: 'Кодировщик',
+        display_name: null,
+        login: 'coder',
+        avatar: '',
+        email: 'coder@mail.ru',
+        phone: '+79152665410',
+      };
+      // }
+
       (req as any).currentUser = currentUser;
       next();
     },

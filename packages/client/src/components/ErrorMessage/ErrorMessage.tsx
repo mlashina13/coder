@@ -35,14 +35,16 @@ export const ErrorMessage: FC = () => {
     clearTimeout(timeoutId);
   };
 
-  return (
-    <Box className='error-message'>
-      <Slide in={!!error} timeout={600}>
-        <Alert severity='error' className='error-message__alert' onClose={closeHandler}>
-          <AlertTitle>Произошла ошибка!</AlertTitle>
-          {error}
-        </Alert>
-      </Slide>
-    </Box>
-  );
+  return null;
+
+  // return (
+  //   <Box className='error-message'>
+  //     <Slide in={!!error} timeout={600}>
+  //       <Alert severity='error' className='error-message__alert' onClose={closeHandler}>
+  //         <AlertTitle>Произошла ошибка!</AlertTitle>
+  //         {error}
+  //       </Alert>
+  //     </Slide>
+  //   </Box>
+  // );
 };
