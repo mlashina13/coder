@@ -23,7 +23,7 @@ ENV POSTGRES_USER=postgres
 ENV POSTGRES_PASSWORD=postgres
 ENV POSTGRES_DB=postgres
 ENV POSTGRES_PORT=5432
-ENV POSTGRES_HOST=prakticum-pgdb
+ENV POSTGRES_HOST=posgres
 ENV SERVER_HOST=coder-32.ya-praktikum.tech
 
 WORKDIR /app/packages/client
