@@ -1,3 +1,4 @@
+/* eslint-disable no-unreachable */
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
@@ -24,12 +25,24 @@ const NAMESPACE = 'user';
 export const checkAuth = createAsyncThunk<UserData | undefined>(
   `${NAMESPACE}/checkAuth`,
   async () => {
-    try {
-      const user = await Auth.getAuthUser();
-      return user;
-    } catch {
-      return undefined;
-    }
+    const user = {
+      email: 'coder@mail.ru',
+      first_name: 'Coder',
+      phone: '+79152665410',
+      second_name: 'Кодировщик',
+      avatar:
+        '/3af7e292-f95c-473b-b97d-f0315d16cc09/2f83fbf6-6442-44af-acc1-3c222a123a78_png-transparent-programming-code-application-development-computer-coding-digital-cyber-security-solid-threat-protection-icon.png',
+      display_name: 'CoderUser',
+      id: '1349902',
+      login: 'coder',
+    } as UserData;
+    return user;
+    // try {
+    //   const user = await Auth.getAuthUser();
+    //   return user;
+    // } catch {
+    //   return undefined;
+    // }
   }
 );
 
@@ -106,8 +119,8 @@ export const updatePersonalData = createAsyncThunk<UserData, UserData, AsyncThun
   `${NAMESPACE}/updatePersonalData`,
   async (userData, { dispatch, rejectWithValue }) => {
     try {
-      const user = await User.updateUserData(userData);
-      return user;
+      // const user = await User.updateUserData(userData);
+      return userData;
     } catch (error) {
       dispatch(setError(errorToString(error as Error)));
       return rejectWithValue(errorToString(error as Error));
@@ -122,7 +135,7 @@ export const updatePassword = createAsyncThunk<boolean, PasswordData, AsyncThunk
   `${NAMESPACE}/updatePassword`,
   async (passwordData, { dispatch, rejectWithValue }) => {
     try {
-      await User.updatePassword(passwordData);
+      // await User.updatePassword(passwordData);
       return true;
     } catch (error) {
       dispatch(setError(errorToString(error as Error)));

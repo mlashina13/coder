@@ -1,3 +1,4 @@
+/* eslint-disable no-unreachable */
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Leaderboard } from '../api/index';
@@ -40,7 +41,7 @@ export const addLeaderboard = createAsyncThunk<boolean, UserLeaderboardData, Asy
   `${NAMESPACE}`,
   async (addLeaderbord, { dispatch, rejectWithValue }) => {
     try {
-      await Leaderboard.leaderboard(addLeaderbord);
+      // await Leaderboard.leaderboard(addLeaderbord);
       return true;
     } catch (error) {
       dispatch(setError(errorToString(error as Error)));
